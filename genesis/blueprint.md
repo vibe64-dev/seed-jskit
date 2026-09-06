@@ -1,0 +1,11 @@
+# Blueprint
+
+## Account App
+
+People can create an account with an email address and password, sign in and
+out, and recover a forgotten password when recovery delivery is configured.
+Private pages are available only after sign-in.
+
+Signed-in people have a responsive home and can manage their profile,
+preferences, avatar, and notification choices. Account, session, and profile
+information persists between application restarts.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Genesis Deslop"
+  short_description: "Clean up committed work without behavior drift"
+  default_prompt: "Use $genesis-deslop to Deslop the latest commit."
