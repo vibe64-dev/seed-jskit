@@ -30,6 +30,9 @@ A host can provide Node, preview routing, and database resources; on the command
 line you supply these prerequisites yourself. Opening a coding session does
 not run dependency installation, database migrations, or verification.
 
+The Stack's memory estimates are initial development planning hints for the
+Node application and workspace setup, not measured requirements or memory limits.
+
 ## Check changes
 
 ```sh
