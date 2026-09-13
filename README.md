@@ -34,6 +34,10 @@ A host can provide Node, preview routing, and database resources; on the command
 line you supply these prerequisites yourself. Opening a coding session does
 not run dependency installation, database migrations, or verification.
 
+The Stack's memory estimates are initial development planning hints for the
+Node application and workspace setup, not measured requirements or memory limits.
+They exclude the separately provided database server.
+
 ## Check changes
 
 ```sh
@@ -47,3 +51,14 @@ These starters are maintained from `gen1_codex`, `gen1_opencode`,
 `gen2_codex`, and `gen2_opencode`. The accounts branch combines the Gen2 authentication/database app, navigation conditions, and shell contract. They contain no generated account credentials or
 installed dependencies. Add product capabilities through JSKIT public APIs and
 package-owned source patterns.
+
+### Database integration check
+
+`npm run test:database` verifies the selected database, prepares it twice, and
+tests registration, profile updates, login after a server restart, rejected
+anonymous reads, and separate account profiles through the real server. Set
+`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` explicitly; an empty
+password is allowed. Set `TEST_DB_NAME` to the same dedicated test database name
+as `DB_NAME`. This test leaves identifiable `migration-` and `other-` fixture
+accounts in that disposable database. The normal smoke test remains available
+without one.

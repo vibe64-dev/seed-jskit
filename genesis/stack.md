@@ -83,3 +83,17 @@
 
 - Prepare `Install dependencies` with `nodejs` when `package.json` exists: `npm` `ci`
 - Prepare `Prepare database` with `nodejs` when `package.json` exists: `npm` `run` `db:prepare`
+
+## Resource estimates
+
+### Output `app`
+
+- Startup typical MiB: `1024`
+- Startup high MiB: `1536`
+- Running typical MiB: `768`
+- Running high MiB: `1536`
+
+### Workspace setup
+
+- Typical MiB: `1024`
+- High MiB: `1536`

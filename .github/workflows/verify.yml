@@ -39,4 +39,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run db:prepare
+      - run: npm run test:database
       - run: npm run verify
