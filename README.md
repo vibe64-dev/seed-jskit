@@ -29,10 +29,22 @@ Open http://localhost:3001. `npm run build` followed by `npm start` serves a pro
 
 Install `genesis-compiler` and `genesis-stack`, run `genesis init` in an empty Git repository, then choose `official:jskit/accounts` with `genesis templates apply`. Vibe64 offers the same starter in the Preview pane. Genesis preserves the destination's history and authored project context; ordinary Git commits or Vibe64 Save keep your new source.
 
-The portable setup, run, and verification commands are in `genesis/stack.md`.
-A host can provide Node, preview routing, and database resources; on the command
-line you supply these prerequisites yourself. Opening a coding session does
-not run dependency installation, database migrations, or verification.
+The starter owns its dependencies and the setup, output, and verification
+commands in `genesis/stack.md`. Genesis describes those requirements; Vibe64
+runs the declared operations. Choosing a starter adds source to the session;
+it does not create external services or invent connection values.
+
+For standalone Vibe64, supply your existing MySQL/MariaDB connection through
+Dashboard → Env: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD`
+(or the application's supported `DATABASE_URL`). Also set a fresh
+`AUTH_LOCAL_SESSION_SECRET` using the generation command above. These values
+belong to your environment, not the starter's source. A managed host may supply
+the resources it owns; do not copy its credentials into this repository.
+
+Return to the project and recheck setup. The declared workspace preparation
+installs dependencies and applies migrations before the web output starts.
+Preparation failures remain actionable; choosing a starter alone does not
+prove that its external services are available.
 
 The Stack's memory estimates are initial development planning hints for the
 Node application and workspace setup, not measured requirements or memory limits.
