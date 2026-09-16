@@ -25,10 +25,14 @@ Open http://localhost:3000. `npm run build` followed by `npm start` serves a pro
 
 Install `genesis-compiler` and `genesis-stack`, run `genesis init` in an empty Git repository, then choose `official:jskit/public` with `genesis templates apply`. Vibe64 offers the same starter in the Preview pane. Genesis preserves the destination's history and authored project context; ordinary Git commits or Vibe64 Save keep your new source.
 
-The portable setup, run, and verification commands are in `genesis/stack.md`.
-A host can provide Node, preview routing, and database resources; on the command
-line you supply these prerequisites yourself. Opening a coding session does
-not run dependency installation, database migrations, or verification.
+The starter owns its dependencies and the setup, output, and verification
+commands in `genesis/stack.md`. Genesis describes those requirements; Vibe64
+runs the declared operations. Choosing a starter adds source to the session;
+it does not create external services or invent connection values.
+
+This variant needs Node.js 26 and dependency installation. It does not need a
+database, account credentials, or a session secret. Its declared output is a
+web application; use the conversation to shape it into your product.
 
 The Stack's memory estimates are initial development planning hints for the
 Node application and workspace setup, not measured requirements or memory limits.
