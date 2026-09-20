@@ -83,10 +83,9 @@ root and workspace JSKIT dependencies to the latest coordinated release, run
 other dependencies, update their declarations deliberately, and commit both
 the manifests and lockfile after checking the application.
 
-Pinia remains on 3.0.4 because the current JSKIT packages require `^3.0.4`.
-Pinia 4 is outside that supported peer range; do not use `--force`,
-`--legacy-peer-deps`, or overrides to bypass it. Revisit the constraint when
-JSKIT publishes support for Pinia 4.
+Pinia 4 and its required `@vue/devtools-api` peer are declared together.
+Keep them compatible with the coordinated JSKIT shell and authentication
+packages; do not bypass peer conflicts with npm overrides or force flags.
 
 Dependency updates do not refresh copied application source. Compare changed
 framework patterns with the application's bootstrap, routes, and tests when
