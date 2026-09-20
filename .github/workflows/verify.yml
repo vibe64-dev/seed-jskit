@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mariadb:
-        image: mariadb:11.4
+        image: mariadb:13.0.2
         env:
           MARIADB_DATABASE: account_app_test
           MARIADB_USER: account_app_test
@@ -32,8 +32,8 @@ jobs:
       DB_PASSWORD: account_app_test_password
       AUTH_LOCAL_SESSION_SECRET: ci-only-session-secret-not-for-production
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
         with:
           node-version-file: .nvmrc
           cache: npm
