@@ -41,12 +41,30 @@ Node application and workspace setup, not measured requirements or memory limits
 
 ```sh
 npm run verify
+npm exec --no -- playwright install chromium
 npm run test:e2e
 ```
 
 The browser suite checks home, settings, and adaptive navigation at compact, medium, and expanded widths.
 
-These starters are maintained from `gen1_codex`, `gen1_opencode`,
-`gen2_codex`, and `gen2_opencode`. The public branch combines the Gen1 adaptive shell, health contract, and home checks. They contain no generated account credentials or
-installed dependencies. Add product capabilities through JSKIT public APIs and
-package-owned source patterns.
+The starter follows the published JSKIT shell foundation and package-owned
+source patterns. It contains no installed dependencies or generated account
+credentials. Add capabilities through JSKIT public APIs.
+
+## Keep dependencies current
+
+`npm ci` installs the reviewed versions in `package-lock.json`. To move all
+root and workspace JSKIT dependencies to the latest coordinated release, run
+`npm run jskit:update`, then `npm run jskit:check`. Review `npm outdated` for
+other dependencies, update their declarations deliberately, and commit both
+the manifests and lockfile after checking the application.
+
+Pinia remains on 3.0.4 because the current JSKIT packages require `^3.0.4`.
+Pinia 4 is outside that supported peer range; do not use `--force`,
+`--legacy-peer-deps`, or overrides to bypass it. Revisit the constraint when
+JSKIT publishes support for Pinia 4.
+
+Dependency updates do not refresh copied application source. Compare changed
+framework patterns with the application's bootstrap, routes, and tests when
+upgrading. Check server and client behavior, production builds, and browser
+navigation before publishing either starter branch.
