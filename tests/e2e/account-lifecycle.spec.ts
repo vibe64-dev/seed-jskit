@@ -12,7 +12,7 @@ test("register, update a profile, sign out, and sign back in to the persisted ac
   await page.getByLabel("Confirm password", { exact: true }).fill(password);
   await page.getByTestId("auth-submit").click();
   await expect(page).toHaveURL(/\/home/u);
-  await expect(page.getByRole("heading", { name: "Welcome", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Manage account" })).toBeVisible();
 
   await page.getByRole("link", { name: "Manage account" }).click();
   await page.getByLabel("Display name", { exact: true }).fill("Starter tester");

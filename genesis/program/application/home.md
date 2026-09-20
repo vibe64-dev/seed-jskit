@@ -16,3 +16,6 @@ to account controls.
 The home is private and redirects visitors to sign in. Once authenticated, a
 person sees the application shell at compact, medium, and expanded sizes, can
 open account settings, and can reach sign-out from the profile menu.
+
+Home opens directly on its content and actions, following the current JSKIT
+shell foundation.

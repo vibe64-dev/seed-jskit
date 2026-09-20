@@ -54,15 +54,11 @@ They exclude the separately provided database server.
 
 ```sh
 npm run verify
+npm exec --no -- playwright install chromium
 npm run test:e2e
 ```
 
 Browser tests use the database environment you provide; use a disposable test database, prepare it with `npm run db:prepare`, and keep the application session secret stable across restarts.
-
-These starters are maintained from `gen1_codex`, `gen1_opencode`,
-`gen2_codex`, and `gen2_opencode`. The accounts branch combines the Gen2 authentication/database app, navigation conditions, and shell contract. They contain no generated account credentials or
-installed dependencies. Add product capabilities through JSKIT public APIs and
-package-owned source patterns.
 
 ### Database integration check
 
@@ -74,3 +70,25 @@ password is allowed. Set `TEST_DB_NAME` to the same dedicated test database name
 as `DB_NAME`. This test leaves identifiable `migration-` and `other-` fixture
 accounts in that disposable database. The normal smoke test remains available
 without one.
+
+The starter follows the published JSKIT shell foundation and package-owned
+source patterns. It contains no installed dependencies or generated account
+credentials. Add capabilities through JSKIT public APIs.
+
+## Keep dependencies current
+
+`npm ci` installs the reviewed versions in `package-lock.json`. To move all
+root and workspace JSKIT dependencies to the latest coordinated release, run
+`npm run jskit:update`, then `npm run jskit:check`. Review `npm outdated` for
+other dependencies, update their declarations deliberately, and commit both
+the manifests and lockfile after checking the application.
+
+Pinia remains on 3.0.4 because the current JSKIT packages require `^3.0.4`.
+Pinia 4 is outside that supported peer range; do not use `--force`,
+`--legacy-peer-deps`, or overrides to bypass it. Revisit the constraint when
+JSKIT publishes support for Pinia 4.
+
+Dependency updates do not refresh copied application source. Compare changed
+framework patterns with the application's bootstrap, routes, and tests when
+upgrading. Check server and client behavior, production builds, and browser
+navigation before publishing either starter branch.
