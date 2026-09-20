@@ -1,5 +1,8 @@
 # Blueprint
 
+Visitors see an accessible loading shell before JavaScript initializes, with a
+Reload link and an explanation if application initialization fails.
+
 ## Account App
 
 People can create an account with an email address and password, sign in and

@@ -6,6 +6,8 @@ render across compact, medium, and expanded layouts.
 
 ## Sources
 
+- `index.html`
+- `tests/e2e/startup.spec.ts`
 - `src/placement.js`
 - `src/placementTopology.js`
 - `config/public.js`
@@ -14,6 +16,8 @@ render across compact, medium, and expanded layouts.
 
 ## Public contract
 
+- The initial document shows loading and Reload before JavaScript is available.
+  Successful mounting replaces it; initialization failure retains a retry explanation.
 - The `home` surface is the default private surface. Signing in makes its Home
   link available; unauthenticated visitors are directed to the account entry.
 - Primary navigation adapts to compact, medium, and expanded layouts. Account
