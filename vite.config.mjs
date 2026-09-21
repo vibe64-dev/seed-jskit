@@ -54,6 +54,7 @@ export default defineConfig({
     include: ["tests/client/**/*.vitest.js"]
   },
   optimizeDeps: {
+    include: ["vuetify/components/**", "vuetify/directives/**"],
     entries: [
       "index.html",
       "src/**/*.{js,ts,vue}"
