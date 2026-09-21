@@ -19,7 +19,8 @@ test("cold startup prepares UI dependencies without warming every screen", async
       "vuetify/components/VDatePicker",
       "vuetify/directives/ripple",
       "@jskit-ai/shell-web/client/navigation/usePaths",
-      "@jskit-ai/shell-web/client/navigation/useSurfaceRouteContext"
+      "@jskit-ai/shell-web/client/navigation/useSurfaceRouteContext",
+      "@jskit-ai/shell-web/client/composables/useShellLayoutState"
     ]) {
       assert.ok(metadata.optimized[dependency], `${dependency} must be ready before the first page loads.`);
     }
