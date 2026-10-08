@@ -30,7 +30,7 @@
     "build:home": "VITE_SURFACE=home vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test": "node --test --test-concurrency=1",
+    "test": "node --test --test-concurrency=1 tests/server/*.test.js",
     "test:client": "vitest run tests/client",
     "test:e2e": "playwright test tests/e2e",
     "jskit:update": "npx --yes @jskit-ai/jskit-catalog@latest update",

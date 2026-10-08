@@ -1,6 +1,8 @@
 # Test the application
 
 Application tests are ready before the first feature.
+`npm test` discovers only `tests/server/*.test.js`; launch scripts and the
+isolated database integration suite have separate commands.
 
 ## Sources
 

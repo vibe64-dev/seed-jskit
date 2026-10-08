@@ -10,7 +10,10 @@ The starter has server tests under `tests/server`, client tests under
 them immediately. Application migrations belong in `migrations`; package-owned
 migrations are discovered by the existing JSKIT database runtime.
 
-For one server file run `npm test -- tests/server/smoke.test.js`. Run client tests
+Run server unit tests with `npm test`, limited to `tests/server/*.test.js`.
+Launch scripts and database integration tests have separate commands. For one
+server file run `node --test --test-concurrency=1 tests/server/smoke.test.js`.
+Run client tests
 with `npm run test:client`. `npm run test:database` selects the exact `TEST_DB_NAME`
 and checks migration idempotence, persistence and rollback. It rejects the normal
 and browser databases. Its fixture table is removed even when a check fails.
