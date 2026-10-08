@@ -20,6 +20,10 @@ isolated database integration suite have separate commands.
 
 ## Public contract
 
+Preparation installs the locked JSKIT packages, release catalogue and matching
+agent documentation together. Agent instructions select those local guides and
+complete patterns; ordinary preparation does not select a newer release.
+
 Workspace setup installs the locked dependencies and runs ordinary JSKIT
 migration preparation. Test commands select exact explicit test databases and
 reject normal/shared identities or production mode. Integration and browser

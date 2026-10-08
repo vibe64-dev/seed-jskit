@@ -5,9 +5,6 @@ Choose **Database app** when you need persistence without accounts. Finish
 applies the application's ordinary Knex migrations. Retry preparation on failure.
 Database credentials come from Vibe64, not a request to invent an environment.
 
-If feature installation reports incompatible JSKIT packages, ask the coding
-agent to match additions to the starter's installed catalogue and retry installation.
-
 The starter has server tests under `tests/server`, client tests under
 `tests/client`, and browser tests under `tests/e2e`. The coding agent can extend
 them immediately. Application migrations belong in `migrations`; package-owned
@@ -36,6 +33,10 @@ starts the same isolated test target with your installed Playwright browser.
 When supplying `PLAYWRIGHT_BASE_URL`, you own the server and must select the
 isolated target before tests that write data. Browser startup reports migration,
 fixture reset and seed times. Do not install another browser in managed sessions.
+
+Workspace setup also installs the version-matched JSKIT guides and source patterns
+for the coding agent. Framework dependencies, their catalogue and documentation
+are locked together; preparation does not silently upgrade the application.
 
 Colleague can explain these steps and offer coding-agent help; a how-to question
 alone does not authorize test execution, fixture reset or schema changes.

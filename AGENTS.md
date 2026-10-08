@@ -9,19 +9,16 @@ in Vibe64. TEST_DB_NAME and BROWSER_TEST_DB_NAME are resource bindings. See
 Use current project context, JSKIT public APIs, and the official framework
 documentation as the source of truth for application work.
 
-Framework references:
+Framework references installed with this starter's JSKIT release:
 
-- `https://mobily-enterprises.github.io/jskit-ai/guide/`
-- `https://mobily-enterprises.github.io/jskit-ai/patterns/`
+- `node_modules/@jskit-ai/agent-docs/skills/jskit/SKILL.md`
+- `node_modules/@jskit-ai/agent-docs/patterns/INDEX.md`
+- `node_modules/@jskit-ai/agent-docs/guide/agent/`
 
-Before implementation, read the narrow relevant source pattern completely. If
-its owner package is installed, prefer that version-matched package-owned copy.
-Do not install an unrelated runtime package only to read documentation.
-
-For additional `@jskit-ai/*` packages, use the exact versions in `release.packages`
-of `node_modules/@jskit-ai/jskit-catalog/catalog/packages.json`. This installed
-catalogue matches the starter; online examples may describe a newer release.
-After adding packages, run `npm run jskit:check`.
+Read the installed JSKIT skill and the narrow relevant source pattern before
+implementation. The documentation package includes complete pattern examples;
+no runtime package installation or online documentation search is needed to read
+them. Follow its existing application upgrade guidance when changing JSKIT release.
 
 Pages start with useful content and actions. Do not add a page header, welcome
 heading, or standalone title unless the user asks for one.

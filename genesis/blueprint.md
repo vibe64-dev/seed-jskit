@@ -1,5 +1,8 @@
 # Blueprint
 
+The starter includes the framework's version-matched guides and complete source
+patterns so the first feature can use its installed JSKIT release directly.
+
 Visitors see an accessible loading shell before JavaScript initializes, with a
 Reload link and an explanation if application initialization fails.
 
