@@ -38,5 +38,9 @@ Workspace setup also installs the version-matched JSKIT guides and source patter
 for the coding agent. Framework dependencies, their catalogue and documentation
 are locked together; preparation does not silently upgrade the application.
 
+To upgrade JSKIT, ask the coding agent to run `npm run jskit:update`. This existing
+command updates the compatible framework graph and its local guidance together.
+Review the dependency changes and run the relevant app checks before using them.
+
 Colleague can explain these steps and offer coding-agent help; a how-to question
 alone does not authorize test execution, fixture reset or schema changes.
