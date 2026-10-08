@@ -5,7 +5,6 @@ Application tests are ready before the first feature.
 ## Sources
 
 - `package.json`
-- `genesis/stack.md`
 - `knexfile.js`
 - `scripts/prepare-database.js`
 - `scripts/test-environment.js`
