@@ -5,6 +5,9 @@ Choose **Database app** when you need persistence without accounts. Finish
 applies the application's ordinary Knex migrations. Retry preparation on failure.
 Database credentials come from Vibe64, not a request to invent an environment.
 
+If feature installation reports incompatible JSKIT packages, ask the coding
+agent to match additions to the starter's installed catalogue and retry installation.
+
 The starter has server tests under `tests/server`, client tests under
 `tests/client`, and browser tests under `tests/e2e`. The coding agent can extend
 them immediately. Application migrations belong in `migrations`; package-owned

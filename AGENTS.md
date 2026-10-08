@@ -18,6 +18,11 @@ Before implementation, read the narrow relevant source pattern completely. If
 its owner package is installed, prefer that version-matched package-owned copy.
 Do not install an unrelated runtime package only to read documentation.
 
+For additional `@jskit-ai/*` packages, use the exact versions in `release.packages`
+of `node_modules/@jskit-ai/jskit-catalog/catalog/packages.json`. This installed
+catalogue matches the starter; online examples may describe a newer release.
+After adding packages, run `npm run jskit:check`.
+
 Pages start with useful content and actions. Do not add a page header, welcome
 heading, or standalone title unless the user asks for one.
 
