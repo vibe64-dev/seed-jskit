@@ -5,6 +5,11 @@ Choose **Database app** when you need persistence without accounts. Finish
 applies the application's ordinary Knex migrations. Retry preparation on failure.
 Database credentials come from Vibe64, not a request to invent an environment.
 
+Preparation also installs the standard JSKIT CRUD server, resource and web-screen
+libraries. The coding agent can add database-backed forms and lists through their
+existing APIs without another library-installation step. Product fields, access
+rules, routes and migrations remain application decisions.
+
 The starter has server tests under `tests/server`, client tests under
 `tests/client`, and browser tests under `tests/e2e`. The coding agent can extend
 them immediately. Application migrations belong in `migrations`; package-owned

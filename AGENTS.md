@@ -6,6 +6,10 @@ Database and tests are ready after the declared Workspace setup. Use
 in Vibe64. TEST_DB_NAME and BROWSER_TEST_DB_NAME are resource bindings. See
 `docs/colleague-usage/testing.md`; do not invent database setup.
 
+The standard CRUD server, resource and shared web-screen libraries are already
+installed. Use their documented APIs directly; install additional dependencies
+only when a feature needs a capability absent from the manifest.
+
 Use current project context, JSKIT public APIs, and the official framework
 documentation as the source of truth for application work.
 

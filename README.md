@@ -1,11 +1,11 @@
-# JSKIT Public starter
+# JSKIT Database starter
 
-An adaptive Fastify/Vue application with public home and settings pages. No accounts or database are required.
+An adaptive Fastify/Vue application with public home and settings pages and
+MySQL persistence. No accounts are required. The standard JSKIT CRUD server,
+resource contracts and shared web screens are installed for the first feature.
 
-This repository has two application branches:
-
-- [public](https://github.com/vibe64-dev/seed-jskit/tree/public): public app.
-- [accounts](https://github.com/vibe64-dev/seed-jskit/tree/accounts): accounts and database.
+Use **Basic app** for an app without persistence, **Database app** for persistence
+without accounts, or **Accounts app** for persistence and authentication.
 
 ## Run locally
 
@@ -23,15 +23,19 @@ Open http://localhost:3000. `npm run build` followed by `npm start` serves a pro
 
 ## Use through Genesis or Vibe64
 
-Install `genesis-compiler` and `genesis-stack`, run `genesis init` in an empty Git repository, then choose `official:jskit/public` with `genesis templates apply`. Vibe64 offers the same starter in the Preview pane. Genesis preserves the destination's history and authored project context; ordinary Git commits or Vibe64 Save keep your new source.
+Choose **Database app** in Vibe64 project setup. A standalone Genesis project can
+apply the configured Database template through `genesis templates apply`.
+Genesis preserves the destination's history and authored project context;
+ordinary Git commits or Vibe64 Save keep your new source.
 
 The starter owns its dependencies and the setup, output, and verification
 commands in `genesis/stack.md`. Genesis describes those requirements; Vibe64
 runs the declared operations. Choosing a starter adds source to the session;
 it does not create external services or invent connection values.
 
-This variant needs Node.js 26 and dependency installation. It does not need a
-database, account credentials, or a session secret. Its declared output is a
+This variant needs Node.js 26, dependency installation and the development,
+integration-test and browser-test MySQL databases declared in `.env.example`.
+It does not need account credentials or a session secret. Its declared output is a
 web application; use the conversation to shape it into your product.
 
 The Stack's memory estimates are initial development planning hints for the

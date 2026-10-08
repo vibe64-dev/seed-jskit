@@ -23,6 +23,8 @@ isolated database integration suite have separate commands.
 Preparation installs the locked JSKIT packages, release catalogue and matching
 agent documentation together. Agent instructions select those local guides and
 complete patterns; ordinary preparation does not select a newer release.
+The locked starter also includes `crud-core`, `resource-crud-core`, and
+`http-web`, ready for database feature implementation without another install.
 
 Workspace setup installs the locked dependencies and runs ordinary JSKIT
 migration preparation. Test commands select exact explicit test databases and
