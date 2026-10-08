@@ -19,7 +19,8 @@ Successful mounting replaces it; initialization failure retains a retry explanat
 
 The root opens the public home. Navigation adapts to compact, medium, and
 expanded screens, keeping home and settings reachable. The home reports the
-result of the application health endpoint. No login or database is required.
+result of the application health endpoint. No login is required. The MySQL
+resource and application migration directory are ready for database features.
 
 Home opens directly on its content and actions, following the current JSKIT
 shell foundation.

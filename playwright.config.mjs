@@ -19,12 +19,12 @@ export default defineConfig({
   },
   ...(managedBaseUrl ? {} : {
     webServer: {
-      command: "npm run build && node ./bin/server.js",
+      command: "npm run develop:test",
       env: {
         PORT: "4173"
       },
       url: `${baseURL}/api/health`,
-      reuseExistingServer: true,
+      reuseExistingServer: false,
       timeout: 180_000
     }
   })

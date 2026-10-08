@@ -6,6 +6,26 @@
 ## Components
 - `nodejs`
 - `jskit`
+- `mysql`
+- `jskit-mysql`
+
+## Resources
+
+```json genesis-resource
+{
+  "id": "database",
+  "kind": "mysql",
+  "environmentAlternatives": [
+    { "bindings": { "database": "DB_NAME", "host": "DB_HOST", "password": "DB_PASSWORD", "port": "DB_PORT", "username": "DB_USER" }, "allowEmpty": ["password"], "preferred": true },
+    { "bindings": { "url": "DATABASE_URL" } }
+  ],
+  "optionalBindings": { "testDatabase": "TEST_DB_NAME", "browserTestDatabase": "BROWSER_TEST_DB_NAME" }
+}
+```
+
+## Environment defaults
+
+- Default `DB_CLIENT`: `mysql2`
 
 ## Environment files
 
@@ -21,6 +41,7 @@
 - Recreate on restore: `node_modules`
 - Ready when: `GET` `/api/health` returns `200`
 - Prepare `Install dependencies`: `npm` `ci`
+- Prepare `Prepare database`: `npm` `run` `db:prepare`
 - Build `Build`: `npm` `run` `build`
 - Serve `Start`: `npm` `start`
 
@@ -30,6 +51,7 @@
 
 - Default.
 - Mode: `interactive`
+- Data: `development`
 - Runtimes: `nodejs`
 - Run `Develop`: `npm` `run` `develop`
 
@@ -40,9 +62,23 @@
 - URL path: `/`
 - Ready when: `GET` `/api/health` returns `200`
 
+### Target `browser-tests`: Browser test app
+
+- Mode: `interactive`
+- Data: `test`
+- Runtimes: `nodejs`
+- Run `Develop test app`: `npm` `run` `develop:test`
+
+#### Presentation
+
+- Kind: `web`
+- URL path: `/`
+- Ready when: `GET` `/api/health` returns `200`
+
 ## Workspace setup
 
 - Prepare `Install dependencies` with `nodejs` when `package.json` exists: `npm` `ci`
+- Prepare `Prepare database` with `nodejs` when `package.json` exists: `npm` `run` `db:prepare`
 
 ## Resource estimates
 

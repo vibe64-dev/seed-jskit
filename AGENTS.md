@@ -1,5 +1,11 @@
 # App Agent Instructions
 
+Database and tests are ready after the declared Workspace setup. Use
+`npm test -- tests/server/smoke.test.js`, `npm run test:client`,
+`npm run test:database`, or `vibe64-helper playwright --target browser-tests test`
+in Vibe64. TEST_DB_NAME and BROWSER_TEST_DB_NAME are resource bindings. See
+`docs/colleague-usage/testing.md`; do not invent database setup.
+
 Use current project context, JSKIT public APIs, and the official framework
 documentation as the source of truth for application work.
 

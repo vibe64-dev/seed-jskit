@@ -1,7 +1,4 @@
-import { createRequire } from "node:module";
 import { surfaceRuntime } from "./surfaceRuntime.js";
-
-const require = createRequire(import.meta.url);
 
 function toPort(value, fallback = 3000) {
   const parsed = Number.parseInt(String(value || "").trim(), 10);
@@ -18,13 +15,9 @@ function ensureRuntimeEnvLoaded() {
     return;
   }
   try {
-    const dotenvModule = require("dotenv");
-    const loadDotEnv = dotenvModule?.config;
-    if (typeof loadDotEnv === "function") {
-      loadDotEnv();
-    }
-  } catch {
-    // dotenv is optional in base-shell; bundles can add it when needed.
+    process.loadEnvFile?.(".env");
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
   }
   envLoaded = true;
 }
@@ -36,6 +29,7 @@ function resolveRuntimeEnv() {
   );
   return {
     ...process.env,
+    DB_CLIENT: "mysql2",
     SERVER_SURFACE: serverSurface,
     PORT: toPort(process.env.PORT, 3000),
     HOST: String(process.env.HOST || "").trim() || "0.0.0.0"
