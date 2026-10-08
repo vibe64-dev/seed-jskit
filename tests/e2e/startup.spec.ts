@@ -29,6 +29,7 @@ for (const width of [390, 768, 1280]) {
     } finally {
       releaseScripts();
     }
+    await page.waitForLoadState("load");
     await expect(page.locator("#app[data-v-app]")).toBeVisible();
     await expect(page.locator("#startup-shell")).toHaveCount(0);
   });
