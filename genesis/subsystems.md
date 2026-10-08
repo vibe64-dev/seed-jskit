@@ -13,8 +13,8 @@ application migrations and isolated database test launchers.
 
 ### Data owned
 
-- Application-owned schema migrations; initially no business tables.
+- Nothing.
 
 ### Data used
 
-- Managed MySQL database, separate integration and browser test databases.
+- Nothing.
