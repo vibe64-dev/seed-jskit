@@ -7,7 +7,7 @@ an external identity provider.
 
 - `package.json`
 - `config/public.js`
-- `src/pages/auth/login.vue`
+- Main: `src/pages/auth/login.vue`
 - `src/pages/auth/reset-password.vue`
 - `src/pages/auth/signout.vue`
 

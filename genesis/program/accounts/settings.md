@@ -5,7 +5,7 @@ personal preferences.
 
 ## Sources
 
-- `src/pages/account/index.vue`
+- Main: `src/pages/account/index.vue`
 - `src/placement.js`
 - `packages/main/src/client/providers/MainClientProvider.js`
 - `src/components/account/settings/AccountSettingsProfileSection.vue`

@@ -4,6 +4,10 @@
 
 Owns the private home and adaptive navigation around authenticated features.
 
+### Source
+
+- Directory `src/components`
+
 ### Program
 
 - `genesis/program/application/home.md`
@@ -20,6 +24,10 @@ Owns the private home and adaptive navigation around authenticated features.
 ## `accounts` Accounts and authentication
 
 Owns local authentication and self-service profiles through installed JSKIT packages.
+
+### Source
+
+- Directory `src/pages`
 
 ### Program
 
@@ -41,6 +49,10 @@ Owns local authentication and self-service profiles through installed JSKIT pack
 ## `operations` Runtime operations
 
 Owns startup, health checks, and preparation of the application's database.
+
+### Source
+
+- Directory `.`
 
 ### Program
 

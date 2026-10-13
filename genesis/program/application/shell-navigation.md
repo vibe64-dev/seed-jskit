@@ -6,6 +6,7 @@ render across compact, medium, and expanded layouts.
 
 ## Sources
 
+- Main: `src/components/ShellLayout.vue`
 - `index.html`
 - `tests/e2e/startup.spec.ts`
 - `src/placement.js`

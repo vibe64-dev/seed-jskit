@@ -27,6 +27,8 @@ Open http://localhost:3001. `npm run build` followed by `npm start` serves a pro
 
 ## Use through Genesis or Vibe64
 
+See [starting the app and recovering a failed import](docs/colleague-usage/starting-app.md).
+
 Install `genesis-compiler` and `genesis-stack`, run `genesis init` in an empty Git repository, then choose `official:jskit/accounts` with `genesis templates apply`. Vibe64 offers the same starter in the Preview pane. Genesis preserves the destination's history and authored project context; ordinary Git commits or Vibe64 Save keep your new source.
 
 The starter owns its dependencies and the setup, output, and verification

@@ -7,7 +7,7 @@ to account controls.
 
 - `src/pages/home.vue`
 - `src/pages/home/index.vue`
-- `src/components/ShellLayout.vue`
+- Main: `src/components/ShellLayout.vue`
 - `src/placement.js`
 - `src/placementTopology.js`
 

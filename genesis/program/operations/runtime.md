@@ -8,7 +8,7 @@ the application.
 - `package.json`
 - `scripts/prepare-database.js`
 - `knexfile.js`
-- `server.js`
+- Main: `server.js`
 - `server/lib/runtimeEnv.js`
 
 ## Public contract
