@@ -49,7 +49,7 @@
 ### Discovery `vue-pages`: Application pages
 
 - Adapter: `jskit`
-- Surface: `app`
+- Surface: `home`
 - Mode: `filesystem`
 - Page root: `src/pages`
 - Registration: `vite.config.mjs`
