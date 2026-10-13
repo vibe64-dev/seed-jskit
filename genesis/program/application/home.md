@@ -7,7 +7,7 @@ Visitors use the application through an adaptive shell.
 - `index.html`
 - `src/main.js`
 - `tests/e2e/startup.spec.ts`
-- `src/pages/home/index.vue`
+- Main: `src/pages/home/index.vue`
 - `src/components/ShellLayout.vue`
 - `config/public.js`
 - `server.js`

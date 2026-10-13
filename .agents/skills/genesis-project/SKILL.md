@@ -46,8 +46,11 @@ Genesis operation or `genesis --version` as an availability probe.
 Successful invocation resolution is routine. Do not narrate whether Genesis is
 project-pinned or on `PATH`, and never describe direct `PATH` use as a fallback.
 Mention how the invocation was selected only when resolution fails or the user
-explicitly asks. This does not suppress an otherwise-required work update about
-using Genesis; keep that update about the project work, not executable selection.
+explicitly asks.
+
+Follow the configured Collaboration approach for user-facing updates, including
+its technical depth and response length. Report concrete progress,
+findings, or blockers; do not announce that you are following guidance.
 
 ## Resolve explicit technology choices
 
@@ -141,11 +144,34 @@ Neither is authority or proof; both may be regenerated with the Genesis
 
 ## Verify and report
 
-After the selected technology's workspace substrate exists, use the Genesis
-`verify` operation for the Stack's declared final checks. An unconfigured result
+During implementation, select the checks relevant to the change. Run the
+Stack's declared final checks through Genesis `verify` when required by the
+project's verification policy or the user's request, after the selected
+technology's workspace substrate exists. Finishing an item or resuming a
+session does not itself require a broad verification run. Keep full output in
+local artifacts, preserve exit status, and read summaries and relevant failure
+excerpts before expanding logs. Do not weaken assertions or omit required
+coverage to save time or tokens. An unconfigured result
 means the declared workspace or checks do not exist yet; it is not a failing
 check. Before reporting completion, compare the requested observable behavior,
 required inputs and resources, declared project operations, and focused evidence
 with what actually exists. Report files changed, checks actually run,
 anything not proven, and anything still requiring attention. Never claim that
 an unrun check passed or that passing checks prove the whole product.
+
+## Subsystem maintenance
+
+Maintain `genesis/subsystems.md` in the same implementation turn when a change
+adds, removes, or changes a subsystem responsibility, Program membership, or
+data ownership/use. Read the map before changing related code. Reuse existing
+subsystems unless a distinct responsibility is evidenced. Require one Source Directory per subsystem and declare each Program module
+exactly once; Program folder names do not determine membership. Keep table references
+grounded in schema/migrations; Genesis does not inspect databases. Private
+helper changes need no map edit when these associations remain unchanged.
+
+If `genesis/subsystems.md` is missing, or is empty in an existing explained
+application, create it from the actual source, schema, and existing Program
+before implementation. This is ordinary explanatory adoption, not a blocker or
+a reason to ask permission again. Preserve the existing Program and source;
+inspect the relevant responsibilities and complete the smallest truthful map.
+Initialization can create the empty file, but only the agent authors its meaning.

@@ -44,6 +44,18 @@
 
 - Prepare `Install dependencies` with `nodejs` when `package.json` exists: `npm` `ci`
 
+## UI discovery
+
+### Discovery `vue-pages`: Application pages
+
+- Adapter: `jskit`
+- Surface: `app`
+- Mode: `filesystem`
+- Page root: `src/pages`
+- Registration: `vite.config.mjs`
+- Component root: `src/components`
+- Component root: `packages`
+
 ## Resource estimates
 
 ### Output `app`
