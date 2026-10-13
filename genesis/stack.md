@@ -80,6 +80,18 @@
 - Prepare `Install dependencies` with `nodejs` when `package.json` exists: `npm` `ci`
 - Prepare `Prepare database` with `nodejs` when `package.json` exists: `npm` `run` `db:prepare`
 
+## UI discovery
+
+### Discovery `home-pages`: Home pages
+
+- Adapter: `jskit`
+- Surface: `home`
+- Mode: `filesystem`
+- Page root: `src/pages`
+- Registration: `vite.config.mjs`
+- Component root: `src/components`
+- Component root: `packages`
+
 ## Resource estimates
 
 ### Output `app`

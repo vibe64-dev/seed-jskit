@@ -5,6 +5,10 @@
 Owns the public adaptive shell, home, settings navigation, service health,
 application migrations and isolated database test launchers.
 
+### Source
+
+- Directory `.`
+
 ### Program
 
 - `genesis/program/application/home.md`

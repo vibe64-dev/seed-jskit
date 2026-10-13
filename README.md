@@ -23,6 +23,8 @@ Open http://localhost:3000. `npm run build` followed by `npm start` serves a pro
 
 ## Use through Genesis or Vibe64
 
+See [starting the app and recovering a failed import](docs/colleague-usage/starting-app.md).
+
 Choose **Database app** in Vibe64 project setup. A standalone Genesis project can
 apply the configured Database template through `genesis templates apply`.
 Genesis preserves the destination's history and authored project context;

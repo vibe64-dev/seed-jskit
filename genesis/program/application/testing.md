@@ -9,7 +9,7 @@ isolated database integration suite have separate commands.
 - `package.json`
 - `knexfile.js`
 - `scripts/prepare-database.js`
-- `scripts/test-environment.js`
+- Main: `scripts/test-environment.js`
 - `scripts/test-database.js`
 - `bin/develop-test.js`
 - `tests/browser/database.js`

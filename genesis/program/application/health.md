@@ -4,7 +4,7 @@ Let operators determine whether the application server is available.
 
 ## Sources
 
-- `server.js`
+- Main: `server.js`
 
 ## Public contract
 
