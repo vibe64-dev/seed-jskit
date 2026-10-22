@@ -53,6 +53,10 @@
 
 - Verify `application`: `npm` `run` `verify`
 
+## Connected development
+
+- Default package type: `npm`
+
 ## Deployment
 
 - Runtimes: `nodejs`
@@ -79,10 +83,19 @@
 - URL path: `/`
 - Ready when: `GET` `/api/health` returns `200`
 
-## Workspace setup
+## Resource estimates
 
-- Prepare `Install dependencies` with `nodejs` when `package.json` exists: `npm` `ci`
-- Prepare `Prepare database` with `nodejs` when `package.json` exists: `npm` `run` `db:prepare`
+### Output `app`
+
+- Startup typical MiB: `1024`
+- Startup high MiB: `1536`
+- Running typical MiB: `768`
+- Running high MiB: `1536`
+
+### Workspace setup
+
+- Typical MiB: `1024`
+- High MiB: `1536`
 
 ## UI discovery
 
@@ -116,16 +129,7 @@
 - Component root: `src/components`
 - Component root: `packages`
 
-## Resource estimates
+## Workspace setup
 
-### Output `app`
-
-- Startup typical MiB: `1024`
-- Startup high MiB: `1536`
-- Running typical MiB: `768`
-- Running high MiB: `1536`
-
-### Workspace setup
-
-- Typical MiB: `1024`
-- High MiB: `1536`
+- Prepare `Install dependencies` with `nodejs` when `package.json` exists: `npm` `ci`
+- Prepare `Prepare database` with `nodejs` when `package.json` exists: `npm` `run` `db:prepare`
