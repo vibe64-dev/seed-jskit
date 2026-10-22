@@ -35,6 +35,10 @@
 
 - Verify `application`: `npm` `run` `verify`
 
+## Connected development
+
+- Default package type: `npm`
+
 ## Deployment
 
 - Runtimes: `nodejs`
@@ -75,23 +79,6 @@
 - URL path: `/`
 - Ready when: `GET` `/api/health` returns `200`
 
-## Workspace setup
-
-- Prepare `Install dependencies` with `nodejs` when `package.json` exists: `npm` `ci`
-- Prepare `Prepare database` with `nodejs` when `package.json` exists: `npm` `run` `db:prepare`
-
-## UI discovery
-
-### Discovery `home-pages`: Home pages
-
-- Adapter: `jskit`
-- Surface: `home`
-- Mode: `filesystem`
-- Page root: `src/pages`
-- Registration: `vite.config.mjs`
-- Component root: `src/components`
-- Component root: `packages`
-
 ## Resource estimates
 
 ### Output `app`
@@ -105,3 +92,20 @@
 
 - Typical MiB: `1024`
 - High MiB: `1536`
+
+## UI discovery
+
+### Discovery `home-pages`: Home pages
+
+- Adapter: `jskit`
+- Surface: `home`
+- Mode: `filesystem`
+- Page root: `src/pages`
+- Registration: `vite.config.mjs`
+- Component root: `src/components`
+- Component root: `packages`
+
+## Workspace setup
+
+- Prepare `Install dependencies` with `nodejs` when `package.json` exists: `npm` `ci`
+- Prepare `Prepare database` with `nodejs` when `package.json` exists: `npm` `run` `db:prepare`
