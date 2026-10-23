@@ -7,13 +7,10 @@ import EmptyState from "../../components/hub/EmptyState.vue";
 import HubAppLayout from "../../components/hub/HubAppLayout.vue";
 import { hubRequest } from "../../lib/hubApi.js";
 import { timeAgo } from "../../lib/format.js";
+import { useConfirmedAction } from "../../lib/useConfirmedAction.js";
 
 const data = ref(null);
 const loadError = ref("");
-const pending = ref(null);
-const busy = ref(false);
-const actionError = ref("");
-const notice = ref("");
 
 const empty = computed(() => data.value && ["waiting", "approved", "development", "blocked"].every((group) => data.value[group].length === 0));
 const activeKey = computed(() => data.value?.keys.find((key) => key.state === "active"));
@@ -63,33 +60,11 @@ async function load() {
 
 onMounted(load);
 
+const { pending, busy, error: actionError, noticeOpen, notice, dialogOpen, ask: askConfirm, confirm } = useConfirmedAction(load);
+
 function ask(action, app = null) {
-  actionError.value = "";
-  pending.value = { action, app, ...ACTIONS[action](app) };
-}
-
-const dialogOpen = computed({
-  get: () => Boolean(pending.value),
-  set: (open) => {
-    if (!open) pending.value = null;
-  }
-});
-
-async function confirm() {
-  const { action, app, done } = pending.value;
-  busy.value = true;
-  actionError.value = "";
-  try {
-    const path = action === "rotate" ? "/hub/api/admin/keys/rotate" : `/hub/api/admin/apps/${encodeURIComponent(app.clientId)}/${action}`;
-    await hubRequest(path, { method: "POST", body: {} });
-    await load();
-    notice.value = done;
-    pending.value = null;
-  } catch (problem) {
-    actionError.value = problem.message;
-  } finally {
-    busy.value = false;
-  }
+  const path = action === "rotate" ? "/hub/api/admin/keys/rotate" : `/hub/api/admin/apps/${encodeURIComponent(app.clientId)}/${action}`;
+  askConfirm({ ...ACTIONS[action](app), run: () => hubRequest(path, { method: "POST", body: {} }) });
 }
 </script>
 
@@ -100,8 +75,7 @@ async function confirm() {
     </template>
 
     <v-alert v-if="loadError" type="error" variant="tonal" class="mb-4">{{ loadError }}</v-alert>
-    <!-- Vue reads "" as true for a Boolean prop, so the open state is explicit. -->
-    <v-snackbar :model-value="Boolean(notice)" @update:model-value="(open) => !open && (notice = '')" :timeout="4000" color="inverse-surface" location="bottom">{{ notice }}</v-snackbar>
+    <v-snackbar v-model="noticeOpen" :timeout="4000" color="inverse-surface" location="bottom">{{ notice }}</v-snackbar>
 
     <template v-if="!data && !loadError">
       <v-skeleton-loader type="list-item-avatar-two-line@3" class="rounded-xl" />

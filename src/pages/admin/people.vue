@@ -6,14 +6,11 @@ import EmptyState from "../../components/hub/EmptyState.vue";
 import HubAppLayout from "../../components/hub/HubAppLayout.vue";
 import { hubRequest } from "../../lib/hubApi.js";
 import { initials, timeAgo } from "../../lib/format.js";
+import { useConfirmedAction } from "../../lib/useConfirmedAction.js";
 
 const people = ref(null);
 const loadError = ref("");
 const search = ref("");
-const pending = ref(null);
-const busy = ref(false);
-const actionError = ref("");
-const notice = ref("");
 
 const shown = computed(() => {
   const query = search.value.trim().toLowerCase();
@@ -31,48 +28,35 @@ async function load() {
 
 onMounted(load);
 
-const dialogOpen = computed({
-  get: () => Boolean(pending.value),
-  set: (open) => {
-    if (!open) pending.value = null;
-  }
-});
+const { pending, busy, error: actionError, noticeOpen, notice, dialogOpen, ask: askConfirm, confirm } = useConfirmedAction(load);
 
 function ask(person) {
-  actionError.value = "";
-  pending.value = person.disabled
-    ? { person, action: "enable", title: `Turn ${person.displayName}'s account back on?`, body: "They can sign in to your apps again.", label: "Turn on", color: "primary" }
+  const action = person.disabled ? "enable" : "disable";
+  const run = () => hubRequest(`/hub/api/admin/people/${encodeURIComponent(person.id)}/${action}`, { method: "POST", body: {} });
+  askConfirm(person.disabled
+    ? {
+        run,
+        title: `Turn ${person.displayName}'s account back on?`,
+        body: "They can sign in to your apps again.",
+        label: "Turn on",
+        color: "primary",
+        done: `${person.displayName} can sign in again.`
+      }
     : {
-        person,
-        action: "disable",
+        run,
         title: `Turn off ${person.displayName}'s account?`,
         body: "They are signed out of every app now and cannot sign in until you turn the account back on.",
         label: "Turn off",
-        color: "error"
-      };
-}
-
-async function confirm() {
-  const { person, action } = pending.value;
-  busy.value = true;
-  try {
-    await hubRequest(`/hub/api/admin/people/${encodeURIComponent(person.id)}/${action}`, { method: "POST", body: {} });
-    await load();
-    notice.value = action === "disable" ? `${person.displayName} is signed out everywhere.` : `${person.displayName} can sign in again.`;
-    pending.value = null;
-  } catch (problem) {
-    actionError.value = problem.message;
-  } finally {
-    busy.value = false;
-  }
+        color: "error",
+        done: `${person.displayName} is signed out everywhere.`
+      });
 }
 </script>
 
 <template>
   <HubAppLayout title="People" subtitle="Everyone with an account on your hub." owner-only>
     <v-alert v-if="loadError" type="error" variant="tonal" class="mb-4">{{ loadError }}</v-alert>
-    <!-- Vue reads "" as true for a Boolean prop, so the open state is explicit. -->
-    <v-snackbar :model-value="Boolean(notice)" @update:model-value="(open) => !open && (notice = '')" :timeout="4000" color="inverse-surface">{{ notice }}</v-snackbar>
+    <v-snackbar v-model="noticeOpen" :timeout="4000" color="inverse-surface">{{ notice }}</v-snackbar>
 
     <v-skeleton-loader v-if="!people && !loadError" type="list-item-avatar-two-line@4" class="rounded-xl" />
 
