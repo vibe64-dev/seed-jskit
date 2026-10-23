@@ -72,7 +72,7 @@ const items = computed(() => {
       ...byId["signing-key"],
       title: "A signing key is active.",
       text: byId["signing-key"].activeSince
-        ? `Active since ${new Date(byId["signing-key"].activeSince).toLocaleDateString()}. Rotate it from Apps.`
+        ? `Active since ${new Date(byId["signing-key"].activeSince).toLocaleDateString(undefined, { dateStyle: "medium" })}. Rotate it from Apps.`
         : "The hub creates one when it starts."
     },
     {

@@ -140,7 +140,7 @@ function ask(action, app = null) {
       </section>
 
       <p v-if="activeKey" class="key-note">
-        Signing key active since {{ new Date(activeKey.createdAt).toLocaleDateString() }}.
+        Signing key active since {{ new Date(activeKey.createdAt).toLocaleDateString(undefined, { dateStyle: "medium" }) }}.
       </p>
     </template>
 

@@ -175,12 +175,14 @@ async function leave() {
 }
 .hub-main__header {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
   margin-bottom: 24px;
-  min-height: 64px;
+}
+.hub-main__actions:empty {
+  display: none;
 }
 .hub-main__title {
   font-size: 1.75rem;
@@ -198,6 +200,9 @@ async function leave() {
   }
   .hub-main__title {
     font-size: 1.45rem;
+  }
+  .hub-main__header {
+    margin-bottom: 16px;
   }
 }
 </style>

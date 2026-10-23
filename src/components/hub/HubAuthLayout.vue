@@ -1,4 +1,5 @@
 <script setup>
+import { mdiLockOutline } from "@mdi/js";
 import HubMark from "./HubMark.vue";
 
 const host = typeof window === "undefined" ? "" : window.location.host;
@@ -9,14 +10,20 @@ const host = typeof window === "undefined" ? "" : window.location.host;
     <div class="hub-auth__backdrop" aria-hidden="true" />
     <div class="hub-auth__column">
       <div class="hub-auth__brand">
-        <HubMark :size="36" />
-        <span class="hub-auth__host">{{ host }}</span>
+        <HubMark :size="40" />
+        <span class="hub-auth__titles">
+          <span class="hub-auth__name">Accounts</span>
+          <span class="hub-auth__host">{{ host }}</span>
+        </span>
       </div>
       <v-card class="hub-auth__card" border flat>
         <slot />
       </v-card>
       <p class="hub-auth__footnote">
-        <slot name="footnote">One account for every app connected to this hub.</slot>
+        <slot name="footnote">
+          <v-icon :icon="mdiLockOutline" size="14" />
+          The apps you sign in to never see your password.
+        </slot>
       </p>
     </div>
   </v-main>
@@ -48,13 +55,21 @@ const host = typeof window === "undefined" ? "" : window.location.host;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+}
+.hub-auth__titles {
+  display: grid;
+  line-height: 1.2;
+  min-width: 0;
+}
+.hub-auth__name {
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: -0.005em;
 }
 .hub-auth__host {
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: rgba(var(--v-theme-on-background), 0.8);
+  font-size: 0.8125rem;
+  color: rgba(var(--v-theme-on-background), 0.62);
   overflow-wrap: anywhere;
 }
 .hub-auth__card {
@@ -63,6 +78,10 @@ const host = typeof window === "undefined" ? "" : window.location.host;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 12px 40px -12px rgba(0, 0, 0, 0.18) !important;
 }
 .hub-auth__footnote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   margin-top: 20px;
   text-align: center;
   font-size: 0.8125rem;

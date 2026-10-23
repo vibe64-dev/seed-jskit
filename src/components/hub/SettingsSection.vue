@@ -21,6 +21,9 @@ defineProps({ title: { type: String, required: true }, body: { type: String, def
   gap: 24px 40px;
   padding: 24px 0;
 }
+.settings-section:first-of-type {
+  padding-top: 0;
+}
 .settings-section + .settings-section {
   border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
 }
