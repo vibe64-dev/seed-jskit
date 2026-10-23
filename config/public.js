@@ -3,7 +3,7 @@ import { surfaceAccessPolicies } from "./surfaceAccessPolicies.js";
 export const config = {};
 
 config.surfaceModeAll = "all";
-config.surfaceDefaultId = "home";
+config.surfaceDefaultId = "account";
 config.webRootAllowed = "no";
 config.surfaceAccessPolicies = surfaceAccessPolicies;
 config.mobile = {
@@ -28,16 +28,6 @@ config.mobile = {
   }
 };
 config.surfaceDefinitions = {
-  home: {
-    id: "home",
-    label: "Home",
-    pagesRoot: "home",
-    enabled: true,
-    requiresAuth: true,
-    requiresWorkspace: false,
-    accessPolicyId: "authenticated",
-    origin: ""
-  },
   auth: {
     id: "auth",
     label: "Sign in",
@@ -50,12 +40,22 @@ config.surfaceDefinitions = {
   },
   account: {
     id: "account",
-    label: "Account",
+    label: "Your account",
     pagesRoot: "account",
     enabled: true,
-    requiresAuth: true,
+    requiresAuth: false,
     requiresWorkspace: false,
-    accessPolicyId: "authenticated",
+    accessPolicyId: "public",
+    origin: ""
+  },
+  admin: {
+    id: "admin",
+    label: "Hub admin",
+    pagesRoot: "admin",
+    enabled: true,
+    requiresAuth: false,
+    requiresWorkspace: false,
+    accessPolicyId: "public",
     origin: ""
   }
 };

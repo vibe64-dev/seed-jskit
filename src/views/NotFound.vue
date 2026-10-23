@@ -1,14 +1,13 @@
 <script setup>
-const title = "Page not found";
-const message = "The page you requested does not exist.";
+import { mdiCompassOffOutline } from "@mdi/js";
+import EmptyState from "../components/hub/EmptyState.vue";
+import HubAuthLayout from "../components/hub/HubAuthLayout.vue";
 </script>
 
 <template>
-  <v-container class="fill-height d-flex align-center justify-center">
-    <v-sheet class="pa-6 pa-md-8 text-center" max-width="560" rounded="xl" border>
-      <h1 class="text-h4 mb-3">{{ title }}</h1>
-      <p class="text-body-1 text-medium-emphasis mb-6">{{ message }}</p>
-      <v-btn color="primary" variant="flat" size="large" to="/home">Go home</v-btn>
-    </v-sheet>
-  </v-container>
+  <HubAuthLayout>
+    <EmptyState :icon="mdiCompassOffOutline" heading="This page does not exist." body="Check the address, or open your account.">
+      <v-btn color="primary" variant="flat" to="/account" class="mt-2">Open your account</v-btn>
+    </EmptyState>
+  </HubAuthLayout>
 </template>

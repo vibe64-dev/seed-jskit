@@ -108,17 +108,7 @@
 
 ## UI discovery
 
-### Discovery `home-pages`: Home pages
-
-- Adapter: `jskit`
-- Surface: `home`
-- Mode: `filesystem`
-- Page root: `src/pages/home`
-- Registration: `vite.config.mjs`
-- Component root: `src/components`
-- Component root: `packages`
-
-### Discovery `auth-pages`: Auth pages
+### Discovery `auth-pages`: Sign-in pages
 
 - Adapter: `jskit`
 - Surface: `auth`
@@ -134,6 +124,16 @@
 - Surface: `account`
 - Mode: `filesystem`
 - Page root: `src/pages/account`
+- Registration: `vite.config.mjs`
+- Component root: `src/components`
+- Component root: `packages`
+
+### Discovery `admin-pages`: Owner pages
+
+- Adapter: `jskit`
+- Surface: `admin`
+- Mode: `filesystem`
+- Page root: `src/pages/admin`
 - Registration: `vite.config.mjs`
 - Component root: `src/components`
 - Component root: `packages`

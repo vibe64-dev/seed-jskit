@@ -11,9 +11,9 @@ jobs:
       mariadb:
         image: mariadb:13.0.2
         env:
-          MARIADB_DATABASE: account_app_test
-          MARIADB_USER: account_app_test
-          MARIADB_PASSWORD: account_app_test_password
+          MARIADB_DATABASE: accounts_hub_test
+          MARIADB_USER: accounts_hub_test
+          MARIADB_PASSWORD: accounts_hub_test_password
           MARIADB_ROOT_PASSWORD: root_test_password
         ports:
           - 3306:3306
@@ -26,11 +26,10 @@ jobs:
       DB_CLIENT: mysql2
       DB_HOST: 127.0.0.1
       DB_PORT: 3306
-      DB_NAME: account_app_test
-      TEST_DB_NAME: account_app_test
-      DB_USER: account_app_test
-      DB_PASSWORD: account_app_test_password
-      AUTH_LOCAL_SESSION_SECRET: ci-only-session-secret-not-for-production
+      DB_NAME: accounts_hub_test
+      TEST_DB_NAME: accounts_hub_test
+      DB_USER: accounts_hub_test
+      DB_PASSWORD: accounts_hub_test_password
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.0.0

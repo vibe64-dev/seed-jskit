@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import { runManagedPreviewIdentityCommand } from "@jskit-ai/auth-web/server/managedPreviewIdentity";
+import { runPreviewIdentityCommand } from "@jskit-ai/oidc-issuer-core/server";
 
-process.exitCode = await runManagedPreviewIdentityCommand();
+process.exitCode = await runPreviewIdentityCommand();

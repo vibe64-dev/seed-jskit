@@ -43,18 +43,42 @@ const { router, fallbackRoute } = createShellRouter({
 
 const vuetify = createVuetify({
   theme: {
-    defaultTheme: "light",
+    defaultTheme: "system",
     themes: {
       light: {
         dark: false,
         colors: {
-          primary: "#315DA8",
-          secondary: "#565F71",
-          surface: "#FAF8FF",
-          "surface-variant": "#E0E2EC"
+          background: "#F6F7FC",
+          surface: "#FFFFFF",
+          "surface-variant": "#E1E2EC",
+          "on-surface-variant": "#44474F",
+          primary: "#2F5BB0",
+          secondary: "#575E71",
+          success: "#1B7F4A",
+          warning: "#9A5B00",
+          error: "#BA1A1A"
+        }
+      },
+      dark: {
+        dark: true,
+        colors: {
+          background: "#0F1116",
+          surface: "#181B22",
+          "surface-variant": "#2B2F38",
+          "on-surface-variant": "#C4C6D0",
+          primary: "#AFC6FF",
+          secondary: "#BFC6DC",
+          success: "#7FD8A4",
+          warning: "#F5BD6B",
+          error: "#FFB4AB"
         }
       }
     }
+  },
+  defaults: {
+    VBtn: { rounded: "pill", style: "text-transform: none; letter-spacing: 0;" },
+    VTextField: { variant: "outlined", density: "comfortable", color: "primary" },
+    VCard: { rounded: "xl" }
   },
   icons: {
     defaultSet: "mdi",

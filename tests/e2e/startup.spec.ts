@@ -14,7 +14,7 @@ for (const width of [390, 768, 1280]) {
       await route.continue();
     });
     try {
-      await page.goto("/home", { waitUntil: "commit" });
+      await page.goto("/auth/sign-in", { waitUntil: "commit" });
       await expect(page.getByRole("status")).toHaveText("Loading application…");
       await expect(page.getByRole("status")).toBeVisible();
       await expect(page.getByRole("link", { name: "Reload page" })).toBeVisible();

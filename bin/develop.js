@@ -35,6 +35,11 @@ function requestShutdown(signal) {
 process.once("SIGINT", () => requestShutdown("SIGINT"));
 process.once("SIGTERM", () => requestShutdown("SIGTERM"));
 
+// The hub's issuer is the address the browser uses: the development server,
+// not the API server behind it. A preview reached through another address
+// sets APP_PUBLIC_URL to that address.
+process.env.APP_PUBLIC_URL ||= `http://localhost:${previewPort}`;
+
 try {
   apiServer = await startServer({ host: LOOPBACK_HOST, port: 0 });
   const apiPort = requiredPort(apiServer.server.address()?.port);

@@ -11,6 +11,7 @@ import {
 } from "@jskit-ai/kernel/server/platform";
 import { loadAppConfigFromAppRoot } from "@jskit-ai/kernel/server/support";
 import { matchesPathPrefix, normalizePathname } from "@jskit-ai/kernel/shared/surface/paths";
+import { HUB_GLOBAL_PATHS } from "@jskit-ai/oidc-issuer-core/server";
 import { resolveRuntimeEnv } from "./server/lib/runtimeEnv.js";
 import { surfaceRuntime } from "./server/lib/surfaceRuntime.js";
 
@@ -43,7 +44,7 @@ function hasFileExtension(pathname) {
 
 function resolveGlobalUiPaths(runtimeGlobalUiPaths = []) {
   const paths = new Set(Array.isArray(runtimeGlobalUiPaths) ? runtimeGlobalUiPaths : []);
-  for (const staticPath of STATIC_GLOBAL_UI_PATHS) {
+  for (const staticPath of [...STATIC_GLOBAL_UI_PATHS, ...HUB_GLOBAL_PATHS]) {
     paths.add(staticPath);
   }
   return [...paths];
@@ -101,7 +102,7 @@ async function createServer({ runtimeEnv = resolveRuntimeEnv() } = {}) {
 
   app.get("/api/health", async () => ({
     ok: true,
-    app: "account-app"
+    app: "accounts-hub"
   }));
 
   const appRoot = path.resolve(process.cwd());
