@@ -124,7 +124,8 @@ npm run test:e2e
 ```
 
 Server and browser tests need a disposable test database prepared with
-`npm run db:prepare`. Give the browser tests their own database: they keep a
+`npm run db:prepare`; server tests use `TEST_DB_NAME` when it is set, so they
+never touch the development database in `DB_NAME`. Give the browser tests their own database: they keep a
 fixed hub secret, and the hub refuses keys made with another one.
 `npm run test:database` checks that an account and its password survive a
 restart against the database in `DB_*`.
