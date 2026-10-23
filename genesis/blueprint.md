@@ -17,8 +17,9 @@ the first time someone signs in through it.
 
 ## People
 
-People create an account with their email and a password, confirm the email,
-reset a forgotten password, and optionally continue with Google when the owner
+People create an account with their email and a password, confirm the email
+(apps trust it, so an app sign-in waits until it is confirmed), reset a
+forgotten password, and optionally continue with Google when the owner
 has set up a Google client. On their account page they change their name and
 password, link or unlink Google, see where they are signed in, and sign out of
 one device or everywhere. When an app sends someone here, the hub names the app

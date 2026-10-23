@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import GoogleButton from "../../components/hub/GoogleButton.vue";
 import HubAuthLayout from "../../components/hub/HubAuthLayout.vue";
 import PasswordField from "../../components/hub/PasswordField.vue";
@@ -8,7 +9,8 @@ import { useHubSession } from "../../lib/useHubSession.js";
 import { useSignInFlow } from "../../lib/useSignInFlow.js";
 
 const { session, refreshSession, setSession } = useHubSession();
-const { withFlow, finish, googleHref } = useSignInFlow();
+const { interaction, withFlow, finish, googleHref } = useSignInFlow();
+const router = useRouter();
 const displayName = ref("");
 const email = ref("");
 const password = ref("");
@@ -28,6 +30,12 @@ async function create() {
     setSession(result);
     await finish();
   } catch (problem) {
+    // A new account confirms its email before an app sign-in continues; the
+    // sign-in page shows that step.
+    if (problem.code === "email_unconfirmed" && interaction.value) {
+      await router.replace(withFlow("/auth/sign-in"));
+      return;
+    }
     error.value = problem.message;
     busy.value = false;
   }

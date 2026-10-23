@@ -1,5 +1,5 @@
 <script setup>
-import { mdiClockOutline, mdiLinkVariantOff } from "@mdi/js";
+import { mdiClockOutline, mdiEmailCheckOutline, mdiLinkVariantOff } from "@mdi/js";
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import AppAvatar from "../../components/hub/AppAvatar.vue";
@@ -26,6 +26,7 @@ const email = ref("");
 const password = ref("");
 const busy = ref(false);
 const error = ref(GOOGLE_MESSAGES[route.query.google] || "");
+const resent = ref(false);
 
 const heading = computed(() => (app.value ? `Sign in to continue to ${app.value.name}` : "Sign in"));
 
@@ -37,6 +38,7 @@ onMounted(async () => {
       setSession({ account: details.account, isOwner: session.isOwner });
       session.google = details.google;
       if (details.app?.status === "pending") view.value = "pending";
+      else if (details.account && !details.account.emailVerified) view.value = "confirm";
       else view.value = details.account ? "continue" : "form";
       return;
     }
@@ -62,6 +64,8 @@ async function run(work) {
     await work();
   } catch (problem) {
     if (problem.code === "app_pending") view.value = "pending";
+    else if (problem.code === "email_unconfirmed" && view.value !== "confirm") view.value = "confirm";
+    else if (problem.code === "email_unconfirmed") error.value = "Not confirmed yet. Open the link in your email, then press Continue.";
     else error.value = problem.message;
     busy.value = false;
   }
@@ -80,7 +84,17 @@ function continueAs() {
 }
 
 function useAnother() {
+  error.value = "";
   view.value = "form";
+}
+
+function resendLink() {
+  return run(async () => {
+    resent.value = false;
+    await hubRequest("/hub/api/email/resend", { method: "POST", body: {} });
+    resent.value = true;
+    busy.value = false;
+  });
 }
 
 function backToApp() {
@@ -117,6 +131,34 @@ function backToApp() {
         </div>
       </div>
       <v-btn variant="tonal" size="large" block :loading="busy" @click="backToApp">Back to the app</v-btn>
+    </div>
+
+    <div v-else-if="view === 'confirm'" class="state-min">
+      <div class="text-center">
+        <v-avatar size="64" color="primary" variant="tonal" class="mb-4"><v-icon :icon="mdiEmailCheckOutline" size="30" /></v-avatar>
+        <h1 class="auth-title">Confirm your email to continue</h1>
+        <p class="auth-lead">
+          We sent a link to <span class="font-weight-medium text-high-emphasis">{{ session.account?.email }}</span>.
+          Open it, then come back and press Continue.
+        </p>
+      </div>
+      <div v-if="app" class="app-chip">
+        <AppAvatar :name="app.name" :size="40" />
+        <div class="min-w-0">
+          <div class="font-weight-medium text-truncate">{{ app.name }}</div>
+          <div class="text-body-2 text-medium-emphasis app-chip__origin">{{ app.origin }}</div>
+        </div>
+      </div>
+      <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
+      <v-alert v-else-if="resent" type="success" variant="tonal" density="compact" class="mb-4" role="status">
+        A new link is on its way.
+      </v-alert>
+      <v-btn color="primary" variant="flat" size="large" block :loading="busy" @click="continueAs">Continue</v-btn>
+      <v-btn variant="text" size="large" block class="mt-2" :disabled="busy" @click="resendLink">Send the link again</v-btn>
+      <p class="auth-switch">
+        Not you?
+        <a class="auth-link" href="#" @click.prevent="useAnother">Use another account</a>
+      </p>
     </div>
 
     <div v-else-if="view === 'continue'" class="state-min">

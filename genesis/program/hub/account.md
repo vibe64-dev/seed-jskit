@@ -13,6 +13,7 @@ app.
 
 - Change name and password; a changed password keeps apps signed in.
 - See whether the email is confirmed and send a new confirmation.
-- Link or unlink Google. Unlinking needs a password first.
+- Link or unlink Google. Linking needs a confirmed email; unlinking needs a
+  password first.
 - See every device signed in, sign one out, or sign out everywhere, which also
   signs the person out of connected apps.

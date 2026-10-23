@@ -6,9 +6,9 @@ OpenID Connect issuer that you own and run on a domain of its own, such as
 sends people to "Sign in with Google". People keep one account, one password
 and one place to manage them.
 
-- People create an account with email and password, confirm the email, reset a
-  forgotten password, and can continue with Google once you add your own
-  Google client.
+- People create an account with email and password, confirm the email (an
+  app sign-in waits until they have), reset a forgotten password, and can
+  continue with Google once you add your own Google client.
 - You, the owner, approve each app that wants to use your accounts, see
   everyone with an account, and follow a Setup checklist.
 - Apps connect with two values: the hub's address and a registration token.
@@ -95,7 +95,8 @@ npm run hub:import -- --in accounts.jsonl --apply  # imports
 
 `hub:import` reads the JSON Lines written by `jskit-oidc-sign-in
 export-local-accounts` from an app that had JSKIT local accounts. Each person
-keeps their account id and password; their email starts unconfirmed. Rows that
+keeps their account id and password; their email starts unconfirmed, and they
+confirm it once at their first app sign-in. Rows that
 clash with a different hub account are refused and listed.
 
 ## Preview sign-in

@@ -12,7 +12,8 @@ import { useHubSession } from "../../lib/useHubSession.js";
 
 const GOOGLE_NOTES = {
   linked: { type: "success", text: "Google is connected. You can now sign in with it." },
-  taken: { type: "error", text: "That Google account is already connected to another account." }
+  taken: { type: "error", text: "That Google account is already connected to another account." },
+  unverified: { type: "warning", text: "Confirm your email first, then connect Google." }
 };
 
 const route = useRoute();
@@ -120,7 +121,7 @@ const signOutEverywhere = () => act("everywhere", async () => {
           <v-chip v-else color="warning" variant="tonal" :prepend-icon="mdiEmailAlertOutline">Not confirmed</v-chip>
         </div>
         <div v-if="!account.emailVerified" class="mt-4">
-          <p class="text-body-2 text-medium-emphasis mb-3">Confirm your email so apps can trust it and you can recover your password.</p>
+          <p class="text-body-2 text-medium-emphasis mb-3">Confirm your email to sign in to apps and to recover your password.</p>
           <v-btn variant="tonal" :loading="busy === 'email'" @click="resend">Send confirmation email</v-btn>
           <p v-if="errors.email" class="text-error text-body-2 mt-2">{{ errors.email }}</p>
         </div>
@@ -172,8 +173,17 @@ const signOutEverywhere = () => act("everywhere", async () => {
               </span>
             </template>
           </v-tooltip>
-          <v-btn v-else variant="tonal" href="/hub/google/start?intent=link">Connect Google</v-btn>
+          <v-tooltip v-else :disabled="account.emailVerified" text="Confirm your email first." location="top">
+            <template #activator="{ props: tip }">
+              <span v-bind="tip">
+                <v-btn variant="tonal" :disabled="!account.emailVerified" href="/hub/google/start?intent=link">Connect Google</v-btn>
+              </span>
+            </template>
+          </v-tooltip>
         </div>
+        <p v-if="!account.googleLinked && !account.emailVerified" class="text-body-2 text-medium-emphasis mt-3 d-sm-none">
+          Confirm your email first, then connect Google.
+        </p>
         <p v-if="account.googleLinked && !account.hasPassword" class="text-body-2 text-medium-emphasis mt-3 d-sm-none">
           Add a password first, so you can still sign in without Google.
         </p>
