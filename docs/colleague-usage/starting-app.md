@@ -10,13 +10,21 @@ that work in the project. Setup and Preview run the operations declared in the
 starter's Stack.
 
 Before the first Preview, the hub needs these settings in Development Env
-(names only; choose your own values):
+(names only; choose your own values). The coding agent can set them, asking you
+for the email and generating the secrets:
 
 - `OIDC_HUB_OWNER_EMAIL`: your email.
 - `OIDC_HUB_REGISTRATION_TOKEN`: at least 24 random characters, kept secret.
-- `OIDC_HUB_SECRET`: at least 32 random bytes, kept secret.
-- Optionally `OIDC_HUB_DEV_ORIGIN_PATTERNS`: the `https://` address pattern of
-  your apps' previews, so they are approved automatically.
+- `OIDC_HUB_SECRET`: at least 32 random bytes, kept secret. Set it once and keep
+  it: the hub's database outlives each session, and a hub started with another
+  secret refuses its stored signing keys.
+
+Your other apps sign in through the **deployed** hub, not through this
+Preview. So its Production Env also needs `APP_PUBLIC_URL` (its own domain), a
+new `OIDC_HUB_SECRET`, the registration token your apps will use, an email
+sender, and `OIDC_HUB_DEV_ORIGIN_PATTERNS`: the `https://` pattern of your
+apps' Preview addresses, so they are approved automatically. `README.md` lists
+every setting.
 
 If one is missing, Preview's log shows one sentence naming it. In the Preview,
 create the account with your owner email and confirm it; then **Setup** lists

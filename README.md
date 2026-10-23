@@ -68,7 +68,8 @@ setting is missing or wrong, the hub stops with one sentence naming it.
 1. Deploy the hub on its own domain (one that no other app shares) and set
    `APP_PUBLIC_URL` to its https address.
 2. In your host's secret store, set `OIDC_HUB_SECRET`, the registration token,
-   the owner email and an email sender.
+   the owner email and an email sender. Set `OIDC_HUB_DEV_ORIGIN_PATTERNS` here
+   too: your apps' development previews sign in through this deployed hub.
 3. Open **Setup**, confirm the domain, send a test email, and follow anything
    still marked.
 
