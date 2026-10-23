@@ -83,6 +83,15 @@
 - URL path: `/`
 - Ready when: `GET` `/api/health` returns `200`
 
+#### Preview identity
+
+- Command: `tools/preview-identity`
+- Protocol: `vibe64.preview-identity.command.v1`
+- Identity types: `email` `user-id`
+- Enabled environment: `AUTH_DEV_BYPASS_ENABLED`
+- Secret environment: `AUTH_DEV_BYPASS_SECRET`
+- Runtimes: `nodejs`
+
 ## Resource estimates
 
 ### Output `app`

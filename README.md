@@ -48,6 +48,13 @@ installs dependencies and applies migrations before the web output starts.
 Preparation failures remain actionable; choosing a starter alone does not
 prove that its external services are available.
 
+Preview login is included: `tools/preview-identity` and the Stack's
+`#### Preview identity` block let Vibe64's Preview sign its browser in as an
+existing account you name in its Preview identity menu. Register the accounts
+first; the starter never creates users. The exchange stays disabled unless the
+host supplies `AUTH_DEV_BYPASS_ENABLED` and `AUTH_DEV_BYPASS_SECRET` for that
+run, so it is inert in production and when you run the app yourself.
+
 The Stack's memory estimates are initial development planning hints for the
 Node application and workspace setup, not measured requirements or memory limits.
 They exclude the separately provided database server.

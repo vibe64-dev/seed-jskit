@@ -6,6 +6,11 @@ the application source and its complete Genesis contracts to the session;
 use **Save** to keep that work in the project. Setup and Preview run the
 operations declared in the starter's Stack.
 
+The starter includes Preview login. After you register an account in the
+Preview, name it in the Preview identity menu (by its email) and Preview can
+sign in as it. Which accounts appear there is your choice; the starter never
+creates users.
+
 If import reports missing Stack contracts while the destination project is
 still empty, the rejected starter needs repair. Migrating that empty project
 cannot repair the downloaded starter. Once the starter is corrected, retry
