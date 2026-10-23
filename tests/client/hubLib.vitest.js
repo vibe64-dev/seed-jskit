@@ -28,6 +28,10 @@ describe("sign-in flow", () => {
     expect(safeNext("//evil.example/x")).toBe("/account");
     expect(safeNext("https://evil.example")).toBe("/account");
     expect(safeNext(undefined)).toBe("/account");
+    for (const value of ["/\\evil.example", "/\t/evil.example", "/\n/evil.example"]) {
+      expect(safeNext(value)).toBe("/account");
+    }
+    expect(safeNext("/admin/apps?tab=1#x")).toBe("/admin/apps?tab=1#x");
   });
 });
 

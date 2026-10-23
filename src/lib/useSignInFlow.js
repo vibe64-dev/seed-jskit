@@ -2,9 +2,18 @@ import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { hubRequest } from "./hubApi.js";
 
+const SAME_ORIGIN_PROBE = "http://next.invalid";
+
+// Browsers read "/\\host" and "/<tab>/host" as another site, so a path counts
+// only if it starts with one slash and resolves on the hub's own origin.
 function safeNext(value) {
   const next = String(value || "");
-  return next.startsWith("/") && !next.startsWith("//") ? next : "/account";
+  if (!next.startsWith("/")) return "/account";
+  try {
+    return new URL(next, SAME_ORIGIN_PROBE).origin === SAME_ORIGIN_PROBE ? next : "/account";
+  } catch {
+    return "/account";
+  }
 }
 
 /**
