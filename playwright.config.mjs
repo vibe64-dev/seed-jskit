@@ -13,7 +13,8 @@ export default defineConfig({
   testDir: "./tests/e2e",
   timeout: 60_000,
   expect: {
-    timeout: 10_000
+    // A development server compiles each page on its first visit.
+    timeout: managedBaseUrl ? 30_000 : 10_000
   },
   use: {
     baseURL,

@@ -69,15 +69,21 @@ async function confirmOwnerEmail() {
   }
 }
 
-test("the owner creates the account that opens Apps, People and Setup", async ({ page }) => {
-  await page.goto("/auth/create-account");
-  await page.getByLabel("Your name").fill("Owner Person");
-  await page.getByLabel("Email").fill(OWNER_EMAIL);
-  await page.getByLabel("Choose a password").fill(PASSWORD);
-  await page.getByRole("button", { name: "Create account" }).click();
-  const created = page.getByRole("heading", { name: "Your account" });
-  const taken = page.getByText("This email already has an account.");
-  await expect(created.or(taken)).toBeVisible();
+test("the owner creates the account that opens Apps, People and Setup", async ({ page, baseURL }) => {
+  // A reused test database keeps the owner from an earlier run.
+  const existing = await fetch(`${baseURL}/hub/api/sign-in`, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-hub-request": "1" },
+    body: JSON.stringify({ email: OWNER_EMAIL, password: PASSWORD })
+  });
+  if (!existing.ok) {
+    await page.goto("/auth/create-account");
+    await page.getByLabel("Your name").fill("Owner Person");
+    await page.getByLabel("Email").fill(OWNER_EMAIL);
+    await page.getByLabel("Choose a password").fill(PASSWORD);
+    await page.getByRole("button", { name: "Create account" }).click();
+    await expect(page.getByRole("heading", { name: "Your account", exact: true })).toBeVisible();
+  }
   await confirmOwnerEmail();
 });
 
@@ -130,6 +136,7 @@ test("Setup counts what is ready and records the hub's own domain", async ({ pag
   const domain = page.locator(".check-row", { hasText: "Your hub has a domain of its own." });
   if (await domain.getByRole("button", { name: "Undo" }).isVisible()) {
     await domain.getByRole("button", { name: "Undo" }).click();
+    await expect(domain.getByRole("button", { name: "It has one" })).toBeVisible();
   }
   const before = Number((await progress.textContent())!.split(" ")[0]);
   await domain.getByRole("button", { name: "It has one" }).click();
