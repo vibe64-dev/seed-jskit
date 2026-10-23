@@ -29,4 +29,4 @@ async function hubRequest(path, { method = "GET", body } = {}) {
   return data;
 }
 
-export { HubRequestError, hubRequest };
+export { hubRequest };
