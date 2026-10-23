@@ -62,7 +62,7 @@
 - Runtimes: `nodejs`
 - Recreate on restore: `node_modules`
 - Ready when: `GET` `/api/health` returns `200`
-- Prepare `Install dependencies`: `npm` `ci`
+- Prepare `Install dependencies`: `npm` `ci` `--include=dev`
 - Build `Build`: `npm` `run` `build`
 - Migrate `Migrate database`: `npm` `run` `db:migrate`
 - Serve `Start`: `npm` `start`

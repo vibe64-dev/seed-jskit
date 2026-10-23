@@ -51,6 +51,7 @@ to the server log. The page **Setup** then lists what is still missing.
 
 | Name | When | Meaning |
 |---|---|---|
+| `NODE_ENV` | production | `production` turns on the production requirements in this table. |
 | `APP_PUBLIC_URL` | production | The hub's https address, which is its issuer. Development uses the development server's address. |
 | `OIDC_HUB_SECRET` | production | At least 32 random bytes (`openssl rand -base64 48`). Protects cookies and stored signing keys; keep it the same across restarts. Development generates one in `.jskit/oidc-hub/`. |
 | `OIDC_HUB_REGISTRATION_TOKEN` | always | Apps present it to register. |
