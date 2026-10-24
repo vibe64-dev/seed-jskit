@@ -10,11 +10,41 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:13.0.2
+        env:
+          MARIADB_DATABASE: database_app
+          MARIADB_USER: database_app
+          MARIADB_PASSWORD: database_app_ci_password
+          MARIADB_ROOT_PASSWORD: root_ci_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      DB_CLIENT: mysql2
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_NAME: database_app
+      TEST_DB_NAME: database_app_test
+      BROWSER_TEST_DB_NAME: database_app_browser
+      DB_USER: database_app
+      DB_PASSWORD: database_app_ci_password
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.0.0
         with:
           node-version-file: .nvmrc
           cache: npm
+      - name: Create the isolated test database
+        run: >-
+          docker exec ${{ job.services.mariadb.id }} mariadb -uroot -proot_ci_password -e
+          "CREATE DATABASE database_app_test; GRANT ALL ON database_app_test.* TO 'database_app'@'%';"
       - run: npm ci
+      - run: npm run db:prepare
+      - run: npm run test:database
       - run: npm run verify
