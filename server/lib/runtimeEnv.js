@@ -1,6 +1,12 @@
+import { loadEnvFile } from "./envFile.js";
 import { surfaceRuntime } from "./surfaceRuntime.js";
 
-function toPort(value, fallback = 3001) {
+/**
+ * The port a value names, else the fallback.
+ * @param {string | undefined} value
+ * @param {number} fallback
+ */
+function toPort(value, fallback) {
   const parsed = Number.parseInt(String(value || "").trim(), 10);
   if (Number.isInteger(parsed) && parsed > 0) {
     return parsed;
@@ -8,24 +14,13 @@ function toPort(value, fallback = 3001) {
   return fallback;
 }
 
-let envLoaded = false;
-
-function ensureRuntimeEnvLoaded() {
-  if (envLoaded) {
-    return;
-  }
-  try {
-    process.loadEnvFile?.(".env");
-  } catch (error) {
-    if (error?.code !== "ENOENT") {
-      throw error;
-    }
-  }
-  envLoaded = true;
-}
-
+/**
+ * The process environment, with .env loaded and SERVER_SURFACE, PORT and HOST resolved. Every value stays a string,
+ * as the kernel's RuntimeEnv type says.
+ * @returns {import("@jskit-ai/kernel/server/types").RuntimeEnv}
+ */
 function resolveRuntimeEnv() {
-  ensureRuntimeEnvLoaded();
+  loadEnvFile();
   const serverSurface = surfaceRuntime.normalizeSurfaceMode(
     process.env.JSKIT_SERVER_SURFACE || process.env.SERVER_SURFACE
   );
@@ -33,7 +28,7 @@ function resolveRuntimeEnv() {
     ...process.env,
     DB_CLIENT: String(process.env.DB_CLIENT || "").trim() || "mysql2",
     SERVER_SURFACE: serverSurface,
-    PORT: toPort(process.env.PORT, 3001),
+    PORT: String(toPort(process.env.PORT, 3001)),
     HOST: String(process.env.HOST || "").trim() || "0.0.0.0"
   };
 }
