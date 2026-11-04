@@ -1,6 +1,7 @@
 import { reactive } from "vue";
 import { hubRequest } from "./hubApi.js";
 
+// readable-check: allow module-state - shared resource: every hub page shows and changes the one signed-in person
 const state = reactive({ loaded: false, account: null, isOwner: false, google: false });
 
 async function refreshSession() {

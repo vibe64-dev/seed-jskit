@@ -38,11 +38,11 @@
   "dependencies": {
     "@fastify/fast-json-stringify-compiler": "^5.1.0",
     "@fastify/static": "^10.1.4",
-    "@jskit-ai/database-runtime-mysql": "0.1.243",
-    "@jskit-ai/http-runtime": "0.1.243",
-    "@jskit-ai/kernel": "0.1.245",
-    "@jskit-ai/oidc-issuer-core": "0.1.0",
-    "@jskit-ai/shell-web": "0.1.250",
+    "@jskit-ai/database-runtime-mysql": "0.1.251",
+    "@jskit-ai/http-runtime": "0.2.4",
+    "@jskit-ai/kernel": "0.2.4",
+    "@jskit-ai/oidc-issuer-core": "0.1.11",
+    "@jskit-ai/shell-web": "0.2.4",
     "@local/main": "0.1.0",
     "@mdi/js": "^7.4.47",
     "@tanstack/vue-query": "^5.103.1",
@@ -55,8 +55,8 @@
     "vuetify": "^4.2.1"
   },
   "devDependencies": {
-    "@jskit-ai/config-eslint": "0.1.241",
-    "@jskit-ai/jskit-catalog": "0.1.294",
+    "@jskit-ai/config-eslint": "0.1.242",
+    "@jskit-ai/jskit-catalog": "0.2.14",
     "@playwright/test": "1.61.1",
     "@vitejs/plugin-vue": "^6.0.9",
     "eslint": "^10.11.0",

@@ -1,11 +1,6 @@
 import { createKnexMigrationConfigFromApp } from "@jskit-ai/database-runtime/server/knexMigrationConfig";
+import { loadEnvFile } from "./server/lib/envFile.js";
 
-try {
-  process.loadEnvFile?.(".env");
-} catch (error) {
-  if (error?.code !== "ENOENT") {
-    throw error;
-  }
-}
+loadEnvFile();
 
-export default await createKnexMigrationConfigFromApp({ client: "mysql2" });
+export default await createKnexMigrationConfigFromApp({ client: "mysql2", environment: process.env });
