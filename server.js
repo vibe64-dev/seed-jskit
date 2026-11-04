@@ -11,11 +11,17 @@ import {
   resolveRuntimeProfileFromSurface
 } from "@jskit-ai/kernel/server/platform";
 import { loadAppConfigFromAppRoot } from "@jskit-ai/kernel/server/support";
-import { matchesPathPrefix, normalizePathname } from "@jskit-ai/kernel/shared/surface/paths";
+import {
+  API_BASE_PATH,
+  matchesPathPrefix,
+  normalizePathname,
+  toRequestPathname
+} from "@jskit-ai/kernel/shared/surface/paths";
 import { surfaceRuntime } from "./server/lib/surfaceRuntime.js";
 
+/** @typedef {import("@jskit-ai/kernel/server/types").RuntimeEnv} RuntimeEnv */
+
 const SPA_INDEX_FILE = "index.html";
-const API_BASE_PATH = "/api";
 const STATIC_GLOBAL_UI_PATHS = Object.freeze([
   "/assets",
   "/favicon.svg",
@@ -23,15 +29,6 @@ const STATIC_GLOBAL_UI_PATHS = Object.freeze([
   "/robots.txt",
   "/manifest.webmanifest"
 ]);
-
-function toRequestPathname(urlValue) {
-  const rawUrl = String(urlValue || "").trim() || "/";
-  try {
-    return normalizePathname(new URL(rawUrl, "http://localhost").pathname || "/");
-  } catch {
-    return normalizePathname(rawUrl.split("?")[0] || "/");
-  }
-}
 
 function isApiPath(pathname) {
   return matchesPathPrefix(pathname, API_BASE_PATH);
@@ -41,15 +38,15 @@ function hasFileExtension(pathname) {
   return path.extname(normalizePathname(pathname)) !== "";
 }
 
-function resolveGlobalUiPaths(runtimeGlobalUiPaths = []) {
-  const paths = new Set(Array.isArray(runtimeGlobalUiPaths) ? runtimeGlobalUiPaths : []);
+function buildGlobalUiPaths(runtimeGlobalUiPaths) {
+  const paths = new Set(runtimeGlobalUiPaths);
   for (const staticPath of STATIC_GLOBAL_UI_PATHS) {
     paths.add(staticPath);
   }
   return [...paths];
 }
 
-function resolveStaticFilePath(pathname) {
+function toStaticFilePath(pathname) {
   const normalizedPathname = normalizePathname(pathname);
 
   const relativePath = normalizedPathname.replace(/^\/+/, "");
@@ -85,7 +82,11 @@ function canServeStaticFile(distRoot, relativePath) {
   return existsSync(resolvedPath);
 }
 
-async function createServer({ runtimeEnv = resolveRuntimeEnv() } = {}) {
+/**
+ * The application's Fastify server with its installed JSKIT runtime, for the environment given.
+ * @param {{ runtimeEnv: RuntimeEnv }} settings
+ */
+async function createServer({ runtimeEnv }) {
   const app = Fastify({
     logger: true,
     schemaController: {
@@ -126,7 +127,7 @@ async function createServer({ runtimeEnv = resolveRuntimeEnv() } = {}) {
     fastify: app,
     surfaceRuntime,
     serverSurface: runtimeEnv.SERVER_SURFACE,
-    globalUiPaths: resolveGlobalUiPaths(runtime?.globalUiPaths || [])
+    globalUiPaths: buildGlobalUiPaths(runtime.globalUiPaths)
   });
 
   if (hasWebBuild) {
@@ -140,10 +141,8 @@ async function createServer({ runtimeEnv = resolveRuntimeEnv() } = {}) {
   }
 
   app.setNotFoundHandler(async (request, reply) => {
-    const pathname = toRequestPathname(request?.url);
-    const method = String(request?.method || "GET")
-      .trim()
-      .toUpperCase();
+    const pathname = toRequestPathname(request.url);
+    const method = request.method;
     if (isApiPath(pathname) || (method !== "GET" && method !== "HEAD")) {
       return reply.code(404).send({
         message: `Route ${method}:${pathname} not found`,
@@ -152,7 +151,7 @@ async function createServer({ runtimeEnv = resolveRuntimeEnv() } = {}) {
       });
     }
     if (hasFileExtension(pathname)) {
-      const staticFilePath = resolveStaticFilePath(pathname);
+      const staticFilePath = toStaticFilePath(pathname);
       if (hasWebBuild && staticFilePath && canServeStaticFile(distRoot, staticFilePath)) {
         return reply.sendFile(staticFilePath);
       }
@@ -183,19 +182,22 @@ async function createServer({ runtimeEnv = resolveRuntimeEnv() } = {}) {
   return app;
 }
 
-async function startServer(options = {}) {
+/**
+ * Starts the server on the host and port given, else on the environment's HOST and PORT.
+ * @param {{ host?: string, port?: number }} [options]
+ */
+async function startServer({ host, port } = {}) {
   const runtimeEnv = resolveRuntimeEnv();
-  const configuredPort = options?.port === undefined ? runtimeEnv.PORT : Number(options.port);
-  const port = Number.isInteger(configuredPort) && configuredPort >= 0 ? configuredPort : runtimeEnv.PORT;
-  const host = String(options?.host || "").trim() || runtimeEnv.HOST;
+  const listenHost = host || runtimeEnv.HOST;
+  const listenPort = port ?? Number(runtimeEnv.PORT);
   const app = await createServer({
     runtimeEnv: {
       ...runtimeEnv,
-      HOST: host,
-      PORT: port
+      HOST: listenHost,
+      PORT: String(listenPort)
     }
   });
-  await app.listen({ port, host });
+  await app.listen({ port: listenPort, host: listenHost });
   return app;
 }
 
