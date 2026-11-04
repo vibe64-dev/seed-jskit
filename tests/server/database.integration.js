@@ -7,7 +7,7 @@ import { prepareDatabaseFromApp } from "@jskit-ai/database-runtime/server/databa
 test("isolated migrations are repeatable and transactions roll back", async () => {
   assert.ok(process.env.TEST_DB_NAME);
   assert.equal(process.env.DB_NAME, process.env.TEST_DB_NAME);
-  const options = { client: "mysql2" };
+  const options = { client: "mysql2", environment: process.env };
   const db = knex(await createKnexMigrationConfigFromApp(options));
   try {
     const [[identity]] = await db.raw("SELECT DATABASE() AS name");

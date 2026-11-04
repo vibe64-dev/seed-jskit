@@ -1,11 +1,6 @@
 import { prepareDatabaseFromApp } from "@jskit-ai/database-runtime/server/databaseSetup";
+import { loadEnvFile } from "../server/lib/envFile.js";
 
-try {
-  process.loadEnvFile?.(".env");
-} catch (error) {
-  if (error?.code !== "ENOENT") {
-    throw error;
-  }
-}
+loadEnvFile();
 
-await prepareDatabaseFromApp({ client: "mysql2" });
+await prepareDatabaseFromApp({ client: "mysql2", environment: process.env });

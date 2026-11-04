@@ -19,6 +19,20 @@ Framework references installed with this starter's JSKIT release:
 - `node_modules/@jskit-ai/agent-docs/patterns/INDEX.md`
 - `node_modules/@jskit-ai/agent-docs/guide/agent/`
 
+Before writing or reviewing server code (a feature, provider, action, service,
+repository, route, error or test), read the typed features guide at
+`node_modules/@jskit-ai/agent-docs/guide/agent/framework/typed-features.md`.
+`npm run lint` checks its rules, and each finding links the section that
+explains it; `npm run verify` adds the package graph, tests and build. Fix a
+finding in the code; excuse one only with the guide's `readable-check: allow`
+comment and reason prefix.
+
+Before writing or reviewing client code (a composable, component, client
+factory or client provider), read the client features guide at
+`node_modules/@jskit-ai/agent-docs/guide/agent/framework/client-features.md`.
+Simple, direct code comes first: never add a layer, wrapper, registry or tiny
+module only to satisfy a rule. `npm run lint` checks its rules too.
+
 Read the installed JSKIT skill and the narrow relevant source pattern before
 implementation. The documentation package includes complete pattern examples;
 no runtime package installation or online documentation search is needed to read

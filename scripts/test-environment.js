@@ -1,7 +1,7 @@
 import { createKnexMigrationConfigFromApp } from "@jskit-ai/database-runtime/server/knexMigrationConfig";
+import { loadEnvFile } from "../server/lib/envFile.js";
 
-try { process.loadEnvFile?.(".env"); }
-catch (error) { if (error.code !== "ENOENT") throw error; }
+loadEnvFile();
 
 async function testDatabaseEnvironment(binding, environment = process.env) {
   if (environment.NODE_ENV === "production") throw new Error("Tests cannot use a production runtime.");

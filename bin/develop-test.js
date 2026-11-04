@@ -3,7 +3,7 @@ import { testDatabaseEnvironment } from "../scripts/test-environment.js";
 import { prepareBrowserTestDatabase } from "../tests/browser/database.js";
 
 const environment = await testDatabaseEnvironment("BROWSER_TEST_DB_NAME");
-const knexConfig = await createKnexMigrationConfigFromApp({ client: "mysql2" });
+const knexConfig = await createKnexMigrationConfigFromApp({ client: "mysql2", environment: process.env });
 await prepareBrowserTestDatabase({ knexConfig, seed: async () => {} });
 Object.assign(process.env, environment);
 await import("./develop.js");
