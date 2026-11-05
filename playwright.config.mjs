@@ -7,7 +7,7 @@ const baseURL = managedBaseUrl || "http://127.0.0.1:4173";
 // The browser tests register apps and name the owner with the same values the server uses.
 process.env.OIDC_HUB_REGISTRATION_TOKEN ||= "playwright-only-registration-token-0123";
 process.env.OIDC_HUB_OWNER_EMAIL ||= "owner@example.test";
-const storageState = String(process.env.VIBE64_PLAYWRIGHT_STORAGE_STATE || "").trim();
+const storageState = String(process.env.PLAYWRIGHT_STORAGE_STATE || "").trim();
 
 export default defineConfig({
   testDir: "./tests/e2e",
