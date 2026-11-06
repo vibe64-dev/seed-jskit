@@ -16,7 +16,7 @@ documentation as the source of truth for application work.
 Framework references installed with this starter's JSKIT release:
 
 - `node_modules/@jskit-ai/agent-docs/skills/jskit/SKILL.md`
-- `node_modules/@jskit-ai/agent-docs/patterns/INDEX.md`
+- `node_modules/@jskit-ai/agent-docs/skills/jskit/references/pattern-index.md`
 - `node_modules/@jskit-ai/agent-docs/guide/agent/`
 
 Before writing or reviewing server code (a feature, provider, action, service,
