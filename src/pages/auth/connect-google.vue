@@ -2,13 +2,15 @@
 import { mdiEmailFastOutline, mdiLinkVariantOff } from "@mdi/js";
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { usePaths } from "@jskit-ai/shell-web/client/navigation/usePaths";
 import HubAuthLayout from "../../components/hub/HubAuthLayout.vue";
 import PasswordField from "../../components/hub/PasswordField.vue";
-import { hubRequest } from "../../lib/hubApi.js";
+import { followHubRedirect, hubRequest } from "../../lib/hubApi.js";
 import { useHubSession } from "../../lib/useHubSession.js";
 
 const route = useRoute();
 const router = useRouter();
+const paths = usePaths();
 const { setSession } = useHubSession();
 const token = typeof route.query.token === "string" ? route.query.token : "";
 const view = ref(token ? "choose" : "loading");
@@ -45,7 +47,7 @@ async function run(work) {
 
 const withPassword = () => run(async () => {
   const { redirectTo } = await hubRequest("/hub/api/google/link/password", { method: "POST", body: { password: password.value } });
-  window.location.assign(redirectTo);
+  followHubRedirect(redirectTo);
 });
 
 const byEmail = () => run(async () => {
@@ -56,7 +58,7 @@ const byEmail = () => run(async () => {
 const finishFromEmail = () => run(async () => {
   const result = await hubRequest("/hub/api/google/link/finish", { method: "POST", body: { token, password: password.value } });
   setSession(result);
-  await router.replace("/account");
+  await router.replace(paths.page("/", { surface: "account" }));
 });
 </script>
 
@@ -70,7 +72,7 @@ const finishFromEmail = () => run(async () => {
       <v-avatar size="64" color="primary" variant="tonal" class="mb-4 mx-auto"><v-icon :icon="mdiLinkVariantOff" size="30" /></v-avatar>
       <h1 class="auth-title">This connection has expired.</h1>
       <p class="auth-lead">Continue with Google again from the sign-in page.</p>
-      <v-btn color="primary" variant="flat" size="large" block to="/auth/sign-in">Back to sign in</v-btn>
+      <v-btn color="primary" variant="flat" size="large" block :to="paths.page('/sign-in', { surface: 'auth' })">Go to sign-in</v-btn>
     </div>
 
     <div v-else-if="view === 'sent'" class="state-min text-center">

@@ -21,7 +21,7 @@
     "build:all": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test": "node --test --test-concurrency=1",
+    "test": "jskit test",
     "test:client": "vitest run tests/client",
     "test:e2e": "playwright test tests/e2e",
     "db:prepare": "node ./scripts/prepare-database.js",
@@ -31,7 +31,7 @@
     "jskit:update": "npx --yes @jskit-ai/jskit-catalog@latest update",
     "jskit:check": "jskit check",
     "verify": "npm run jskit:check && npm run lint && npm run test && npm run test:client && npm run build",
-    "test:database": "node --test --test-concurrency=1 tests/server/hub-persistence.integration.js",
+    "test:database": "jskit test tests/server/hub-persistence.integration.js",
     "hub:keys:rotate": "jskit-oidc-issuer keys rotate",
     "hub:import": "jskit-oidc-issuer import-accounts"
   },

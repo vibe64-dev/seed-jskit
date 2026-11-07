@@ -2,11 +2,12 @@
 import { mdiCheckDecagram, mdiEmailAlertOutline, mdiGoogle, mdiLaptop } from "@mdi/js";
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { usePaths } from "@jskit-ai/shell-web/client/navigation/usePaths";
 import ConfirmDialog from "../../components/hub/ConfirmDialog.vue";
 import HubAppLayout from "../../components/hub/HubAppLayout.vue";
 import PasswordField from "../../components/hub/PasswordField.vue";
 import SettingsSection from "../../components/hub/SettingsSection.vue";
-import { hubRequest } from "../../lib/hubApi.js";
+import { googleStartHref, hubRequest } from "../../lib/hubApi.js";
 import { deviceName, timeAgo } from "../../lib/format.js";
 import { useHubSession } from "../../lib/useHubSession.js";
 
@@ -18,6 +19,8 @@ const GOOGLE_NOTES = {
 
 const route = useRoute();
 const router = useRouter();
+const paths = usePaths();
+const connectGoogleHref = googleStartHref({ intent: "link" });
 const { setSession } = useHubSession();
 const data = ref(null);
 const name = ref("");
@@ -84,7 +87,7 @@ const endSession = (id) => act(`session:${id}`, async () => {
 const signOutEverywhere = () => act("everywhere", async () => {
   await hubRequest("/hub/api/account/sign-out-everywhere", { method: "POST", body: {} });
   setSession();
-  await router.replace("/auth/sign-in");
+  await router.replace(paths.page("/sign-in", { surface: "auth" }));
 });
 </script>
 
@@ -176,7 +179,7 @@ const signOutEverywhere = () => act("everywhere", async () => {
           <v-tooltip v-else :disabled="account.emailVerified" text="Confirm your email first." location="top">
             <template #activator="{ props: tip }">
               <span v-bind="tip">
-                <v-btn variant="tonal" :disabled="!account.emailVerified" href="/hub/google/start?intent=link">Connect Google</v-btn>
+                <v-btn variant="tonal" :disabled="!account.emailVerified" :href="connectGoogleHref">Connect Google</v-btn>
               </span>
             </template>
           </v-tooltip>

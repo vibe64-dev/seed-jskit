@@ -33,7 +33,7 @@ async function create() {
     // A new account confirms its email before an app sign-in continues; the
     // sign-in page shows that step.
     if (problem.code === "email_unconfirmed" && interaction.value) {
-      await router.replace(withFlow("/auth/sign-in"));
+      await router.replace(withFlow("/sign-in"));
       return;
     }
     error.value = problem.message;
@@ -64,7 +64,7 @@ async function create() {
       </template>
       <p class="auth-switch">
         Already have an account?
-        <router-link class="auth-link" :to="withFlow('/auth/sign-in')">Sign in</router-link>
+        <router-link class="auth-link" :to="withFlow('/sign-in')">Sign in</router-link>
       </p>
     </form>
   </HubAuthLayout>

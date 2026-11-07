@@ -1,10 +1,12 @@
 <script setup>
 import { mdiAlertCircle, mdiCheckCircle, mdiCircleOutline, mdiContentCopy } from "@mdi/js";
 import { computed, onMounted, ref } from "vue";
+import { usePaths } from "@jskit-ai/shell-web/client/navigation/usePaths";
 import HubAppLayout from "../../components/hub/HubAppLayout.vue";
 import { hubRequest } from "../../lib/hubApi.js";
 import { timeAgo } from "../../lib/format.js";
 
+const paths = usePaths();
 const data = ref(null);
 const loadError = ref("");
 const busy = ref("");
@@ -166,7 +168,7 @@ async function copyRedirect() {
             <v-btn v-if="item.id === 'domain' && item.state === 'ok'" variant="text" :loading="busy === 'domain'" @click="setDomain(false)">
               Undo
             </v-btn>
-            <v-btn v-if="item.id === 'signing-key'" variant="text" to="/admin/apps">Open Apps</v-btn>
+            <v-btn v-if="item.id === 'signing-key'" variant="text" :to="paths.page('/apps', { surface: 'admin' })">Open Apps</v-btn>
           </div>
         </div>
       </v-card>

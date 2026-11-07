@@ -10,6 +10,7 @@ import {
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
+import { usePaths } from "@jskit-ai/shell-web/client/navigation/usePaths";
 import { initials } from "../../lib/format.js";
 import { useHubSession } from "../../lib/useHubSession.js";
 import EmptyState from "./EmptyState.vue";
@@ -23,16 +24,19 @@ const props = defineProps({
 
 const route = useRoute();
 const router = useRouter();
+const paths = usePaths();
 const { mdAndUp } = useDisplay();
 const { session, refreshSession, signOut } = useHubSession();
 const ready = ref(session.loaded && Boolean(session.account));
 const host = window.location.host;
 
+const accountPage = paths.page("/", { surface: "account" });
+const signInPage = paths.page("/sign-in", { surface: "auth" });
 const tabs = [
-  { to: "/account", label: "Your account", icon: mdiAccountCircleOutline },
-  { to: "/admin/apps", label: "Apps", icon: mdiApps },
-  { to: "/admin/people", label: "People", icon: mdiAccountGroupOutline },
-  { to: "/admin/setup", label: "Setup", icon: mdiClipboardCheckOutline }
+  { to: accountPage, label: "Your account", icon: mdiAccountCircleOutline },
+  { to: paths.page("/apps", { surface: "admin" }), label: "Apps", icon: mdiApps },
+  { to: paths.page("/people", { surface: "admin" }), label: "People", icon: mdiAccountGroupOutline },
+  { to: paths.page("/setup", { surface: "admin" }), label: "Setup", icon: mdiClipboardCheckOutline }
 ];
 const showTabs = computed(() => session.isOwner);
 const allowed = computed(() => !props.ownerOnly || session.isOwner);
@@ -42,7 +46,7 @@ onMounted(async () => {
     await refreshSession();
   } finally {
     if (!session.account) {
-      router.replace({ path: "/auth/sign-in", query: { next: route.fullPath } });
+      router.replace({ path: signInPage, query: { next: route.fullPath } });
     } else {
       ready.value = true;
     }
@@ -51,7 +55,7 @@ onMounted(async () => {
 
 async function leave() {
   await signOut();
-  router.replace("/auth/sign-in");
+  router.replace(signInPage);
 }
 </script>
 
@@ -117,7 +121,7 @@ async function leave() {
           heading="Only the hub's owner can open this page."
           body="Your own account settings are always open to you."
         >
-          <v-btn color="primary" variant="tonal" to="/account" class="mt-2">Open your account</v-btn>
+          <v-btn color="primary" variant="tonal" :to="accountPage" class="mt-2">Open your account</v-btn>
         </EmptyState>
       </v-card>
       <slot v-else />

@@ -4,6 +4,7 @@ import vue from "@vitejs/plugin-vue";
 import vuetify from "vite-plugin-vuetify";
 import VueRouter from "vue-router/vite";
 import { createJskitClientBootstrapPlugin } from "@jskit-ai/kernel/client/vite";
+import { testConcurrency } from "@jskit-ai/jskit-catalog/test-budget";
 
 const configuredDevPort = Number.parseInt(String(process.env.VITE_DEV_PORT || "").trim(), 10);
 const devPort = Number.isInteger(configuredDevPort) && configuredDevPort > 0 ? configuredDevPort : 3001;
@@ -51,7 +52,8 @@ export default defineConfig({
     }
   ],
   test: {
-    include: ["tests/client/**/*.vitest.js"]
+    include: ["tests/client/**/*.vitest.js"],
+    maxWorkers: testConcurrency()
   },
   optimizeDeps: {
     include: ["vuetify/components/**", "vuetify/directives/**"],

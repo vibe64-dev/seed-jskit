@@ -31,7 +31,7 @@ async function send() {
       <v-avatar size="64" color="primary" variant="tonal" class="mb-4 mx-auto"><v-icon :icon="mdiEmailFastOutline" size="30" /></v-avatar>
       <h1 class="auth-title">Check your email</h1>
       <p class="auth-lead">If an account uses {{ email }}, a link to choose a new password is on its way. It works for one hour.</p>
-      <v-btn variant="tonal" size="large" block :to="withFlow('/auth/sign-in')">Back to sign in</v-btn>
+      <v-btn variant="tonal" size="large" block :to="withFlow('/sign-in')">Go to sign-in</v-btn>
     </div>
     <form v-else class="state-min" novalidate @submit.prevent="send">
       <h1 class="auth-title">Reset your password</h1>
@@ -41,7 +41,7 @@ async function send() {
       <v-btn type="submit" color="primary" variant="flat" size="large" block :loading="busy">Send link</v-btn>
       <p class="auth-switch">
         Remembered it?
-        <router-link class="auth-link" :to="withFlow('/auth/sign-in')">Sign in</router-link>
+        <router-link class="auth-link" :to="withFlow('/sign-in')">Sign in</router-link>
       </p>
     </form>
   </HubAuthLayout>

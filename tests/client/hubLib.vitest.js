@@ -23,15 +23,15 @@ describe("format", () => {
 });
 
 describe("sign-in flow", () => {
-  it("only returns to a page on this hub", () => {
-    expect(safeNext("/admin/apps")).toBe("/admin/apps");
-    expect(safeNext("//evil.example/x")).toBe("/account");
-    expect(safeNext("https://evil.example")).toBe("/account");
-    expect(safeNext(undefined)).toBe("/account");
+  it("only returns to a page on this hub, otherwise to the fallback page", () => {
+    expect(safeNext("/admin/apps", "/account")).toBe("/admin/apps");
+    expect(safeNext("//evil.example/x", "/account")).toBe("/account");
+    expect(safeNext("https://evil.example", "/account")).toBe("/account");
+    expect(safeNext(undefined, "/account")).toBe("/account");
     for (const value of ["/\\evil.example", "/\t/evil.example", "/\n/evil.example"]) {
-      expect(safeNext(value)).toBe("/account");
+      expect(safeNext(value, "/account")).toBe("/account");
     }
-    expect(safeNext("/admin/apps?tab=1#x")).toBe("/admin/apps?tab=1#x");
+    expect(safeNext("/admin/apps?tab=1#x", "/account")).toBe("/admin/apps?tab=1#x");
   });
 });
 

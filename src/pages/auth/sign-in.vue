@@ -6,7 +6,7 @@ import AppAvatar from "../../components/hub/AppAvatar.vue";
 import GoogleButton from "../../components/hub/GoogleButton.vue";
 import HubAuthLayout from "../../components/hub/HubAuthLayout.vue";
 import PasswordField from "../../components/hub/PasswordField.vue";
-import { hubRequest } from "../../lib/hubApi.js";
+import { followHubRedirect, hubRequest } from "../../lib/hubApi.js";
 import { hostOf, initials } from "../../lib/format.js";
 import { useHubSession } from "../../lib/useHubSession.js";
 import { useSignInFlow } from "../../lib/useSignInFlow.js";
@@ -97,10 +97,10 @@ function resendLink() {
   });
 }
 
-function backToApp() {
+function cancelSignIn() {
   return run(async () => {
     const { redirectTo } = await hubRequest(`/hub/interaction/${encodeURIComponent(interaction.value)}/cancel`, { method: "POST", body: {} });
-    window.location.assign(redirectTo);
+    followHubRedirect(redirectTo);
   });
 }
 </script>
@@ -130,7 +130,7 @@ function backToApp() {
           <div class="text-body-2 text-medium-emphasis app-chip__origin">{{ app.origin }}</div>
         </div>
       </div>
-      <v-btn variant="tonal" size="large" block :loading="busy" @click="backToApp">Back to the app</v-btn>
+      <v-btn variant="tonal" size="large" block :loading="busy" @click="cancelSignIn">Cancel sign-in</v-btn>
     </div>
 
     <div v-else-if="view === 'confirm'" class="state-min">
@@ -185,7 +185,7 @@ function backToApp() {
       <v-text-field v-model="email" label="Email" type="email" autocomplete="username" inputmode="email" autofocus />
       <PasswordField v-model="password" />
       <div class="d-flex justify-end mt-n2 mb-4">
-        <router-link class="auth-link text-body-2" :to="withFlow('/auth/forgot-password')">Forgot password?</router-link>
+        <router-link class="auth-link text-body-2" :to="withFlow('/forgot-password')">Forgot password?</router-link>
       </div>
       <v-btn type="submit" color="primary" variant="flat" size="large" block :loading="busy">Sign in</v-btn>
       <template v-if="session.google">
@@ -194,7 +194,7 @@ function backToApp() {
       </template>
       <p class="auth-switch">
         New here?
-        <router-link class="auth-link" :to="withFlow('/auth/create-account')">Create an account</router-link>
+        <router-link class="auth-link" :to="withFlow('/create-account')">Create an account</router-link>
       </p>
     </form>
   </HubAuthLayout>

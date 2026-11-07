@@ -1,4 +1,5 @@
 import { defineConfig } from "@playwright/test";
+import { testConcurrency } from "@jskit-ai/jskit-catalog/test-budget";
 
 const managedBaseUrl = String(process.env.PLAYWRIGHT_BASE_URL || "")
   .trim()
@@ -11,6 +12,7 @@ const storageState = String(process.env.PLAYWRIGHT_STORAGE_STATE || "").trim();
 
 export default defineConfig({
   testDir: "./tests/e2e",
+  workers: testConcurrency(),
   timeout: 60_000,
   expect: {
     // A development server compiles each page on its first visit.

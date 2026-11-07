@@ -21,7 +21,8 @@ Google, both for the hub itself and for an app that sent the person here.
 - An app's sign-in arrives as `/auth/sign-in?interaction=<id>`. The page names
   the app and its full address; after sign-in it returns the person to the app.
 - An app waiting for the owner's approval shows "This app is waiting for
-  approval by the hub's owner." with a way back to the app.
+  approval by the hub's owner." with **Cancel sign-in**, which returns the
+  person to the app.
 - A signed-in person continues as themselves or chooses another account.
 - A person whose email is not confirmed sees "Confirm your email to continue",
   can send the link again, and presses Continue once confirmed; no app receives
