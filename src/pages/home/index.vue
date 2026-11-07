@@ -1,6 +1,9 @@
 <script setup>
 import { computed } from "vue";
 import { useQuery } from "@tanstack/vue-query";
+import { usePaths } from "@jskit-ai/shell-web/client/navigation/usePaths";
+
+const paths = usePaths();
 
 const healthQuery = useQuery({
   queryKey: ["shell-web", "health"],
@@ -30,7 +33,7 @@ const healthPending = computed(
 <template>
   <section class="home-surface-screen d-flex flex-column ga-4">
     <div class="home-surface-screen__actions">
-      <v-btn color="primary" variant="flat" to="/home/settings/general">Settings</v-btn>
+      <v-btn color="primary" variant="flat" :to="paths.page('/settings/general')">Settings</v-btn>
     </div>
 
     <v-sheet rounded="lg" border class="home-surface-screen__panel">
