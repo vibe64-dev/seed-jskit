@@ -12,6 +12,7 @@ Google, both for the hub itself and for an app that sent the person here.
 - `src/pages/auth/reset-password.vue`
 - `src/pages/auth/connect-google.vue`
 - `src/lib/useSignInFlow.js`
+- `src/lib/autofocus.js`
 - `src/components/hub/PasswordField.vue`
 - `src/components/hub/GoogleButton.vue`
 - `tests/e2e/hub.spec.ts`
@@ -30,3 +31,5 @@ Google, both for the hub itself and for an app that sent the person here.
 - An expired sign-in says so and sends the person back to the app.
 - Wrong email and wrong password get the same message. Repeated attempts are
   slowed down.
+- Each page puts the caret in its first field once, as the field appears, and
+  never moves it back while the person types in another field.

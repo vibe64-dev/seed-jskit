@@ -4,6 +4,7 @@ import { ref } from "vue";
 import HubAuthLayout from "../../components/hub/HubAuthLayout.vue";
 import { hubRequest } from "../../lib/hubApi.js";
 import { useSignInFlow } from "../../lib/useSignInFlow.js";
+import { vAutofocus } from "../../lib/autofocus.js";
 
 const { withFlow } = useSignInFlow();
 const email = ref("");
@@ -37,7 +38,7 @@ async function send() {
       <h1 class="auth-title">Reset your password</h1>
       <p class="auth-lead">We'll email you a link to choose a new one.</p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
-      <v-text-field v-model="email" label="Email" type="email" autocomplete="email" inputmode="email" autofocus />
+      <v-text-field v-model="email" label="Email" type="email" autocomplete="email" inputmode="email" v-autofocus />
       <v-btn type="submit" color="primary" variant="flat" size="large" block :loading="busy">Send link</v-btn>
       <p class="auth-switch">
         Remembered it?

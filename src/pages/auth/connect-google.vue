@@ -7,6 +7,7 @@ import HubAuthLayout from "../../components/hub/HubAuthLayout.vue";
 import PasswordField from "../../components/hub/PasswordField.vue";
 import { followHubRedirect, hubRequest } from "../../lib/hubApi.js";
 import { useHubSession } from "../../lib/useHubSession.js";
+import { vAutofocus } from "../../lib/autofocus.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -89,7 +90,7 @@ const finishFromEmail = () => run(async () => {
       </p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
       <template v-if="hasPassword">
-        <PasswordField v-model="password" autofocus />
+        <PasswordField v-model="password" v-autofocus />
         <v-btn type="submit" color="primary" variant="flat" size="large" block :loading="busy">Connect and sign in</v-btn>
         <v-btn variant="text" size="large" block class="mt-2" :disabled="busy" @click="byEmail">Email me a link instead</v-btn>
       </template>
@@ -106,7 +107,7 @@ const finishFromEmail = () => run(async () => {
         autocomplete="new-password"
         hint="At least 8 characters, and not a common password."
         persistent-hint
-        autofocus
+        v-autofocus
       />
       <v-btn type="submit" color="primary" variant="flat" size="large" block class="mt-4" :loading="busy">Connect Google and sign in</v-btn>
     </form>

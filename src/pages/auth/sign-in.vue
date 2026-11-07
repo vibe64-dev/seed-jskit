@@ -10,6 +10,7 @@ import { followHubRedirect, hubRequest } from "../../lib/hubApi.js";
 import { hostOf, initials } from "../../lib/format.js";
 import { useHubSession } from "../../lib/useHubSession.js";
 import { useSignInFlow } from "../../lib/useSignInFlow.js";
+import { vAutofocus } from "../../lib/autofocus.js";
 
 const GOOGLE_MESSAGES = {
   failed: "Google sign-in did not finish. Try again, or use your email and password.",
@@ -182,7 +183,7 @@ function cancelSignIn() {
       <h1 class="auth-title">{{ heading }}</h1>
       <p class="auth-lead">{{ app ? hostOf(app.origin) : "Use your account for every connected app." }}</p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
-      <v-text-field v-model="email" label="Email" type="email" autocomplete="username" inputmode="email" autofocus />
+      <v-text-field v-model="email" label="Email" type="email" autocomplete="username" inputmode="email" v-autofocus />
       <PasswordField v-model="password" />
       <div class="d-flex justify-end mt-n2 mb-4">
         <router-link class="auth-link text-body-2" :to="withFlow('/forgot-password')">Forgot password?</router-link>

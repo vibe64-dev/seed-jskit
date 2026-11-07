@@ -7,6 +7,7 @@ import PasswordField from "../../components/hub/PasswordField.vue";
 import { hubRequest } from "../../lib/hubApi.js";
 import { useHubSession } from "../../lib/useHubSession.js";
 import { useSignInFlow } from "../../lib/useSignInFlow.js";
+import { vAutofocus } from "../../lib/autofocus.js";
 
 const { session, refreshSession, setSession } = useHubSession();
 const { interaction, withFlow, finish, googleHref } = useSignInFlow();
@@ -48,7 +49,7 @@ async function create() {
       <h1 class="auth-title">Create your account</h1>
       <p class="auth-lead">One account for every app connected to this hub.</p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
-      <v-text-field v-model="displayName" label="Your name" autocomplete="name" autofocus />
+      <v-text-field v-model="displayName" label="Your name" autocomplete="name" v-autofocus />
       <v-text-field v-model="email" label="Email" type="email" autocomplete="email" inputmode="email" />
       <PasswordField
         v-model="password"

@@ -53,7 +53,11 @@ function callbackUrl(page: Page) {
   return page.locator("#callback").getAttribute("href").then((href) => new URL(href!));
 }
 
+// Each auth page puts the caret in its first field as it opens; a form is
+// filled once it has, so a late focus would show up as a field holding the
+// next field's text.
 async function signIn(page: Page, email: string) {
+  await expect(page.getByLabel("Email")).toBeFocused();
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Password", { exact: true }).fill(PASSWORD);
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
@@ -78,6 +82,7 @@ test("the owner creates the account that opens Apps, People and Setup", async ({
   });
   if (!existing.ok) {
     await page.goto("/auth/create-account");
+    await expect(page.getByLabel("Your name")).toBeFocused();
     await page.getByLabel("Your name").fill("Owner Person");
     await page.getByLabel("Email").fill(OWNER_EMAIL);
     await page.getByLabel("Choose a password").fill(PASSWORD);
@@ -147,6 +152,7 @@ test("Setup counts what is ready and records the hub's own domain", async ({ pag
 test("someone who is not the owner cannot open owner pages", async ({ page }) => {
   const email = `person-${randomBytes(4).toString("hex")}@example.test`;
   await page.goto("/auth/create-account?next=/admin/people");
+  await expect(page.getByLabel("Your name")).toBeFocused();
   await page.getByLabel("Your name").fill("Another Person");
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Choose a password").fill(PASSWORD);

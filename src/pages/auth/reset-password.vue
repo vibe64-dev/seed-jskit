@@ -7,6 +7,7 @@ import HubAuthLayout from "../../components/hub/HubAuthLayout.vue";
 import PasswordField from "../../components/hub/PasswordField.vue";
 import { hubRequest } from "../../lib/hubApi.js";
 import { useHubSession } from "../../lib/useHubSession.js";
+import { vAutofocus } from "../../lib/autofocus.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -53,7 +54,7 @@ async function save() {
         autocomplete="new-password"
         hint="At least 8 characters, and not a common password."
         persistent-hint
-        autofocus
+        v-autofocus
       />
       <v-btn type="submit" color="primary" variant="flat" size="large" block class="mt-4" :loading="busy">Save and sign in</v-btn>
     </form>
