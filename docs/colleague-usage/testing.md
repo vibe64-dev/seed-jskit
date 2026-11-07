@@ -16,8 +16,9 @@ them immediately. Application migrations belong in `migrations`; package-owned
 migrations are discovered by the existing JSKIT database runtime.
 
 Run server unit tests with `npm test`, limited to `tests/server/*.test.js`.
-Launch scripts and database integration tests have separate commands. For one
-server file run `node --test --test-concurrency=1 tests/server/smoke.test.js`.
+`jskit test` runs the files in parallel, as many at a time as the machine's test
+budget allows. Launch scripts and database integration tests have separate
+commands. For one server file run `npx jskit test tests/server/smoke.test.js`.
 Run client tests
 with `npm run test:client`. `npm run test:database` selects the exact `TEST_DB_NAME`
 and checks migration idempotence, persistence and rollback. It rejects the normal
