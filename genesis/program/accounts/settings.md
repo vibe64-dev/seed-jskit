@@ -6,6 +6,7 @@ personal preferences.
 ## Sources
 
 - Main: `src/pages/account/index.vue`
+- `src/pages/account.vue`
 - `src/placement.js`
 - `packages/main/src/client/providers/MainClientProvider.js`
 - `src/components/account/settings/AccountSettingsProfileSection.vue`
@@ -18,4 +19,6 @@ Signed-in people can view and update their display name, avatar, locale and
 format preferences, and notification choices. The account email is visible but
 cannot be edited as profile data. Loading preserves the settings layout,
 validation remains beside the relevant field, and command failures use shared
-feedback without shifting the form.
+feedback without shifting the form. The page renders under the account
+surface's shell layout, whose top app bar carries its "Account settings" title
+and an Up arrow to home.

@@ -5,7 +5,11 @@
       "policy": "authenticated"
     },
     "jskit": {
-      "surface": "account"
+      "title": "Account settings",
+      "parent": {
+        "surface": "home",
+        "path": "/"
+      }
     }
   }
 }
