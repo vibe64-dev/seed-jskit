@@ -11,6 +11,8 @@ test("register, update a profile, sign out, and sign back in to the persisted ac
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByLabel("Confirm password", { exact: true }).fill(password);
   await page.getByTestId("auth-submit").click();
+  // Registering waits for the email address to be confirmed; outside production the page offers the link.
+  await page.getByTestId("auth-confirmation-dev-confirm").click();
   await expect(page).toHaveURL(/\/home/u);
   await expect(page.getByRole("link", { name: "Manage account" })).toBeVisible();
 

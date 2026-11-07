@@ -53,6 +53,19 @@ function createSession(app) {
   };
 }
 
+// Registering waits for the email address to be confirmed; outside production the answer carries the
+// confirmation link, and confirming its code creates the account and signs the person in.
+async function registerAndConfirm(request, email, password) {
+  const registered = await request("POST", "/api/register", { email, password });
+  assert.equal(registered.status, 201, JSON.stringify(registered.body));
+  assert.equal(registered.body.requiresEmailConfirmation, true, JSON.stringify(registered.body));
+  const waitingSession = await request("GET", "/api/session");
+  assert.equal(waitingSession.body.authenticated, false);
+  const token = new URL(registered.body.confirmationUrl).searchParams.get("confirmation_token");
+  const confirmed = await request("POST", "/api/register/confirm", { token });
+  assert.equal(confirmed.status, 200, JSON.stringify(confirmed.body));
+}
+
 test("account data survives server restart and stays scoped to its owner", async (context) => {
   const preparation = { client: "mysql2", environment: runtimeEnv };
   const database = knex(await createKnexMigrationConfigFromApp(preparation));
@@ -77,8 +90,7 @@ test("account data survives server restart and stays scoped to its owner", async
   const password = "Migration-test-password-2026!";
   const anonymousSession = await request("GET", "/api/session");
   assert.equal(anonymousSession.status, 200);
-  const registered = await request("POST", "/api/register", { email, password });
-  assert.equal(registered.status, 201, JSON.stringify(registered.body));
+  await registerAndConfirm(request, email, password);
   const registeredSession = await request("GET", "/api/session");
   assert.equal(registeredSession.body.authenticated, true);
 
@@ -116,11 +128,7 @@ test("account data survives server restart and stays scoped to its owner", async
 
   const other = createSession(app);
   await other("GET", "/api/session");
-  const otherRegistration = await other("POST", "/api/register", {
-    email: `other-${randomUUID()}@example.test`,
-    password
-  });
-  assert.equal(otherRegistration.status, 201, JSON.stringify(otherRegistration.body));
+  await registerAndConfirm(other, `other-${randomUUID()}@example.test`, password);
   const otherSettings = await other("GET", "/api/settings");
   assert.notEqual(otherSettings.body.data.attributes.profile.displayName, "Migration tester");
   const otherPatched = await other("PATCH", "/api/settings/profile", {
