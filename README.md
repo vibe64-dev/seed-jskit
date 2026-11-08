@@ -47,6 +47,9 @@ npm exec --no -- playwright install chromium
 npm run test:e2e
 ```
 
+`npm run verify` runs `jskit check` and `jskit check m3`, JSKIT's Material 3 check, so it fails on
+a raw colour, an MDI icon, an outlined card or a theme without a dark scheme as well.
+
 The browser suite checks home, settings, and adaptive navigation at compact, medium, and expanded widths.
 It builds the production frontend once, reused while its sources are unchanged, and starts one server per
 Playwright worker within the machine's test budget; every run ends with its 10 slowest tests.
