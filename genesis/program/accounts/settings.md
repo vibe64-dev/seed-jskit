@@ -7,6 +7,8 @@ personal preferences.
 
 - Main: `src/pages/account/index.vue`
 - `src/pages/account.vue`
+- `src/pages/account/[section].vue`
+- `tests/e2e/account-lifecycle.spec.ts`
 - `src/placement.js`
 - `packages/main/src/client/providers/MainClientProvider.js`
 - `src/components/account/settings/AccountSettingsProfileSection.vue`
@@ -21,4 +23,8 @@ cannot be edited as profile data. Loading preserves the settings layout,
 validation remains beside the relevant field, and command failures use shared
 feedback without shifting the form. The page renders under the account
 surface's shell layout, whose top app bar carries its "Account settings" title
-and an Up arrow to home.
+and an Up arrow to home. `/account` lists the sections; each section is its own
+page at `/account/<section>` (`/account/profile`, `/account/preferences`,
+`/account/notifications`), whose Up returns to the list. A phone or medium
+window shows the list or one section; a wide window shows the list beside the
+open section, or beside the first one on the list's own page.

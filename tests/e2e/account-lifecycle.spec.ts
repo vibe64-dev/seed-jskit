@@ -43,4 +43,10 @@ test("register, update a profile, sign out, and sign back in to the persisted ac
     await expect(page.getByRole("heading", { name: "Account settings", exact: true })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1)).toBe(true);
   }
+
+  // On a phone the section list and each section are pages of their own: a section opens at /account/<section>.
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.getByRole("link", { name: "Preferences", exact: true }).click();
+  await expect(page).toHaveURL(/\/account\/preferences$/u);
+  await expect(page.getByRole("button", { name: "Save preferences", exact: true })).toBeVisible();
 });
