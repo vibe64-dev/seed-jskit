@@ -68,19 +68,21 @@ npm run test:e2e
 ```
 
 Browser tests use the database server you provide. `BROWSER_TEST_DB_NAME` names their database, distinct from
-`DB_NAME` and `TEST_DB_NAME`: each Playwright worker gets its own copy (`<name>`, `<name>_1`, ...), restored from a
-snapshot of the migrations' schema (`tests/browser/workers.js`), and its own server on the production build.
+`DB_NAME` and `TEST_DB_NAME`. They build the production frontend once, reused while its sources are unchanged, and
+start one server per Playwright worker within the machine's test budget, each on its own copy of that database
+(`<name>`, `<name>_1`, ...) restored from a snapshot of the migrations' schema (`tests/browser/workers.js`); every
+run ends with its 10 slowest tests. Grant the database user the test databases and their numbered copies
+(`account_app_%`).
 
 ### Database integration check
 
-`npm run test:database` verifies the selected database, prepares it twice, and
+`npm test` and `npm run test:database` run `jskit test --databases`: each test
+file gets its own copy of `TEST_DB_NAME`, restored from a snapshot of the
+migrations' schema, as both `DB_NAME` and `TEST_DB_NAME`, with the connection in
+`.env`; set a `TEST_DB_NAME` distinct from `DB_NAME`. `npm run test:database`
+runs the integration file, which verifies its database, prepares it twice, and
 tests registration, profile updates, login after a server restart, rejected
-anonymous reads, and separate account profiles through the real server. Set
-`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` explicitly; an empty
-password is allowed. Set `TEST_DB_NAME` to the same dedicated test database name
-as `DB_NAME`. This test leaves identifiable `migration-` and `other-` fixture
-accounts in that disposable database. The normal smoke test remains available
-without one.
+anonymous reads, and separate account profiles through the real server.
 
 The starter follows the published JSKIT shell foundation and package-owned
 source patterns. It contains no installed dependencies or generated account

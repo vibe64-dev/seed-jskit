@@ -24,7 +24,7 @@
     "build:home": "VITE_SURFACE=home vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test": "jskit test",
+    "test": "jskit test --databases",
     "test:client": "vitest run tests/client",
     "test:e2e": "playwright test tests/e2e",
     "db:prepare": "node ./scripts/prepare-database.js",
@@ -34,7 +34,7 @@
     "jskit:update": "npx --yes @jskit-ai/jskit-catalog@latest update",
     "jskit:check": "jskit check",
     "verify": "npm run jskit:check && npm run lint && npm run test && npm run test:client && npm run build",
-    "test:database": "jskit test tests/server/account-persistence.integration.js"
+    "test:database": "jskit test --databases tests/server/account-persistence.integration.js"
   },
   "dependencies": {
     "@fastify/static": "^10.1.4",

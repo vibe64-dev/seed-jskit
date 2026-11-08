@@ -8,7 +8,7 @@ import knexConfig from "../../knexfile.js";
 /** The specs register their own accounts; nothing is seeded. */
 async function seed() {}
 
-export default async function prepareBrowserDatabases({ workers }) {
+export default async function prepareBrowserDatabases({ workers, baseUrls }) {
   const { databases, summary } = await prepareTestDatabases({
     knexConfig,
     environment: process.env,
@@ -17,5 +17,6 @@ export default async function prepareBrowserDatabases({ workers }) {
     seed
   });
   console.log(`[browser-tests] ${summary}.`);
-  return databases.map((database) => ({ DB_NAME: database }));
+  // Links the server writes, such as an email confirmation, point at the worker's own server.
+  return databases.map((database, index) => ({ DB_NAME: database, APP_PUBLIC_URL: baseUrls[index] }));
 }
