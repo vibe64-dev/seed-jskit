@@ -10,11 +10,8 @@ const notifications = props.runtime.notifications;
 </script>
 
 <template>
-  <v-sheet rounded="lg" border>
-    <header class="pa-4 pb-0">
-      <h2 class="text-h6 mb-0">Notifications</h2>
-    </header>
-    <div class="pa-4">
+  <div class="account-settings-section">
+    <div class="account-settings-section__body">
       <v-form @submit.prevent="notifications.submit" novalidate>
         <v-switch
           v-model="notifications.form.productUpdates"
@@ -38,17 +35,27 @@ const notifications = props.runtime.notifications;
           color="primary"
           hide-details
           disabled
-          class="mb-4"
         />
         <v-btn
           type="submit"
           color="primary"
-          size="large"
-          :disabled="notifications.isSaving.value || notifications.isRefreshing.value"
+          class="mt-4"
+          :loading="notifications.isSaving.value"
+          :disabled="notifications.isRefreshing.value"
         >
-          {{ notifications.isSaving.value ? "Saving notification settings…" : "Save notification settings" }}
+          Save notification settings
         </v-btn>
       </v-form>
     </div>
-  </v-sheet>
+  </div>
 </template>
+
+<style scoped>
+.account-settings-section {
+  overflow: hidden;
+}
+
+.account-settings-section__body {
+  padding: 1rem;
+}
+</style>

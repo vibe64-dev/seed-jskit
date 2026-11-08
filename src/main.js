@@ -1,12 +1,15 @@
+// Vuetify's styles first, so its stylesheet comes before any component chunk's.
+import "vuetify/styles";
+import "@jskit-ai/material-web/client/material.css";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { QueryClient, VueQueryPlugin } from "@tanstack/vue-query";
 import { createRouter, createWebHistory } from "vue-router/auto";
 import { routes } from "vue-router/auto-routes";
-import "vuetify/styles";
 import { createVuetify } from "vuetify";
-import { aliases as mdiAliases, mdi } from "vuetify/iconsets/mdi-svg";
+import { createMaterialVuetifyOptions } from "@jskit-ai/material-web/client";
 import App from "./App.vue";
+import { theme } from "./theme/index.js";
 import NotFoundView from "./views/NotFound.vue";
 import { bootInstalledClientModules } from "virtual:jskit-client-bootstrap";
 import { createSurfaceRuntime } from "@jskit-ai/kernel/shared/surface/runtime";
@@ -39,27 +42,11 @@ const { router, fallbackRoute } = createShellRouter({
   }
 });
 
-const vuetify = createVuetify({
-  theme: {
-    defaultTheme: "light",
-    themes: {
-      light: {
-        dark: false,
-        colors: {
-          primary: "#315DA8",
-          secondary: "#565F71",
-          surface: "#FAF8FF",
-          "surface-variant": "#E0E2EC"
-        }
-      }
-    }
-  },
-  icons: {
-    defaultSet: "mdi",
-    aliases: mdiAliases,
-    sets: { mdi }
-  }
-});
+// Material 3 from the app's theme (src/theme/index.js), with Material Symbols behind every icon alias. JSKIT's shell,
+// sign-in and account pages draw with Material 3's colour roles (on-surface-variant, surface-container,
+// secondary-container, ...), which only these generated schemes define; Vuetify's own default theme lacks most of them
+// and has on-surface-variant near-white, for text on its dark surface-variant.
+const vuetify = createVuetify(createMaterialVuetifyOptions(theme));
 const pinia = createPinia();
 const queryClient = new QueryClient({
   defaultOptions: {

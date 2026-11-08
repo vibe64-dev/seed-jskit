@@ -10,19 +10,16 @@ const profile = props.runtime.profile;
 </script>
 
 <template>
-  <v-sheet rounded="lg" border>
-    <header class="pa-4 pb-0">
-      <h2 class="text-h6 mb-0">Profile</h2>
-    </header>
-    <div class="pa-4">
+  <div class="account-settings-section">
+    <div class="account-settings-section__body">
       <v-form @submit.prevent="profile.submit" novalidate>
         <v-row class="mb-2">
           <v-col cols="12" md="4" class="d-flex flex-column align-center justify-center">
             <v-avatar :size="profile.avatar.size" color="surface-variant" rounded="circle" class="mb-3">
               <v-img v-if="profile.avatar.effectiveUrl" :src="profile.avatar.effectiveUrl" cover />
-              <span v-else class="text-h6">{{ profile.initials.value }}</span>
+              <span v-else class="text-title-large">{{ profile.initials.value }}</span>
             </v-avatar>
-            <div class="text-caption text-medium-emphasis">Preview size: {{ profile.avatar.size }} px</div>
+            <div class="text-body-small on-surface-variant">Preview size: {{ profile.avatar.size }} px</div>
           </v-col>
 
           <v-col cols="12" md="8">
@@ -30,7 +27,6 @@ const profile = props.runtime.profile;
               <v-btn
                 variant="tonal"
                 color="secondary"
-                size="large"
                 :disabled="profile.isSaving.value || profile.isDeletingAvatar.value || profile.isRefreshing.value"
                 @click="profile.openAvatarEditor"
               >
@@ -40,22 +36,22 @@ const profile = props.runtime.profile;
                 v-if="profile.avatar.hasUploadedAvatar"
                 variant="text"
                 color="error"
-                size="large"
-                :disabled="profile.isSaving.value || profile.isDeletingAvatar.value || profile.isRefreshing.value"
+                :loading="profile.isDeletingAvatar.value"
+                :disabled="profile.isSaving.value || profile.isRefreshing.value"
                 @click="profile.removeAvatar"
               >
-                {{ profile.isDeletingAvatar.value ? "Removing avatar…" : "Remove avatar" }}
+                Remove avatar
               </v-btn>
             </div>
 
-            <div v-if="profile.selectedAvatarFileName.value" class="text-caption text-medium-emphasis mb-2">
+            <div v-if="profile.selectedAvatarFileName.value" class="text-body-small on-surface-variant mb-2">
               Selected file: {{ profile.selectedAvatarFileName.value }}
             </div>
           </v-col>
         </v-row>
 
         <v-row>
-          <v-col cols="12" md="6">
+          <v-col cols="12">
             <v-text-field
               v-model="profile.form.displayName"
               label="Display name"
@@ -63,11 +59,11 @@ const profile = props.runtime.profile;
               density="comfortable"
               autocomplete="nickname"
               :readonly="profile.isSaving.value || profile.isRefreshing.value"
-              :error-messages="profile.fieldErrors.displayName ? [profile.fieldErrors.displayName] : []"
+              :error-messages="profile.fieldErrors.displayName"
             />
           </v-col>
 
-          <v-col cols="12" md="6">
+          <v-col cols="12">
             <v-text-field
               v-model="profile.form.email"
               label="Email"
@@ -83,12 +79,23 @@ const profile = props.runtime.profile;
         <v-btn
           type="submit"
           color="primary"
-          size="large"
-          :disabled="profile.isSaving.value || profile.isDeletingAvatar.value || profile.isRefreshing.value"
+          class="mt-4"
+          :loading="profile.isSaving.value"
+          :disabled="profile.isDeletingAvatar.value || profile.isRefreshing.value"
         >
-          {{ profile.isSaving.value ? "Saving profile…" : "Save profile" }}
+          Save profile
         </v-btn>
       </v-form>
     </div>
-  </v-sheet>
+  </div>
 </template>
+
+<style scoped>
+.account-settings-section {
+  overflow: hidden;
+}
+
+.account-settings-section__body {
+  padding: 1rem;
+}
+</style>

@@ -8,10 +8,11 @@ const message = "The page you requested does not exist.";
 
 <template>
   <v-container class="fill-height d-flex align-center justify-center">
-    <v-sheet class="pa-6 pa-md-8 text-center" max-width="560" rounded="xl" border>
-      <h1 class="text-h4 mb-3">{{ title }}</h1>
-      <p class="text-body-1 text-medium-emphasis mb-6">{{ message }}</p>
+    <section class="d-flex flex-column align-center text-center ga-4">
+      <v-icon icon="$searchOff" size="48" class="on-surface-variant" />
+      <h1 class="text-headline-medium mb-0">{{ title }}</h1>
+      <p class="text-body-large on-surface-variant mb-2">{{ message }}</p>
       <v-btn color="primary" variant="flat" size="large" :to="paths.page('/', { surface: 'home' })">Go home</v-btn>
-    </v-sheet>
+    </section>
   </v-container>
 </template>

@@ -10,11 +10,8 @@ const preferences = props.runtime.preferences;
 </script>
 
 <template>
-  <v-sheet rounded="lg" border>
-    <header class="pa-4 pb-0">
-      <h2 class="text-h6 mb-0">Preferences</h2>
-    </header>
-    <div class="pa-4">
+  <div class="account-settings-section">
+    <div class="account-settings-section__body">
       <v-form @submit.prevent="preferences.submit" novalidate>
         <v-row>
           <v-col cols="12" md="4">
@@ -27,7 +24,7 @@ const preferences = props.runtime.preferences;
               variant="outlined"
               density="comfortable"
               :disabled="preferences.isSaving.value || preferences.isRefreshing.value"
-              :error-messages="preferences.fieldErrors.theme ? [preferences.fieldErrors.theme] : []"
+              :error-messages="preferences.fieldErrors.theme"
             />
           </v-col>
 
@@ -41,7 +38,7 @@ const preferences = props.runtime.preferences;
               variant="outlined"
               density="comfortable"
               :disabled="preferences.isSaving.value || preferences.isRefreshing.value"
-              :error-messages="preferences.fieldErrors.locale ? [preferences.fieldErrors.locale] : []"
+              :error-messages="preferences.fieldErrors.locale"
             />
           </v-col>
 
@@ -53,7 +50,7 @@ const preferences = props.runtime.preferences;
               variant="outlined"
               density="comfortable"
               :disabled="preferences.isSaving.value || preferences.isRefreshing.value"
-              :error-messages="preferences.fieldErrors.timeZone ? [preferences.fieldErrors.timeZone] : []"
+              :error-messages="preferences.fieldErrors.timeZone"
             />
           </v-col>
 
@@ -67,7 +64,7 @@ const preferences = props.runtime.preferences;
               variant="outlined"
               density="comfortable"
               :disabled="preferences.isSaving.value || preferences.isRefreshing.value"
-              :error-messages="preferences.fieldErrors.dateFormat ? [preferences.fieldErrors.dateFormat] : []"
+              :error-messages="preferences.fieldErrors.dateFormat"
             />
           </v-col>
 
@@ -81,7 +78,7 @@ const preferences = props.runtime.preferences;
               variant="outlined"
               density="comfortable"
               :disabled="preferences.isSaving.value || preferences.isRefreshing.value"
-              :error-messages="preferences.fieldErrors.numberFormat ? [preferences.fieldErrors.numberFormat] : []"
+              :error-messages="preferences.fieldErrors.numberFormat"
             />
           </v-col>
 
@@ -93,11 +90,11 @@ const preferences = props.runtime.preferences;
               variant="outlined"
               density="comfortable"
               :disabled="preferences.isSaving.value || preferences.isRefreshing.value"
-              :error-messages="preferences.fieldErrors.currencyCode ? [preferences.fieldErrors.currencyCode] : []"
+              :error-messages="preferences.fieldErrors.currencyCode"
             />
           </v-col>
 
-          <v-col cols="12" md="3">
+          <v-col cols="12" md="4">
             <v-select
               v-model.number="preferences.form.avatarSize"
               label="Avatar size"
@@ -105,7 +102,7 @@ const preferences = props.runtime.preferences;
               variant="outlined"
               density="comfortable"
               :disabled="preferences.isSaving.value || preferences.isRefreshing.value"
-              :error-messages="preferences.fieldErrors.avatarSize ? [preferences.fieldErrors.avatarSize] : []"
+              :error-messages="preferences.fieldErrors.avatarSize"
             />
           </v-col>
         </v-row>
@@ -113,12 +110,23 @@ const preferences = props.runtime.preferences;
         <v-btn
           type="submit"
           color="primary"
-          size="large"
-          :disabled="preferences.isSaving.value || preferences.isRefreshing.value"
+          class="mt-4"
+          :loading="preferences.isSaving.value"
+          :disabled="preferences.isRefreshing.value"
         >
-          {{ preferences.isSaving.value ? "Saving preferences…" : "Save preferences" }}
+          Save preferences
         </v-btn>
       </v-form>
     </div>
-  </v-sheet>
+  </div>
 </template>
+
+<style scoped>
+.account-settings-section {
+  overflow: hidden;
+}
+
+.account-settings-section__body {
+  padding: 1rem;
+}
+</style>
