@@ -36,7 +36,8 @@
     }
   ],
   "optionalBindings": {
-    "testDatabase": "TEST_DB_NAME"
+    "testDatabase": "TEST_DB_NAME",
+    "browserTestDatabase": "BROWSER_TEST_DB_NAME"
   }
 }
 ```

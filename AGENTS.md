@@ -8,6 +8,10 @@ Framework references:
 - `https://mobily-enterprises.github.io/jskit-ai/guide/`
 - `https://mobily-enterprises.github.io/jskit-ai/patterns/`
 
+Before writing or reviewing code that reads or writes a database table, read
+the data access guide at
+`https://mobily-enterprises.github.io/jskit-ai/guide/framework/data-access`.
+
 Before writing or reviewing server code (a feature, provider, action, service,
 repository, route, error or test), read the typed features guide at
 `https://mobily-enterprises.github.io/jskit-ai/guide/framework/typed-features`.

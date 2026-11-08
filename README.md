@@ -67,7 +67,9 @@ npm exec --no -- playwright install chromium
 npm run test:e2e
 ```
 
-Browser tests use the database environment you provide; use a disposable test database, prepare it with `npm run db:prepare`, and keep the application session secret stable across restarts.
+Browser tests use the database server you provide. `BROWSER_TEST_DB_NAME` names their database, distinct from
+`DB_NAME` and `TEST_DB_NAME`: each Playwright worker gets its own copy (`<name>`, `<name>_1`, ...), restored from a
+snapshot of the migrations' schema (`tests/browser/workers.js`), and its own server on the production build.
 
 ### Database integration check
 

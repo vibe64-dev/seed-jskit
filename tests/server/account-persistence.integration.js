@@ -54,7 +54,8 @@ function createSession(app) {
 }
 
 // Registering waits for the email address to be confirmed; outside production the answer carries the
-// confirmation link, and confirming its code creates the account and signs the person in.
+// confirmation link, and confirming its code with the registered password creates the account and signs the
+// person in.
 async function registerAndConfirm(request, email, password) {
   const registered = await request("POST", "/api/register", { email, password });
   assert.equal(registered.status, 201, JSON.stringify(registered.body));
@@ -62,7 +63,7 @@ async function registerAndConfirm(request, email, password) {
   const waitingSession = await request("GET", "/api/session");
   assert.equal(waitingSession.body.authenticated, false);
   const token = new URL(registered.body.confirmationUrl).searchParams.get("confirmation_token");
-  const confirmed = await request("POST", "/api/register/confirm", { token });
+  const confirmed = await request("POST", "/api/register/confirm", { token, password });
   assert.equal(confirmed.status, 200, JSON.stringify(confirmed.body));
 }
 
