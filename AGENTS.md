@@ -37,6 +37,16 @@ factory or client provider), read the client features guide at
 Simple, direct code comes first: never add a layer, wrapper, registry or tiny
 module only to satisfy a rule. `npm run lint` checks its rules too.
 
+Before writing or reviewing UI (a page, component, colour, icon or type
+style), read the Material 3 guide at
+`https://mobily-enterprises.github.io/jskit-ai/guide/framework/material-3`.
+Colours are the theme's Material 3 roles (`on-surface-variant`,
+`surface-container-low`, ...), generated from the seed in `src/theme/index.js`;
+an icon is a `$` alias, and one JSKIT lacks goes in that file's `icons`. Never
+hand-write Vuetify theme colours or icon sets in `src/main.js`: JSKIT's pages
+draw with roles only the generated schemes define. `npx jskit check m3` checks
+the guide's rules.
+
 Read the installed JSKIT skill and the narrow relevant source pattern before
 implementation. The documentation package includes complete pattern examples;
 no runtime package installation or online documentation search is needed to read
