@@ -9,14 +9,10 @@ isolated database integration suite have separate commands.
 - `package.json`
 - `knexfile.js`
 - `scripts/prepare-database.js`
-- Main: `scripts/test-environment.js`
-- `scripts/test-database.js`
-- `bin/develop-test.js`
-- `tests/browser/database.js`
+- Main: `playwright.config.mjs`
 - `tests/browser/workers.js`
+- `bin/develop-test.js`
 - `tests/server/database.integration.js`
-- `tests/server/test-environment.test.js`
-- `playwright.config.mjs`
 - `docs/colleague-usage/testing.md`
 
 ## Public contract
@@ -28,12 +24,15 @@ The locked starter also includes `crud-core`, `resource-crud-core`, and
 `http-web`, ready for database feature implementation without another install.
 
 Workspace setup installs the locked dependencies and runs ordinary JSKIT
-migration preparation. Test commands select exact explicit test databases and
-reject normal/shared identities or production mode. Integration and browser
-databases stay separate. Browser setup retains schema and migration ledgers,
-applies pending migrations and resets only browser fixtures with an explicit
-seed. The declared browser-tests target advertises test data and uses the
-host's assigned address. Standalone Playwright (`browserTestConfig()`) builds
-the production frontend once and starts one server per worker, each with its own
-port and its own copy of the browser database restored from a schema snapshot.
-Managed Playwright uses the supplied Preview.
+migration preparation. Test databases come from JSKIT's harness
+(`@jskit-ai/database-runtime/server/testDatabases`): `npm run test:database`
+runs `jskit test --databases`, which gives each integration file a copy of
+`TEST_DB_NAME` restored from a schema snapshot, and the browser run's
+`tests/browser/workers.js` gives each server a copy of `BROWSER_TEST_DB_NAME`.
+Both refuse the normal database, each other's databases and production mode;
+the migrations are replayed only when one changes. Standalone Playwright
+(`browserTestConfig()` from `@jskit-ai/jskit-catalog/browser-tests`) builds the
+production frontend once and starts one server and database per worker. The
+declared browser-tests target (`develop:test`) runs the development launcher on
+its own restored copy, advertises test data and uses the host's assigned
+address. Managed Playwright uses the supplied Preview.

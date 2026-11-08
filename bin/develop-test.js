@@ -1,9 +1,7 @@
-import { createKnexMigrationConfigFromApp } from "@jskit-ai/database-runtime/server/knexMigrationConfig";
-import { testDatabaseEnvironment } from "../scripts/test-environment.js";
-import { prepareBrowserTestDatabase } from "../tests/browser/database.js";
+import prepareBrowserDatabases from "../tests/browser/workers.js";
 
-const environment = await testDatabaseEnvironment("BROWSER_TEST_DB_NAME");
-const knexConfig = await createKnexMigrationConfigFromApp({ client: "mysql2", environment: process.env });
-await prepareBrowserTestDatabase({ knexConfig, seed: async () => {} });
-Object.assign(process.env, environment);
+// The Browser test app: the development launcher on a copy of BROWSER_TEST_DB_NAME restored from the schema snapshot,
+// as each local browser-test worker's server gets one.
+const [environment] = await prepareBrowserDatabases({ workers: 1 });
+Object.assign(process.env, { NODE_ENV: "test", ...environment });
 await import("./develop.js");

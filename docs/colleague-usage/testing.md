@@ -20,28 +20,32 @@ Run server unit tests with `npm test`, limited to `tests/server/*.test.js`.
 budget allows. Launch scripts and database integration tests have separate
 commands. For one server file run `npx jskit test tests/server/smoke.test.js`.
 Run client tests
-with `npm run test:client`. `npm run test:database` selects the exact `TEST_DB_NAME`
-and checks migration idempotence, persistence and rollback. It rejects the normal
-and browser databases. Its fixture table is removed even when a check fails.
+with `npm run test:client`. `npm run test:database` runs the integration file
+with `jskit test --databases`: it gets its own copy of `TEST_DB_NAME`, restored
+from a snapshot of the migrations' schema, and checks migration idempotence,
+persistence and rollback. The normal and browser databases are refused. Its
+fixture table is removed even when a check fails.
 
 For browser checks in Vibe64, ask the coding agent to run
 `vibe64-helper playwright --target browser-tests test`. The declared **Browser
-test app** validates `BROWSER_TEST_DB_NAME`, applies pending migrations, retains
-the migration ledger, clears test rows and starts the app. It never drops the
-schema. The starter has no required baseline rows; add an explicit fixture seed
-in `bin/develop-test.js` when features need them. The amber **Test Preview** bar
+test app** restores `BROWSER_TEST_DB_NAME` from the stored snapshot of the
+migrations' schema, so no test rows survive, and starts the app; the
+migrations are replayed only when one changes. The starter has no required
+baseline rows; add a fixture `seed` in `tests/browser/workers.js` when features
+need them. The amber **Test Preview** bar
 identifies this target. Vibe64 restores the previous Preview afterward; a red
 recovery notice needs coding-agent recovery before normal use.
 
-Outside Vibe64, provision the three distinct databases and grants named in
-`.env.example`, then run `npm ci` and `npm run db:prepare`. `npm run test:e2e`
-builds the production frontend once and gives each Playwright worker its own
-server and its own copy of `BROWSER_TEST_DB_NAME`, restored from a snapshot of
-the migrations' schema and seeded by `tests/browser/workers.js`, with your
+Outside Vibe64, provision the three distinct databases named in `.env.example`
+with a grant that also covers their numbered copies (`database_app_%`), then run
+`npm ci` and `npm run db:prepare`. `npm run test:e2e` builds the production
+frontend once (reused while its sources are unchanged) and starts one server and
+database copy per Playwright worker, within the machine's test budget, with your
 installed Playwright browser. When supplying `PLAYWRIGHT_BASE_URL`, you own the
-server and must select the isolated target before tests that write data. The
-run reports its preparation times. Do not install another browser in managed
-sessions.
+server and must select the isolated target before tests that write data.
+Browser startup reports how many databases it prepared, whether it replayed the
+migrations, and the restore and seed times; every run ends with its 10 slowest
+tests. Do not install another browser in managed sessions.
 
 Workspace setup also installs the version-matched JSKIT guides and source patterns
 for the coding agent. Framework dependencies, their catalogue and documentation

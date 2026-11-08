@@ -17,7 +17,7 @@
     "start": "node ./bin/server.js",
     "develop": "node ./bin/develop.js",
     "develop:test": "node ./bin/develop-test.js",
-    "test:database": "node ./scripts/test-database.js",
+    "test:database": "jskit test --databases tests/server/database.integration.js",
     "db:prepare": "node ./scripts/prepare-database.js",
     "db:migrate": "knex --knexfile ./knexfile.js migrate:latest",
     "db:migrate:rollback": "knex --knexfile ./knexfile.js migrate:rollback",
