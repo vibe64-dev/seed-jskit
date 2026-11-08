@@ -126,6 +126,10 @@ npm exec --no -- playwright install chromium
 npm run test:e2e
 ```
 
+`npm run verify` runs `jskit check` and `jskit check m3`, JSKIT's Material 3
+check, so it fails on a raw colour, an MDI icon, an outlined card or a theme
+without a dark scheme as well.
+
 Server and browser tests use JSKIT's test harness. `npm test` and
 `npm run test:database` run `jskit test --databases`: each test file running at
 once gets its own copy of `TEST_DB_NAME`, restored from a snapshot of the

@@ -35,7 +35,8 @@ an icon is a `$` alias, and one JSKIT lacks goes in that file's `icons`. Never
 hand-write Vuetify theme colours or icon sets in `src/main.js`: the hub's pages
 and JSKIT's components draw with roles only the generated schemes define.
 Google's own colours for its mark are the one content palette, in
-`src/theme/palettes.js`. `npx jskit check m3` checks the guide's rules.
+`src/theme/palettes.js`. `npx jskit check m3` checks the guide's rules; `npm run
+verify` runs it and fails on any finding.
 
 Before implementation, read the narrow relevant source pattern completely. If
 its owner package is installed, prefer that version-matched package-owned copy.
