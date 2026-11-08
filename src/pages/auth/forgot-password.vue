@@ -1,5 +1,4 @@
 <script setup>
-import { mdiEmailFastOutline } from "@mdi/js";
 import { ref } from "vue";
 import HubAuthLayout from "../../components/hub/HubAuthLayout.vue";
 import { hubRequest } from "../../lib/hubApi.js";
@@ -29,16 +28,16 @@ async function send() {
 <template>
   <HubAuthLayout>
     <div v-if="sent" class="state-min text-center">
-      <v-avatar size="64" color="primary" variant="tonal" class="mb-4 mx-auto"><v-icon :icon="mdiEmailFastOutline" size="30" /></v-avatar>
-      <h1 class="auth-title">Check your email</h1>
+      <v-avatar size="64" color="primary" variant="tonal" class="mb-4 mx-auto"><v-icon icon="$mail" size="30" /></v-avatar>
+      <h1 class="auth-title text-headline-small">Check your email</h1>
       <p class="auth-lead">If an account uses {{ email }}, a link to choose a new password is on its way. It works for one hour.</p>
       <v-btn variant="tonal" size="large" block :to="withFlow('/sign-in')">Go to sign-in</v-btn>
     </div>
     <form v-else class="state-min" novalidate @submit.prevent="send">
-      <h1 class="auth-title">Reset your password</h1>
+      <h1 class="auth-title text-headline-small">Reset your password</h1>
       <p class="auth-lead">We'll email you a link to choose a new one.</p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
-      <v-text-field v-model="email" label="Email" type="email" autocomplete="email" inputmode="email" v-autofocus />
+      <v-text-field v-model="email" label="Email" type="email" autocomplete="email" inputmode="email" class="mb-4" v-autofocus />
       <v-btn type="submit" color="primary" variant="flat" size="large" block :loading="busy">Send link</v-btn>
       <p class="auth-switch">
         Remembered it?

@@ -1,5 +1,4 @@
 <script setup>
-import { mdiAccountGroupOutline, mdiMagnify } from "@mdi/js";
 import { computed, onMounted, ref } from "vue";
 import ConfirmDialog from "../../components/hub/ConfirmDialog.vue";
 import EmptyState from "../../components/hub/EmptyState.vue";
@@ -63,19 +62,19 @@ function ask(person) {
     <template v-else-if="people">
       <v-text-field
         v-model="search"
-        :prepend-inner-icon="mdiMagnify"
+        prepend-inner-icon="$search"
         label="Find by name or email"
         hide-details
         clearable
         class="mb-4 search"
       />
-      <v-card border flat>
+      <v-card>
         <div v-for="person in shown" :key="person.id" class="person-row">
           <v-avatar size="44" :color="person.disabled ? 'surface-variant' : 'primary'" variant="tonal">
-            <span class="text-body-2 font-weight-bold">{{ initials(person.displayName) }}</span>
+            <span class="text-label-large">{{ initials(person.displayName) }}</span>
           </v-avatar>
           <div class="person-row__text">
-            <div class="person-row__name">
+            <div class="person-row__name text-title-medium">
               {{ person.displayName }}
               <v-chip v-if="person.isOwner" size="x-small" color="primary" variant="tonal">Owner</v-chip>
               <v-chip v-if="person.disabled" size="x-small" color="error" variant="tonal">Turned off</v-chip>
@@ -83,7 +82,7 @@ function ask(person) {
               <v-chip v-if="!person.emailVerified" size="x-small" variant="tonal">Email not confirmed</v-chip>
               <v-chip v-if="person.googleLinked" size="x-small" variant="tonal">Google</v-chip>
             </div>
-            <div class="person-row__meta">{{ person.email }} · joined {{ timeAgo(person.createdAt) }}</div>
+            <div class="person-row__meta text-body-medium on-surface-variant">{{ person.email }} · joined {{ timeAgo(person.createdAt) }}</div>
           </div>
           <div class="person-row__action">
             <v-btn
@@ -98,7 +97,7 @@ function ask(person) {
         </div>
         <EmptyState
           v-if="!shown.length"
-          :icon="mdiAccountGroupOutline"
+          icon="$group"
           :heading="people.length ? 'Nobody matches that search.' : 'Nobody has an account yet.'"
           :body="people.length ? 'Try part of a name or an email address.' : 'People appear here after they create an account through one of your apps.'"
         />
@@ -137,11 +136,8 @@ function ask(person) {
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  font-weight: 600;
 }
 .person-row__meta {
-  font-size: 0.85rem;
-  color: rgba(var(--v-theme-on-surface), 0.62);
   overflow-wrap: anywhere;
 }
 @media (max-width: 599px) {

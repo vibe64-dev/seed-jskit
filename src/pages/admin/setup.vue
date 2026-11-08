@@ -1,5 +1,4 @@
 <script setup>
-import { mdiAlertCircle, mdiCheckCircle, mdiCircleOutline, mdiContentCopy } from "@mdi/js";
 import { computed, onMounted, ref } from "vue";
 import { usePaths } from "@jskit-ai/shell-web/client/navigation/usePaths";
 import HubAppLayout from "../../components/hub/HubAppLayout.vue";
@@ -14,9 +13,9 @@ const errors = ref({});
 const copied = ref(false);
 
 const STATE_ICONS = {
-  ok: { icon: mdiCheckCircle, color: "success", label: "Ready" },
-  warning: { icon: mdiAlertCircle, color: "warning", label: "Needs attention" },
-  todo: { icon: mdiCircleOutline, color: "medium-emphasis", label: "Not done yet" }
+  ok: { icon: "$checkCircle", color: "success", label: "Ready" },
+  warning: { icon: "$warning", color: "warning", label: "Needs attention" },
+  todo: { icon: "$radioOff", color: "outline", label: "Not done yet" }
 };
 
 const items = computed(() => {
@@ -127,15 +126,15 @@ async function copyRedirect() {
     <v-skeleton-loader v-if="!data && !loadError" type="list-item-two-line@6" class="rounded-xl" />
 
     <template v-else-if="data">
-      <v-card border flat class="progress-card mb-4">
+      <v-card class="progress-card mb-4">
         <div class="d-flex align-center justify-space-between mb-2">
-          <span class="font-weight-medium">{{ readyCount }} of {{ items.length }} ready</span>
-          <span class="text-body-2 text-medium-emphasis">{{ data.issuer }}</span>
+          <span class="text-title-medium">{{ readyCount }} of {{ items.length }} ready</span>
+          <span class="text-body-medium on-surface-variant">{{ data.issuer }}</span>
         </div>
         <v-progress-linear :model-value="(readyCount / items.length) * 100" color="success" rounded height="8" bg-opacity="0.12" />
       </v-card>
 
-      <v-card border flat>
+      <v-card>
         <div v-for="item in items" :key="item.id" class="check-row" :data-state="item.state">
           <v-icon
             :icon="STATE_ICONS[item.state].icon"
@@ -144,14 +143,14 @@ async function copyRedirect() {
             class="check-row__icon"
           />
           <div class="check-row__text">
-            <div class="check-row__title">{{ item.title }}</div>
-            <div class="check-row__body">{{ item.text }}</div>
+            <div class="check-row__title text-title-medium">{{ item.title }}</div>
+            <div class="check-row__body text-body-medium on-surface-variant">{{ item.text }}</div>
             <code v-if="item.variable" class="check-row__variable">{{ item.variable }}</code>
             <div v-if="item.id === 'google'" class="redirect-field">
               <code>{{ data.googleRedirectUri }}</code>
-              <v-btn :icon="mdiContentCopy" variant="text" size="small" aria-label="Copy redirect address" @click="copyRedirect" />
+              <v-btn icon="$contentCopy" variant="text" size="small" aria-label="Copy redirect address" @click="copyRedirect" />
             </div>
-            <p v-if="errors[item.id]" class="text-error text-body-2 mt-2">{{ errors[item.id] }}</p>
+            <p v-if="errors[item.id]" class="text-error text-body-medium mt-2">{{ errors[item.id] }}</p>
           </div>
           <div class="check-row__action">
             <v-btn
@@ -193,26 +192,16 @@ async function copyRedirect() {
 .check-row__icon {
   margin-top: 1px;
 }
-.check-row__title {
-  font-weight: 600;
-}
 .check-row__body {
   margin-top: 2px;
-  font-size: 0.9rem;
-  color: rgba(var(--v-theme-on-surface), 0.68);
   overflow-wrap: anywhere;
-}
-.check-row__variable,
-.redirect-field code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.82rem;
 }
 .check-row__variable {
   display: inline-block;
   margin-top: 8px;
   padding: 2px 8px;
   border-radius: 6px;
-  background: rgba(var(--v-theme-on-surface), 0.06);
+  background: rgb(var(--v-theme-surface-container-highest));
 }
 .redirect-field {
   display: flex;
@@ -221,7 +210,7 @@ async function copyRedirect() {
   margin-top: 8px;
   padding: 4px 4px 4px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  background: rgb(var(--v-theme-surface-container-highest));
   max-width: 100%;
 }
 .redirect-field code {

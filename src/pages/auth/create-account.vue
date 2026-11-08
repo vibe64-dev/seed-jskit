@@ -46,11 +46,11 @@ async function create() {
 <template>
   <HubAuthLayout>
     <form class="state-min" novalidate @submit.prevent="create">
-      <h1 class="auth-title">Create your account</h1>
+      <h1 class="auth-title text-headline-small">Create your account</h1>
       <p class="auth-lead">One account for every app connected to this hub.</p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
-      <v-text-field v-model="displayName" label="Your name" autocomplete="name" v-autofocus />
-      <v-text-field v-model="email" label="Email" type="email" autocomplete="email" inputmode="email" />
+      <v-text-field v-model="displayName" label="Your name" autocomplete="name" class="mb-4" v-autofocus />
+      <v-text-field v-model="email" label="Email" type="email" autocomplete="email" inputmode="email" class="mb-4" />
       <PasswordField
         v-model="password"
         label="Choose a password"
@@ -60,7 +60,7 @@ async function create() {
       />
       <v-btn type="submit" color="primary" variant="flat" size="large" block class="mt-4" :loading="busy">Create account</v-btn>
       <template v-if="session.google">
-        <div class="or-divider"><span>or</span></div>
+        <div class="or-divider text-label-medium"><span>or</span></div>
         <GoogleButton :href="googleHref()" label="Sign up with Google" />
       </template>
       <p class="auth-switch">

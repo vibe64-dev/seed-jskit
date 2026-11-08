@@ -1,5 +1,4 @@
 <script setup>
-import { mdiClockOutline, mdiEmailCheckOutline, mdiLinkVariantOff } from "@mdi/js";
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import AppAvatar from "../../components/hub/AppAvatar.vue";
@@ -113,22 +112,22 @@ function cancelSignIn() {
     </div>
 
     <div v-else-if="view === 'expired'" class="state-min text-center">
-      <v-avatar size="64" color="primary" variant="tonal" class="mb-4"><v-icon :icon="mdiLinkVariantOff" size="30" /></v-avatar>
-      <h1 class="auth-title">This sign-in has expired.</h1>
+      <v-avatar size="64" color="primary" variant="tonal" class="mb-4"><v-icon icon="$linkOff" size="30" /></v-avatar>
+      <h1 class="auth-title text-headline-small">This sign-in has expired.</h1>
       <p class="auth-lead">Go back to the app and sign in again.</p>
     </div>
 
     <div v-else-if="view === 'pending'" class="state-min">
       <div class="text-center">
-        <v-avatar size="64" color="warning" variant="tonal" class="mb-4"><v-icon :icon="mdiClockOutline" size="30" /></v-avatar>
-        <h1 class="auth-title">This app is waiting for approval by the hub's owner.</h1>
+        <v-avatar size="64" color="warning" variant="tonal" class="mb-4"><v-icon icon="$schedule" size="30" /></v-avatar>
+        <h1 class="auth-title text-headline-small">This app is waiting for approval by the hub's owner.</h1>
         <p class="auth-lead">The owner approves each new app once. Try again after they have.</p>
       </div>
       <div v-if="app" class="app-chip">
         <AppAvatar :name="app.name" :size="40" />
         <div class="min-w-0">
           <div class="font-weight-medium text-truncate">{{ app.name }}</div>
-          <div class="text-body-2 text-medium-emphasis app-chip__origin">{{ app.origin }}</div>
+          <div class="text-body-medium on-surface-variant app-chip__origin">{{ app.origin }}</div>
         </div>
       </div>
       <v-btn variant="tonal" size="large" block :loading="busy" @click="cancelSignIn">Cancel sign-in</v-btn>
@@ -136,10 +135,10 @@ function cancelSignIn() {
 
     <div v-else-if="view === 'confirm'" class="state-min">
       <div class="text-center">
-        <v-avatar size="64" color="primary" variant="tonal" class="mb-4"><v-icon :icon="mdiEmailCheckOutline" size="30" /></v-avatar>
-        <h1 class="auth-title">Confirm your email to continue</h1>
+        <v-avatar size="64" color="primary" variant="tonal" class="mb-4"><v-icon icon="$markEmailUnread" size="30" /></v-avatar>
+        <h1 class="auth-title text-headline-small">Confirm your email to continue</h1>
         <p class="auth-lead">
-          We sent a link to <span class="font-weight-medium text-high-emphasis">{{ session.account?.email }}</span>.
+          We sent a link to <span class="font-weight-medium">{{ session.account?.email }}</span>.
           Open it, then come back and press Continue.
         </p>
       </div>
@@ -147,7 +146,7 @@ function cancelSignIn() {
         <AppAvatar :name="app.name" :size="40" />
         <div class="min-w-0">
           <div class="font-weight-medium text-truncate">{{ app.name }}</div>
-          <div class="text-body-2 text-medium-emphasis app-chip__origin">{{ app.origin }}</div>
+          <div class="text-body-medium on-surface-variant app-chip__origin">{{ app.origin }}</div>
         </div>
       </div>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
@@ -163,7 +162,7 @@ function cancelSignIn() {
     </div>
 
     <div v-else-if="view === 'continue'" class="state-min">
-      <h1 class="auth-title">{{ heading }}</h1>
+      <h1 class="auth-title text-headline-small">{{ heading }}</h1>
       <p v-if="app" class="auth-lead">{{ hostOf(app.origin) }}</p>
       <div class="account-row">
         <v-avatar size="44" color="primary" variant="tonal">
@@ -171,7 +170,7 @@ function cancelSignIn() {
         </v-avatar>
         <div class="min-w-0">
           <div class="font-weight-medium text-truncate">{{ session.account.displayName }}</div>
-          <div class="text-body-2 text-medium-emphasis text-truncate">{{ session.account.email }}</div>
+          <div class="text-body-medium on-surface-variant text-truncate">{{ session.account.email }}</div>
         </div>
       </div>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4">{{ error }}</v-alert>
@@ -180,17 +179,17 @@ function cancelSignIn() {
     </div>
 
     <form v-else class="state-min" novalidate @submit.prevent="signIn">
-      <h1 class="auth-title">{{ heading }}</h1>
+      <h1 class="auth-title text-headline-small">{{ heading }}</h1>
       <p class="auth-lead">{{ app ? hostOf(app.origin) : "Use your account for every connected app." }}</p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
-      <v-text-field v-model="email" label="Email" type="email" autocomplete="username" inputmode="email" v-autofocus />
-      <PasswordField v-model="password" />
+      <v-text-field v-model="email" label="Email" type="email" autocomplete="username" inputmode="email" class="mb-4" v-autofocus />
+      <PasswordField v-model="password" class="mb-4" />
       <div class="d-flex justify-end mt-n2 mb-4">
-        <router-link class="auth-link text-body-2" :to="withFlow('/forgot-password')">Forgot password?</router-link>
+        <router-link class="auth-link text-body-medium" :to="withFlow('/forgot-password')">Forgot password?</router-link>
       </div>
       <v-btn type="submit" color="primary" variant="flat" size="large" block :loading="busy">Sign in</v-btn>
       <template v-if="session.google">
-        <div class="or-divider"><span>or</span></div>
+        <div class="or-divider text-label-medium"><span>or</span></div>
         <GoogleButton :href="googleHref()" />
       </template>
       <p class="auth-switch">

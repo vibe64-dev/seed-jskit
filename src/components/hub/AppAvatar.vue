@@ -9,6 +9,6 @@ const color = computed(() => COLORS[[...props.name].reduce((sum, char) => sum + 
 
 <template>
   <v-avatar :size="size" :color="color" variant="tonal" rounded="lg">
-    <span class="text-body-2 font-weight-bold">{{ initials(name) }}</span>
+    <span class="text-label-large">{{ initials(name) }}</span>
   </v-avatar>
 </template>

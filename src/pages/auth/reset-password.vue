@@ -1,5 +1,4 @@
 <script setup>
-import { mdiLinkVariantOff } from "@mdi/js";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { usePaths } from "@jskit-ai/shell-web/client/navigation/usePaths";
@@ -39,13 +38,13 @@ async function save() {
 <template>
   <HubAuthLayout>
     <div v-if="expired" class="state-min text-center">
-      <v-avatar size="64" color="primary" variant="tonal" class="mb-4 mx-auto"><v-icon :icon="mdiLinkVariantOff" size="30" /></v-avatar>
-      <h1 class="auth-title">This link has expired.</h1>
+      <v-avatar size="64" color="primary" variant="tonal" class="mb-4 mx-auto"><v-icon icon="$linkOff" size="30" /></v-avatar>
+      <h1 class="auth-title text-headline-small">This link has expired.</h1>
       <p class="auth-lead">Reset links work once, for one hour. Ask for a new one.</p>
       <v-btn color="primary" variant="flat" size="large" block :to="paths.page('/forgot-password', { surface: 'auth' })">Send a new link</v-btn>
     </div>
     <form v-else class="state-min" novalidate @submit.prevent="save">
-      <h1 class="auth-title">Choose a new password</h1>
+      <h1 class="auth-title text-headline-small">Choose a new password</h1>
       <p class="auth-lead">You'll be signed in on this device, and signed out everywhere else.</p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
       <PasswordField

@@ -8,11 +8,11 @@ defineProps({
 
 <template>
   <div class="empty-state">
-    <v-avatar size="64" color="primary" variant="tonal">
+    <v-avatar size="64" color="primary-container">
       <v-icon :icon="icon" size="30" />
     </v-avatar>
-    <p class="empty-state__heading">{{ heading }}</p>
-    <p v-if="body" class="empty-state__body">{{ body }}</p>
+    <p class="empty-state__heading text-title-medium">{{ heading }}</p>
+    <p v-if="body" class="empty-state__body text-body-medium on-surface-variant">{{ body }}</p>
     <slot />
   </div>
 </template>
@@ -28,12 +28,9 @@ defineProps({
 }
 .empty-state__heading {
   margin: 8px 0 0;
-  font-size: 1.05rem;
-  font-weight: 600;
 }
 .empty-state__body {
   margin: 0 0 8px;
   max-width: 420px;
-  color: rgba(var(--v-theme-on-surface), 0.68);
 }
 </style>

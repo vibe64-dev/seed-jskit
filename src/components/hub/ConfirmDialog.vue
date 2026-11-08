@@ -17,8 +17,8 @@ const { xs } = useDisplay();
 <template>
   <v-dialog v-model="open" :max-width="xs ? undefined : 460" :fullscreen="false" persistent>
     <v-card class="pa-2">
-      <v-card-title class="text-h6 text-wrap pt-4">{{ title }}</v-card-title>
-      <v-card-text class="text-body-1 text-medium-emphasis">
+      <v-card-title class="text-headline-small text-wrap pt-4">{{ title }}</v-card-title>
+      <v-card-text class="text-body-medium on-surface-variant">
         <slot>{{ body }}</slot>
         <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mt-4">{{ error }}</v-alert>
       </v-card-text>

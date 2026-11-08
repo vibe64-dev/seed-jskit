@@ -1,13 +1,5 @@
 <script setup>
-import {
-  mdiAccountCircleOutline,
-  mdiAccountGroupOutline,
-  mdiApps,
-  mdiClipboardCheckOutline,
-  mdiLockOutline,
-  mdiLogout
-} from "@mdi/js";
-import { computed, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 import { usePaths } from "@jskit-ai/shell-web/client/navigation/usePaths";
@@ -29,19 +21,26 @@ const { mdAndUp } = useDisplay();
 const { session, refreshSession, signOut } = useHubSession();
 const ready = ref(session.loaded && Boolean(session.account));
 const host = window.location.host;
+// Material 3's top app bar rests on surface and moves to surface-container once the page scrolls under it.
+const scrolled = ref(false);
+const onScroll = () => {
+  scrolled.value = window.scrollY > 0;
+};
 
 const accountPage = paths.page("/", { surface: "account" });
 const signInPage = paths.page("/sign-in", { surface: "auth" });
 const tabs = [
-  { to: accountPage, label: "Your account", icon: mdiAccountCircleOutline },
-  { to: paths.page("/apps", { surface: "admin" }), label: "Apps", icon: mdiApps },
-  { to: paths.page("/people", { surface: "admin" }), label: "People", icon: mdiAccountGroupOutline },
-  { to: paths.page("/setup", { surface: "admin" }), label: "Setup", icon: mdiClipboardCheckOutline }
+  { to: accountPage, label: "Your account", shortLabel: "Account", icon: "$accountCircle" },
+  { to: paths.page("/apps", { surface: "admin" }), label: "Apps", shortLabel: "Apps", icon: "$apps" },
+  { to: paths.page("/people", { surface: "admin" }), label: "People", shortLabel: "People", icon: "$group" },
+  { to: paths.page("/setup", { surface: "admin" }), label: "Setup", shortLabel: "Setup", icon: "$checklist" }
 ];
 const showTabs = computed(() => session.isOwner);
 const allowed = computed(() => !props.ownerOnly || session.isOwner);
 
 onMounted(async () => {
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
   try {
     await refreshSession();
   } finally {
@@ -53,6 +52,8 @@ onMounted(async () => {
   }
 });
 
+onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
+
 async function leave() {
   await signOut();
   router.replace(signInPage);
@@ -60,21 +61,23 @@ async function leave() {
 </script>
 
 <template>
-  <v-app-bar flat border="b" height="64" class="hub-bar">
+  <v-app-bar :color="scrolled ? 'surface-container' : 'surface'">
     <div class="hub-bar__brand">
       <HubMark :size="32" />
       <div class="hub-bar__titles">
-        <span class="hub-bar__name">Accounts</span>
-        <span v-if="mdAndUp" class="hub-bar__host">{{ host }}</span>
+        <span class="text-title-medium">Accounts</span>
+        <span v-if="mdAndUp" class="text-body-small on-surface-variant">{{ host }}</span>
       </div>
     </div>
     <nav v-if="showTabs && mdAndUp" class="hub-bar__tabs" aria-label="Hub">
+      <!-- The current destination is a pill in secondary-container, as Material 3 marks the active navigation item; the
+           others are text in on-surface-variant, as JSKIT's own navigation items draw them. -->
       <v-btn
         v-for="tab in tabs"
         :key="tab.to"
         :to="tab.to"
-        variant="text"
-        :active="route.path === tab.to"
+        :variant="route.path === tab.to ? 'flat' : 'text'"
+        :color="route.path === tab.to ? 'secondary-container' : 'on-surface-variant'"
         class="hub-bar__tab"
       >
         {{ tab.label }}
@@ -84,19 +87,19 @@ async function leave() {
     <v-menu v-if="session.account" location="bottom end">
       <template #activator="{ props: menu }">
         <v-btn v-bind="menu" icon variant="text" class="mr-2" aria-label="Your account menu">
-          <v-avatar size="36" color="primary" variant="tonal">
-            <span class="text-body-2 font-weight-bold">{{ initials(session.account.displayName) }}</span>
+          <v-avatar size="36" color="primary-container">
+            <span class="text-label-large">{{ initials(session.account.displayName) }}</span>
           </v-avatar>
         </v-btn>
       </template>
-      <v-card min-width="260" class="pa-2">
+      <v-card min-width="260" color="surface-container" variant="elevated" class="pa-2">
         <div class="px-4 pt-3 pb-2">
-          <div class="text-body-1 font-weight-medium text-truncate">{{ session.account.displayName }}</div>
-          <div class="text-body-2 text-medium-emphasis text-truncate">{{ session.account.email }}</div>
+          <div class="text-title-medium text-truncate">{{ session.account.displayName }}</div>
+          <div class="text-body-medium on-surface-variant text-truncate">{{ session.account.email }}</div>
         </div>
         <v-divider class="my-1" />
-        <v-list density="comfortable" nav>
-          <v-list-item :prepend-icon="mdiLogout" title="Sign out" @click="leave" />
+        <v-list density="comfortable" nav role="menu">
+          <v-list-item role="menuitem" prepend-icon="$logout" title="Sign out" @click="leave" />
         </v-list>
       </v-card>
     </v-menu>
@@ -106,8 +109,8 @@ async function leave() {
     <v-container class="hub-main__container">
       <header class="hub-main__header">
         <div>
-          <h1 class="hub-main__title">{{ title }}</h1>
-          <p v-if="subtitle" class="hub-main__subtitle">{{ subtitle }}</p>
+          <h1 class="text-headline-small">{{ title }}</h1>
+          <p v-if="subtitle" class="hub-main__subtitle text-body-large on-surface-variant">{{ subtitle }}</p>
         </div>
         <div class="hub-main__actions"><slot v-if="ready && allowed" name="actions" /></div>
       </header>
@@ -115,31 +118,28 @@ async function leave() {
         <v-skeleton-loader type="card" class="mb-4 rounded-xl" height="160" />
         <v-skeleton-loader type="card" class="rounded-xl" height="160" />
       </template>
-      <v-card v-else-if="!allowed" border flat>
+      <v-card v-else-if="!allowed">
         <EmptyState
-          :icon="mdiLockOutline"
+          icon="$lock"
           heading="Only the hub's owner can open this page."
           body="Your own account settings are always open to you."
         >
-          <v-btn color="primary" variant="tonal" :to="accountPage" class="mt-2">Open your account</v-btn>
+          <v-btn variant="tonal" :to="accountPage" class="mt-2">Open your account</v-btn>
         </EmptyState>
       </v-card>
       <slot v-else />
     </v-container>
   </v-main>
 
-  <v-bottom-navigation v-if="showTabs && !mdAndUp" grow border="t" height="64" :elevation="0">
+  <v-bottom-navigation v-if="showTabs && !mdAndUp" grow bg-color="surface-container" :elevation="0" :height="80">
     <v-btn v-for="tab in tabs" :key="tab.to" :to="tab.to" :value="tab.to">
       <v-icon :icon="tab.icon" />
-      <span class="text-caption">{{ tab.label === "Your account" ? "Account" : tab.label }}</span>
+      <span class="text-label-medium">{{ tab.shortLabel }}</span>
     </v-btn>
   </v-bottom-navigation>
 </template>
 
 <style scoped>
-.hub-bar {
-  background: rgb(var(--v-theme-surface)) !important;
-}
 .hub-bar__brand {
   display: flex;
   align-items: center;
@@ -150,27 +150,18 @@ async function leave() {
 .hub-bar__titles {
   display: flex;
   flex-direction: column;
-  line-height: 1.15;
   min-width: 0;
-}
-.hub-bar__name {
-  font-weight: 650;
-  font-size: 1.05rem;
-}
-.hub-bar__host {
-  font-size: 0.8rem;
-  color: rgba(var(--v-theme-on-surface), 0.6);
 }
 .hub-bar__tabs {
   display: flex;
   gap: 4px;
   margin-left: 32px;
 }
-.hub-bar__tab {
-  font-weight: 500;
+/* Vuetify has a text class for no on-* role, so the colour of a text tab is set here. */
+.hub-bar__tab.v-btn--variant-text {
+  color: rgb(var(--v-theme-on-surface-variant));
 }
 .hub-main {
-  background: rgb(var(--v-theme-background));
   min-height: 100dvh;
 }
 .hub-main__container {
@@ -188,22 +179,12 @@ async function leave() {
 .hub-main__actions:empty {
   display: none;
 }
-.hub-main__title {
-  font-size: 1.75rem;
-  line-height: 1.2;
-  font-weight: 650;
-  letter-spacing: -0.01em;
-}
 .hub-main__subtitle {
   margin-top: 6px;
-  color: rgba(var(--v-theme-on-background), 0.68);
 }
 @media (max-width: 599px) {
   .hub-main__container {
     padding-top: 20px;
-  }
-  .hub-main__title {
-    font-size: 1.45rem;
   }
   .hub-main__header {
     margin-bottom: 16px;

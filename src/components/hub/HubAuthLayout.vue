@@ -1,5 +1,4 @@
 <script setup>
-import { mdiLockOutline } from "@mdi/js";
 import HubMark from "./HubMark.vue";
 
 const host = typeof window === "undefined" ? "" : window.location.host;
@@ -12,16 +11,17 @@ const host = typeof window === "undefined" ? "" : window.location.host;
       <div class="hub-auth__brand">
         <HubMark :size="40" />
         <span class="hub-auth__titles">
-          <span class="hub-auth__name">Accounts</span>
-          <span class="hub-auth__host">{{ host }}</span>
+          <span class="text-title-medium">Accounts</span>
+          <span class="hub-auth__host text-body-small on-surface-variant">{{ host }}</span>
         </span>
       </div>
-      <v-card class="hub-auth__card" border flat>
+      <!-- Material 3's elevated card: surface-container-low at level 1, over the tinted backdrop. -->
+      <v-card class="hub-auth__card" variant="elevated">
         <slot />
       </v-card>
-      <p class="hub-auth__footnote">
+      <p class="hub-auth__footnote text-body-small on-surface-variant">
         <slot name="footnote">
-          <v-icon :icon="mdiLockOutline" size="14" />
+          <v-icon icon="$lock" size="14" />
           The apps you sign in to never see your password.
         </slot>
       </p>
@@ -33,7 +33,6 @@ const host = typeof window === "undefined" ? "" : window.location.host;
 .hub-auth {
   position: relative;
   min-height: 100dvh;
-  background: rgb(var(--v-theme-background));
   overflow: hidden;
 }
 .hub-auth__backdrop {
@@ -59,23 +58,13 @@ const host = typeof window === "undefined" ? "" : window.location.host;
 }
 .hub-auth__titles {
   display: grid;
-  line-height: 1.2;
   min-width: 0;
 }
-.hub-auth__name {
-  font-size: 1.05rem;
-  font-weight: 650;
-  letter-spacing: -0.005em;
-}
 .hub-auth__host {
-  font-size: 0.8125rem;
-  color: rgba(var(--v-theme-on-background), 0.62);
   overflow-wrap: anywhere;
 }
 .hub-auth__card {
   padding: 32px;
-  background: rgb(var(--v-theme-surface));
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 12px 40px -12px rgba(0, 0, 0, 0.18) !important;
 }
 .hub-auth__footnote {
   display: flex;
@@ -84,8 +73,6 @@ const host = typeof window === "undefined" ? "" : window.location.host;
   gap: 6px;
   margin-top: 20px;
   text-align: center;
-  font-size: 0.8125rem;
-  color: rgba(var(--v-theme-on-background), 0.6);
 }
 @media (max-width: 599px) {
   .hub-auth__card {

@@ -1,5 +1,4 @@
 <script setup>
-import { mdiApps, mdiKeyChainVariant } from "@mdi/js";
 import { computed, onMounted, ref } from "vue";
 import AppRow from "../../components/hub/AppRow.vue";
 import ConfirmDialog from "../../components/hub/ConfirmDialog.vue";
@@ -71,7 +70,7 @@ function ask(action, app = null) {
 <template>
   <HubAppLayout title="Apps" subtitle="Every app that signs people in through your hub." owner-only>
     <template #actions>
-      <v-btn variant="tonal" :prepend-icon="mdiKeyChainVariant" :disabled="!data" @click="ask('rotate')">Rotate signing key</v-btn>
+      <v-btn variant="tonal" prepend-icon="$key" :disabled="!data" @click="ask('rotate')">Rotate signing key</v-btn>
     </template>
 
     <v-alert v-if="loadError" type="error" variant="tonal" class="mb-4">{{ loadError }}</v-alert>
@@ -81,9 +80,9 @@ function ask(action, app = null) {
       <v-skeleton-loader type="list-item-avatar-two-line@3" class="rounded-xl" />
     </template>
 
-    <v-card v-else-if="empty" border flat>
+    <v-card v-else-if="empty">
       <EmptyState
-        :icon="mdiApps"
+        icon="$apps"
         heading="No app has signed in through your hub yet."
         body="Connect an app and it appears here. Development addresses are approved automatically; you approve each production address once."
       />
@@ -91,8 +90,8 @@ function ask(action, app = null) {
 
     <template v-else-if="data">
       <section v-if="data.waiting.length" class="group">
-        <h2 class="group__title">Waiting for you <span class="group__count">{{ data.waiting.length }}</span></h2>
-        <v-card border flat class="group__card group__card--attention">
+        <h2 class="group__title text-title-medium">Waiting for you <span class="group__count text-label-medium">{{ data.waiting.length }}</span></h2>
+        <v-card color="surface-container-high" class="group__card">
           <AppRow v-for="app in data.waiting" :key="app.clientId" :app="app" :meta="`Registered ${timeAgo(app.createdAt)}`">
             <v-btn color="primary" variant="flat" @click="ask('approve', app)">Approve</v-btn>
             <v-btn variant="text" color="error" @click="ask('block', app)">Block</v-btn>
@@ -101,8 +100,8 @@ function ask(action, app = null) {
       </section>
 
       <section class="group">
-        <h2 class="group__title">Approved</h2>
-        <v-card border flat class="group__card">
+        <h2 class="group__title text-title-medium">Approved</h2>
+        <v-card class="group__card">
           <AppRow
             v-for="app in data.approved"
             :key="app.clientId"
@@ -111,13 +110,13 @@ function ask(action, app = null) {
           >
             <v-btn variant="text" @click="ask('remove', app)">Remove</v-btn>
           </AppRow>
-          <p v-if="!data.approved.length" class="group__empty">Approved production apps appear here.</p>
+          <p v-if="!data.approved.length" class="group__empty text-body-medium on-surface-variant">Approved production apps appear here.</p>
         </v-card>
       </section>
 
       <section class="group">
-        <h2 class="group__title">Development <span class="group__hint">approved automatically</span></h2>
-        <v-card border flat class="group__card">
+        <h2 class="group__title text-title-medium">Development <span class="text-body-medium on-surface-variant">approved automatically</span></h2>
+        <v-card class="group__card">
           <AppRow
             v-for="app in data.development"
             :key="app.clientId"
@@ -126,20 +125,20 @@ function ask(action, app = null) {
           >
             <v-btn variant="text" @click="ask('remove', app)">Remove</v-btn>
           </AppRow>
-          <p v-if="!data.development.length" class="group__empty">Apps on this computer or on your development addresses appear here.</p>
+          <p v-if="!data.development.length" class="group__empty text-body-medium on-surface-variant">Apps on this computer or on your development addresses appear here.</p>
         </v-card>
       </section>
 
       <section v-if="data.blocked.length" class="group">
-        <h2 class="group__title">Blocked</h2>
-        <v-card border flat class="group__card">
+        <h2 class="group__title text-title-medium">Blocked</h2>
+        <v-card class="group__card">
           <AppRow v-for="app in data.blocked" :key="app.clientId" :app="app">
             <v-btn variant="text" @click="ask('remove', app)">Unblock</v-btn>
           </AppRow>
         </v-card>
       </section>
 
-      <p v-if="activeKey" class="key-note">
+      <p v-if="activeKey" class="key-note text-body-small on-surface-variant">
         Signing key active since {{ new Date(activeKey.createdAt).toLocaleDateString(undefined, { dateStyle: "medium" }) }}.
       </p>
     </template>
@@ -165,8 +164,6 @@ function ask(action, app = null) {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1rem;
-  font-weight: 600;
   margin-bottom: 10px;
 }
 .group__count {
@@ -176,27 +173,13 @@ function ask(action, app = null) {
   height: 24px;
   padding: 0 8px;
   border-radius: 999px;
-  font-size: 0.8rem;
   background: rgb(var(--v-theme-primary));
   color: rgb(var(--v-theme-on-primary));
 }
-.group__hint {
-  font-weight: 400;
-  font-size: 0.85rem;
-  color: rgba(var(--v-theme-on-background), 0.6);
-}
-.group__card--attention {
-  border-color: rgba(var(--v-theme-primary), 0.5) !important;
-  background: rgba(var(--v-theme-primary), 0.04);
-}
 .group__empty {
   padding: 18px 20px;
-  color: rgba(var(--v-theme-on-surface), 0.6);
-  font-size: 0.9rem;
 }
 .key-note {
   margin-top: 28px;
-  font-size: 0.85rem;
-  color: rgba(var(--v-theme-on-background), 0.6);
 }
 </style>

@@ -1,5 +1,4 @@
 <script setup>
-import { mdiEyeOffOutline, mdiEyeOutline } from "@mdi/js";
 import { ref } from "vue";
 
 defineProps({
@@ -20,7 +19,7 @@ const visible = ref(false);
   >
     <template #append-inner>
       <v-btn
-        :icon="visible ? mdiEyeOffOutline : mdiEyeOutline"
+        :icon="visible ? '$visibilityOff' : '$visibility'"
         :aria-label="visible ? 'Hide password' : 'Show password'"
         variant="text"
         size="small"

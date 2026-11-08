@@ -11,9 +11,9 @@ defineProps({
   <div class="app-row">
     <AppAvatar :name="app.name" :size="44" />
     <div class="app-row__text">
-      <div class="app-row__name">{{ app.name }}</div>
-      <div class="app-row__origin">{{ app.origin }}</div>
-      <div v-if="meta" class="app-row__meta">{{ meta }}</div>
+      <div class="app-row__name text-title-medium">{{ app.name }}</div>
+      <div class="app-row__origin text-body-medium on-surface-variant">{{ app.origin }}</div>
+      <div v-if="meta" class="app-row__meta text-body-small on-surface-variant">{{ meta }}</div>
     </div>
     <div class="app-row__actions"><slot /></div>
   </div>
@@ -30,19 +30,11 @@ defineProps({
 .app-row + .app-row {
   border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
 }
-.app-row__name {
-  font-weight: 600;
-}
 .app-row__origin {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.85rem;
   overflow-wrap: anywhere;
-  color: rgba(var(--v-theme-on-surface), 0.8);
 }
 .app-row__meta {
-  font-size: 0.8rem;
   margin-top: 2px;
-  color: rgba(var(--v-theme-on-surface), 0.6);
 }
 .app-row__actions {
   display: flex;

@@ -9,14 +9,10 @@
   flex: 0 0 auto;
 }
 .auth-title {
-  font-size: 1.5rem;
-  line-height: 1.25;
-  font-weight: 650;
-  letter-spacing: -0.01em;
   margin-bottom: 6px;
 }
 .auth-lead {
-  color: rgba(var(--v-theme-on-surface), 0.68);
+  color: rgb(var(--v-theme-on-surface-variant));
   margin-bottom: 24px;
   overflow-wrap: anywhere;
 }
@@ -32,23 +28,23 @@
 .auth-switch {
   margin-top: 24px;
   text-align: center;
-  color: rgba(var(--v-theme-on-surface), 0.68);
+  color: rgb(var(--v-theme-on-surface-variant));
 }
 .or-divider {
   display: flex;
   align-items: center;
   gap: 12px;
   margin: 20px 0;
-  color: rgba(var(--v-theme-on-surface), 0.55);
-  font-size: 0.85rem;
+  color: rgb(var(--v-theme-on-surface-variant));
 }
 .or-divider::before,
 .or-divider::after {
   content: "";
   flex: 1;
   height: 1px;
-  background: rgba(var(--v-border-color), var(--v-border-opacity));
+  background: rgb(var(--v-theme-outline-variant));
 }
+/* A person or an app shown inside the card, on the next surface tone up instead of a border. */
 .account-row,
 .app-chip {
   display: flex;
@@ -56,7 +52,7 @@
   gap: 14px;
   padding: 14px 16px;
   border-radius: 16px;
-  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  background: rgb(var(--v-theme-surface-container-high));
   margin: 8px 0 24px;
 }
 .app-chip__origin {

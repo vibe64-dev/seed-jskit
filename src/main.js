@@ -1,12 +1,15 @@
+// Vuetify's styles first, so its stylesheet comes before any component chunk's.
+import "vuetify/styles";
+import "@jskit-ai/material-web/client/material.css";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { QueryClient, VueQueryPlugin } from "@tanstack/vue-query";
 import { createRouter, createWebHistory } from "vue-router/auto";
 import { routes } from "vue-router/auto-routes";
-import "vuetify/styles";
 import { createVuetify } from "vuetify";
-import { aliases as mdiAliases, mdi } from "vuetify/iconsets/mdi-svg";
+import { createMaterialVuetifyOptions } from "@jskit-ai/material-web/client";
 import App from "./App.vue";
+import { theme } from "./theme/index.js";
 import NotFoundView from "./views/NotFound.vue";
 import { bootInstalledClientModules } from "virtual:jskit-client-bootstrap";
 import { createSurfaceRuntime } from "@jskit-ai/kernel/shared/surface/runtime";
@@ -39,51 +42,9 @@ const { router, fallbackRoute } = createShellRouter({
   }
 });
 
-const vuetify = createVuetify({
-  theme: {
-    defaultTheme: "system",
-    themes: {
-      light: {
-        dark: false,
-        colors: {
-          background: "#F6F7FC",
-          surface: "#FFFFFF",
-          "surface-variant": "#E1E2EC",
-          "on-surface-variant": "#44474F",
-          primary: "#2F5BB0",
-          secondary: "#575E71",
-          success: "#1B7F4A",
-          warning: "#9A5B00",
-          error: "#BA1A1A"
-        }
-      },
-      dark: {
-        dark: true,
-        colors: {
-          background: "#0F1116",
-          surface: "#181B22",
-          "surface-variant": "#2B2F38",
-          "on-surface-variant": "#C4C6D0",
-          primary: "#AFC6FF",
-          secondary: "#BFC6DC",
-          success: "#7FD8A4",
-          warning: "#F5BD6B",
-          error: "#FFB4AB"
-        }
-      }
-    }
-  },
-  defaults: {
-    VBtn: { rounded: "pill", style: "text-transform: none; letter-spacing: 0;" },
-    VTextField: { variant: "outlined", density: "comfortable", color: "primary" },
-    VCard: { rounded: "xl" }
-  },
-  icons: {
-    defaultSet: "mdi",
-    aliases: mdiAliases,
-    sets: { mdi }
-  }
-});
+// Material 3 from the hub's theme (src/theme/index.js), with Material Symbols behind every icon alias: the light and
+// dark schemes are generated from its seed, with every colour role Material 3 defines, and follow the device's setting.
+const vuetify = createVuetify(createMaterialVuetifyOptions(theme));
 const pinia = createPinia();
 const queryClient = new QueryClient({
   defaultOptions: {

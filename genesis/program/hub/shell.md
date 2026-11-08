@@ -13,15 +13,22 @@ the owner, Apps, People and Setup as tabs on desktop and a bottom bar on phone.
 - `src/lib/hubApi.js`
 - `src/lib/useHubSession.js`
 - `src/main.js`
+- `src/theme/index.js`
+- `src/theme/palettes.js`
 - `index.html`
 - `config/public.js`
 - `src/views/NotFound.vue`
 - `tests/e2e/startup.spec.ts`
+- `tests/e2e/readable-text.spec.ts`
 
 ## Public contract
 
 - The initial document shows loading and Reload before JavaScript is available.
-- The theme follows the device's light or dark setting.
+- Colours are Material 3: `@jskit-ai/material-web` generates the light and dark
+  schemes from the seed in `src/theme/index.js`, and the theme follows the
+  device's light or dark setting. Surfaces are told apart by tone, not borders,
+  and icons are Material Symbols. Every text, signed out, signed in and as the
+  owner, reads at WCAG contrast on its background in both schemes.
 - Every state-changing call sends `x-hub-request: 1`; the hub refuses calls
   without it.
 - A signed-out visitor to a signed-in page goes to sign-in and comes back

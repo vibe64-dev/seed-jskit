@@ -1,5 +1,4 @@
 <script setup>
-import { mdiCheckDecagram, mdiEmailAlertOutline, mdiGoogle, mdiLaptop } from "@mdi/js";
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { usePaths } from "@jskit-ai/shell-web/client/navigation/usePaths";
@@ -117,16 +116,16 @@ const signOutEverywhere = () => act("everywhere", async () => {
         <v-divider class="my-5" />
         <div class="email-row">
           <div class="min-w-0">
-            <div class="text-body-2 text-medium-emphasis">Email</div>
-            <div class="text-body-1 font-weight-medium text-truncate">{{ account.email }}</div>
+            <div class="text-body-medium on-surface-variant">Email</div>
+            <div class="text-body-large font-weight-medium text-truncate">{{ account.email }}</div>
           </div>
-          <v-chip v-if="account.emailVerified" color="success" variant="tonal" :prepend-icon="mdiCheckDecagram">Confirmed</v-chip>
-          <v-chip v-else color="warning" variant="tonal" :prepend-icon="mdiEmailAlertOutline">Not confirmed</v-chip>
+          <v-chip v-if="account.emailVerified" color="success" variant="tonal" prepend-icon="$verified">Confirmed</v-chip>
+          <v-chip v-else color="warning" variant="tonal" prepend-icon="$markEmailUnread">Not confirmed</v-chip>
         </div>
         <div v-if="!account.emailVerified" class="mt-4">
-          <p class="text-body-2 text-medium-emphasis mb-3">Confirm your email to sign in to apps and to recover your password.</p>
+          <p class="text-body-medium on-surface-variant mb-3">Confirm your email to sign in to apps and to recover your password.</p>
           <v-btn variant="tonal" :loading="busy === 'email'" @click="resend">Send confirmation email</v-btn>
-          <p v-if="errors.email" class="text-error text-body-2 mt-2">{{ errors.email }}</p>
+          <p v-if="errors.email" class="text-error text-body-medium mt-2">{{ errors.email }}</p>
         </div>
       </SettingsSection>
 
@@ -135,7 +134,7 @@ const signOutEverywhere = () => act("everywhere", async () => {
         :body="account.hasPassword ? 'Change it any time. Your apps stay signed in.' : 'You sign in with Google. Add a password to sign in without it.'"
       >
         <form @submit.prevent="savePassword">
-          <PasswordField v-if="account.hasPassword" v-model="currentPassword" label="Current password" />
+          <PasswordField v-if="account.hasPassword" v-model="currentPassword" label="Current password" class="mb-4" />
           <PasswordField
             v-model="newPassword"
             :label="account.hasPassword ? 'New password' : 'Password'"
@@ -161,10 +160,10 @@ const signOutEverywhere = () => act("everywhere", async () => {
       <SettingsSection v-if="data.google" title="Google" body="Sign in with your Google account instead of a password.">
         <div class="email-row">
           <div class="d-flex align-center ga-3 min-w-0">
-            <v-avatar size="40" color="surface-variant"><v-icon :icon="mdiGoogle" /></v-avatar>
+            <v-avatar size="40" color="secondary-container"><v-icon icon="$google" /></v-avatar>
             <div class="min-w-0">
               <div class="font-weight-medium">{{ account.googleLinked ? "Connected" : "Not connected" }}</div>
-              <div class="text-body-2 text-medium-emphasis">
+              <div class="text-body-medium on-surface-variant">
                 {{ account.googleLinked ? "Continue with Google signs you in." : "Connect it once to use it from now on." }}
               </div>
             </div>
@@ -184,20 +183,20 @@ const signOutEverywhere = () => act("everywhere", async () => {
             </template>
           </v-tooltip>
         </div>
-        <p v-if="!account.googleLinked && !account.emailVerified" class="text-body-2 text-medium-emphasis mt-3 d-sm-none">
+        <p v-if="!account.googleLinked && !account.emailVerified" class="text-body-medium on-surface-variant mt-3 d-sm-none">
           Confirm your email first, then connect Google.
         </p>
-        <p v-if="account.googleLinked && !account.hasPassword" class="text-body-2 text-medium-emphasis mt-3 d-sm-none">
+        <p v-if="account.googleLinked && !account.hasPassword" class="text-body-medium on-surface-variant mt-3 d-sm-none">
           Add a password first, so you can still sign in without Google.
         </p>
-        <p v-if="errors.google" class="text-error text-body-2 mt-2">{{ errors.google }}</p>
+        <p v-if="errors.google" class="text-error text-body-medium mt-2">{{ errors.google }}</p>
       </SettingsSection>
 
       <SettingsSection title="Where you're signed in" body="Signing out here also signs you out of the apps on that device the next time they check.">
         <v-list class="py-0" bg-color="transparent">
           <v-list-item v-for="item in data.sessions" :key="item.id" class="px-0 session-row">
             <template #prepend>
-              <v-avatar size="40" color="surface-variant" class="mr-3"><v-icon :icon="mdiLaptop" /></v-avatar>
+              <v-avatar size="40" color="secondary-container" class="mr-3"><v-icon icon="$devices" /></v-avatar>
             </template>
             <v-list-item-title class="font-weight-medium">
               {{ deviceName(item.userAgent) }}

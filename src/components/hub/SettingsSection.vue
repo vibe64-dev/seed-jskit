@@ -5,10 +5,10 @@ defineProps({ title: { type: String, required: true }, body: { type: String, def
 <template>
   <section class="settings-section">
     <div class="settings-section__intro">
-      <h2 class="settings-section__title">{{ title }}</h2>
-      <p v-if="body" class="settings-section__body">{{ body }}</p>
+      <h2 class="text-title-medium">{{ title }}</h2>
+      <p v-if="body" class="settings-section__body text-body-medium on-surface-variant">{{ body }}</p>
     </div>
-    <v-card border flat class="settings-section__card">
+    <v-card class="settings-section__card">
       <slot />
     </v-card>
   </section>
@@ -27,14 +27,8 @@ defineProps({ title: { type: String, required: true }, body: { type: String, def
 .settings-section + .settings-section {
   border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
 }
-.settings-section__title {
-  font-size: 1.05rem;
-  font-weight: 600;
-}
 .settings-section__body {
   margin-top: 4px;
-  font-size: 0.9rem;
-  color: rgba(var(--v-theme-on-background), 0.66);
 }
 .settings-section__card {
   padding: 20px 24px;
