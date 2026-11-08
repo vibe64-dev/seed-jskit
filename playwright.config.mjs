@@ -1,48 +1,27 @@
 import { defineConfig } from "@playwright/test";
-import { testConcurrency } from "@jskit-ai/jskit-catalog/test-budget";
+import { browserTestConfig } from "@jskit-ai/jskit-catalog/browser-tests";
 
-const managedBaseUrl = String(process.env.PLAYWRIGHT_BASE_URL || "")
-  .trim()
-  .replace(/\/+$/u, "");
-const baseURL = managedBaseUrl || "http://127.0.0.1:4173";
-// The browser tests register apps and name the owner with the same values the server uses.
+// The browser tests register apps and name the owner with the same values the servers use.
 process.env.OIDC_HUB_REGISTRATION_TOKEN ||= "playwright-only-registration-token-0123";
 process.env.OIDC_HUB_OWNER_EMAIL ||= "owner@example.test";
-const storageState = String(process.env.PLAYWRIGHT_STORAGE_STATE || "").trim();
+const managed = Boolean(String(process.env.PLAYWRIGHT_BASE_URL || "").trim());
+
+// Each Playwright worker gets its own server on the production build and its own copy of BROWSER_TEST_DB_NAME, with
+// the server's own address as APP_PUBLIC_URL (tests/browser/workers.js); with PLAYWRIGHT_BASE_URL, the managed target.
+const config = browserTestConfig({
+  testDir: "./tests/e2e",
+  prepare: "tests/browser/workers.js",
+  env: {
+    OIDC_HUB_SECRET: "playwright-only-hub-secret-0123456789abcdef0123",
+    OIDC_HUB_REGISTRATION_TOKEN: process.env.OIDC_HUB_REGISTRATION_TOKEN,
+    OIDC_HUB_OWNER_EMAIL: process.env.OIDC_HUB_OWNER_EMAIL,
+    DB_CLIENT: "mysql2",
+    NODE_ENV: "test"
+  }
+});
 
 export default defineConfig({
-  testDir: "./tests/e2e",
-  workers: testConcurrency(),
-  timeout: 60_000,
-  expect: {
-    // A development server compiles each page on its first visit.
-    timeout: managedBaseUrl ? 30_000 : 10_000
-  },
-  use: {
-    baseURL,
-    headless: true,
-    ...(storageState ? { storageState } : {})
-  },
-  ...(managedBaseUrl ? {} : {
-    webServer: {
-      command: "npm run build && node ./bin/server.js",
-      env: {
-        APP_PUBLIC_URL: baseURL,
-        OIDC_HUB_SECRET: "playwright-only-hub-secret-0123456789abcdef0123",
-        OIDC_HUB_REGISTRATION_TOKEN: process.env.OIDC_HUB_REGISTRATION_TOKEN,
-        OIDC_HUB_OWNER_EMAIL: process.env.OIDC_HUB_OWNER_EMAIL,
-        DB_CLIENT: "mysql2",
-        DB_HOST: process.env.DB_HOST ?? "127.0.0.1",
-        DB_PORT: process.env.DB_PORT ?? "3306",
-        DB_NAME: process.env.DB_NAME ?? "accounts_hub_browser_test",
-        DB_USER: process.env.DB_USER ?? "accounts_hub_browser_test",
-        DB_PASSWORD: process.env.DB_PASSWORD ?? "",
-        NODE_ENV: "test",
-        PORT: "4173"
-      },
-      url: `${baseURL}/api/health`,
-      reuseExistingServer: true,
-      timeout: 180_000
-    }
-  })
+  ...config,
+  // A managed target's development server compiles each page on its first visit.
+  expect: { ...config.expect, timeout: managed ? 30_000 : config.expect.timeout }
 });

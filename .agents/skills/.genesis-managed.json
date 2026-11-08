@@ -2,16 +2,20 @@
   "schemaVersion": 1,
   "skills": {
     "genesis-deslop": {
-      "hash": "sha256:44f26ae5cb23f594710cb438d80b11cdf0d67a3d7d1a4dd0cbbfdc4c4a6625c2",
+      "hash": "sha256:4affd9989ef680b13e9829bdb39ad73f0b8623c0d50b5d60b7370681ff9bdd22",
       "source": "genesis:skills/genesis-deslop"
     },
     "genesis-program": {
-      "hash": "sha256:ae378bd1b2c378d6f09cf46c263fcc8106f0ea955610ac20a28e53ee5725e4d1",
+      "hash": "sha256:3641fc1ae2b9688f4acffa1034b07bbb1607e74aa4f4aea4da91d1441d4b2653",
       "source": "genesis:skills/genesis-program"
     },
     "genesis-project": {
-      "hash": "sha256:a4c40a1c78d2ef1b1851b1b27ecfa9d755dee8470deb394246b3e211837257ce",
+      "hash": "sha256:7807556f3c3fe6380001a6c022701aed5f532941cb558eedf5b7841d817e488e",
       "source": "genesis:skills/genesis-project"
+    },
+    "genesis-ui-pass": {
+      "hash": "sha256:052697026011dc33e361bdf3fee8e59bce851d7ba00727eb5413dcbe76592b3a",
+      "source": "genesis:skills/genesis-ui-pass"
     }
   }
 }
