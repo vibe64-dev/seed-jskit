@@ -108,6 +108,14 @@ abstractions. Consolidate ownership where one clear module is enough. Do not
 optimize for tiny files or indirection; optimize for a small, obvious design
 that a junior programmer can follow.
 
+Before editing, list the behaviors of the code in scope with the test that
+covers each, as the engineering approach's refactor rule and the "Refactors
+keep behavior" section of
+`.agents/skills/genesis-project/references/sanity-checks.md` describe. After
+cleanup, walk the list again: every item must still hold and still have a test,
+and a test the cleanup changed must assert no less than before. A behavior no
+test covers is a follow-up finding, never permission to drop it.
+
 Cleanup is not a second implementation pass. The selected changes limit where
 cleanup may occur; sharing a file does not bring unrelated edits into scope or
 authorize different behavior in that file. Deslop may reorganize behavior
@@ -136,5 +144,5 @@ Leave the cleanup as ordinary uncommitted work for review and a later normal
 commit. Never amend or rewrite the selected commits. Run focused checks when
 useful. Final declared checks remain available through the Genesis `verify`
 operation. Summarize the resolved scope and any selected commit identities,
-what became simpler, files changed, checks actually run, and follow-up findings
-left unchanged.
+what became simpler, the behaviors checked before and after, files changed,
+checks actually run, and follow-up findings left unchanged.
