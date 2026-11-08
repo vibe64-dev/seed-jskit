@@ -48,6 +48,8 @@ npm run test:e2e
 ```
 
 The browser suite checks home, settings, and adaptive navigation at compact, medium, and expanded widths.
+It builds the production frontend once, reused while its sources are unchanged, and starts one server per
+Playwright worker within the machine's test budget; every run ends with its 10 slowest tests.
 
 The starter follows the published JSKIT shell foundation and package-owned
 source patterns. It contains no installed dependencies or generated account
