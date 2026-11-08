@@ -126,15 +126,17 @@ npm exec --no -- playwright install chromium
 npm run test:e2e
 ```
 
-Server tests need a disposable test database prepared with `npm run db:prepare`;
-they use `TEST_DB_NAME` when it is set, so they never touch the development
-database in `DB_NAME`. Browser tests get their own: `BROWSER_TEST_DB_NAME` names
-it, and each Playwright worker gets its own copy (`<name>`, `<name>_1`, ...),
-restored from a snapshot of the migrations' schema (`tests/browser/workers.js`),
-with its own server on the production build. They keep a fixed hub secret, and
-the hub refuses keys made with another one.
-`npm run test:database` checks that an account and its password survive a
-restart against the database in `DB_*`.
+Server and browser tests use JSKIT's test harness. `npm test` and
+`npm run test:database` run `jskit test --databases`: each test file running at
+once gets its own copy of `TEST_DB_NAME`, restored from a snapshot of the
+migrations' schema, so they never touch the development database in `DB_NAME`.
+Browser tests build the production frontend once, reused while its sources are
+unchanged, and start one hub per Playwright worker, each with its own address
+and its own copy of `BROWSER_TEST_DB_NAME` (`<name>`, `<name>_1`, ...) restored
+by `tests/browser/workers.js`, and a fixed test-only hub secret; the hub refuses
+keys made with another one. Grant the database user the test databases and
+their numbered copies (`accounts_hub_%`). `npm run test:database` checks that an
+account and its password survive a restart.
 
 ## Keep dependencies current
 
