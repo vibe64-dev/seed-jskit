@@ -46,8 +46,11 @@ Genesis operation or `genesis --version` as an availability probe.
 Successful invocation resolution is routine. Do not narrate whether Genesis is
 project-pinned or on `PATH`, and never describe direct `PATH` use as a fallback.
 Mention how the invocation was selected only when resolution fails or the user
-explicitly asks. This does not suppress an otherwise-required work update about
-using Genesis; keep that update about the project work, not executable selection.
+explicitly asks.
+
+Follow the configured Collaboration approach for user-facing updates, including
+its technical depth and response length. Report concrete progress,
+findings, or blockers; do not announce that you are following guidance.
 
 ## Resolve explicit technology choices
 
@@ -92,7 +95,7 @@ build, and output commands before accepting materialized component proposals.
 A selected component describes its current foundation; it does not silently
 port older source. When the existing commands differ, keep the implementation
 unchanged and replace the complete project-owned consumer operation (for
-Vibe64, `## Workspace setup` or `## Outputs`). Genesis treats those sections as
+example, a host's `## Workspace setup` or `## Outputs`). Genesis treats those sections as
 opaque text; the named consumer alone owns their meaning and execution. Do not
 claim a proposed recipe is usable until it matches the source.
 
@@ -102,8 +105,8 @@ tests, and runtime behavior.
 
 `.genesis/machine-city.json` is a derived detailed file/function map.
 `.genesis/program-city.json` is a derived simpler subsystem/operation map.
-Neither is authority or proof; both may be regenerated with the Genesis
-`index` operation.
+Neither is authority or proof; both are git-ignored and may be regenerated
+with the Genesis `index` operation.
 
 ## Implement ordinary local work
 
@@ -123,7 +126,7 @@ Neither is authority or proof; both may be regenerated with the Genesis
   when implementation intentionally changes observable product behavior.
   Private restructuring may require only corrected Sources or an informational
   Implementation map, and may require no explanatory edit. Keep exact
-  consumer-owned operation declarations, such as Vibe64 `## Outputs`, aligned
+  consumer-owned operation declarations, such as a host's `## Outputs`, aligned
   when implementation intentionally changes the corresponding commands or
   capabilities. Record only capability metadata and environment-variable names
   there, never values or secrets; do not infer or execute the section as
@@ -141,11 +144,59 @@ Neither is authority or proof; both may be regenerated with the Genesis
 
 ## Verify and report
 
-After the selected technology's workspace substrate exists, use the Genesis
-`verify` operation for the Stack's declared final checks. An unconfigured result
-means the declared workspace or checks do not exist yet; it is not a failing
-check. Before reporting completion, compare the requested observable behavior,
-required inputs and resources, declared project operations, and focused evidence
-with what actually exists. Report files changed, checks actually run,
-anything not proven, and anything still requiring attention. Never claim that
-an unrun check passed or that passing checks prove the whole product.
+During implementation, select the checks relevant to the change. Run the
+Stack's declared final checks through Genesis `verify` when required by the
+project's verification policy or the user's request, after the selected
+technology's workspace substrate exists. Finishing an item or resuming a
+session does not itself require a broad verification run. Keep full output in
+local artifacts, preserve exit status, and read summaries and relevant failure
+excerpts before expanding logs. Do not weaken assertions or omit required
+coverage to save time or tokens.
+
+A change to user-visible behavior ships with the browser specs that cover it
+updated and run in the same change, before pushing. When an existing spec
+fails, first classify it as outdated (the behavior changed on purpose) or as a
+regression. Fix regressions in the product, and change a spec only for an
+intended change, naming the change that made it outdated. Test resources a
+managed host supplies, such as a login state, base URL, browser, or ports, are
+the host's contract. If they do not work (for example, tests run signed out
+despite a supplied login), report the host defect with evidence and stop; never
+compensate in the project by rewriting cookies or adding its own login or
+browser.
+
+Speed is verified like behavior, with the engineering approach's sanity
+checks. A change to a list, batch or write path ships with a test at realistic
+row counts and history that compares its query count at a few rows and at a
+realistic number. Read the run's preparation, suite and slowest-file timings
+with its counts; when one grows with the data, find the cause (a read per row,
+an access check sized by stored history, test preparation that replays
+migrations) before reporting completion. After a refactor, walk the behavior
+list made before it and report any item that no longer holds. Before reporting
+data access, tests, a refactor, a screen or a release done, read the matching
+section of [the sanity checks guide](references/sanity-checks.md) and apply its
+checks with the tools your Stack pieces name.
+
+An unconfigured result means the declared workspace or checks do not exist
+yet; it is not a failing check. Before reporting completion, compare the
+requested observable behavior, required inputs and resources, declared project
+operations, and focused evidence with what actually exists. Report files
+changed, checks actually run, anything not proven, and anything still requiring
+attention. Never claim that an unrun check passed or that passing checks prove
+the whole product.
+
+## Subsystem maintenance
+
+Maintain `genesis/subsystems.md` in the same implementation turn when a change
+adds, removes, or changes a subsystem responsibility, Program membership, or
+data ownership/use. Read the map before changing related code. Reuse existing
+subsystems unless a distinct responsibility is evidenced. Require one Source Directory per subsystem and declare each Program module
+exactly once; Program folder names do not determine membership. Keep table references
+grounded in schema/migrations; Genesis does not inspect databases. Private
+helper changes need no map edit when these associations remain unchanged.
+
+If `genesis/subsystems.md` is missing, or is empty in an existing explained
+application, create it from the actual source, schema, and existing Program
+before implementation. This is ordinary explanatory adoption, not a blocker or
+a reason to ask permission again. Preserve the existing Program and source;
+inspect the relevant responsibilities and complete the smallest truthful map.
+Initialization can create the empty file, but only the agent authors its meaning.

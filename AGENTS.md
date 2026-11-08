@@ -19,6 +19,10 @@ Framework references installed with this starter's JSKIT release:
 - `node_modules/@jskit-ai/agent-docs/skills/jskit/references/pattern-index.md`
 - `node_modules/@jskit-ai/agent-docs/guide/agent/`
 
+Before writing or reviewing code that reads or writes a database table, read
+the data access guide at
+`node_modules/@jskit-ai/agent-docs/guide/agent/framework/data-access.md`.
+
 Before writing or reviewing server code (a feature, provider, action, service,
 repository, route, error or test), read the typed features guide at
 `node_modules/@jskit-ai/agent-docs/guide/agent/framework/typed-features.md`.

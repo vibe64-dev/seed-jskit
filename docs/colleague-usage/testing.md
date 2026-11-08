@@ -35,10 +35,13 @@ recovery notice needs coding-agent recovery before normal use.
 
 Outside Vibe64, provision the three distinct databases and grants named in
 `.env.example`, then run `npm ci` and `npm run db:prepare`. `npm run test:e2e`
-starts the same isolated test target with your installed Playwright browser.
-When supplying `PLAYWRIGHT_BASE_URL`, you own the server and must select the
-isolated target before tests that write data. Browser startup reports migration,
-fixture reset and seed times. Do not install another browser in managed sessions.
+builds the production frontend once and gives each Playwright worker its own
+server and its own copy of `BROWSER_TEST_DB_NAME`, restored from a snapshot of
+the migrations' schema and seeded by `tests/browser/workers.js`, with your
+installed Playwright browser. When supplying `PLAYWRIGHT_BASE_URL`, you own the
+server and must select the isolated target before tests that write data. The
+run reports its preparation times. Do not install another browser in managed
+sessions.
 
 Workspace setup also installs the version-matched JSKIT guides and source patterns
 for the coding agent. Framework dependencies, their catalogue and documentation

@@ -13,6 +13,7 @@ isolated database integration suite have separate commands.
 - `scripts/test-database.js`
 - `bin/develop-test.js`
 - `tests/browser/database.js`
+- `tests/browser/workers.js`
 - `tests/server/database.integration.js`
 - `tests/server/test-environment.test.js`
 - `playwright.config.mjs`
@@ -32,5 +33,7 @@ reject normal/shared identities or production mode. Integration and browser
 databases stay separate. Browser setup retains schema and migration ledgers,
 applies pending migrations and resets only browser fixtures with an explicit
 seed. The declared browser-tests target advertises test data and uses the
-host's assigned address. Standalone Playwright starts that same launcher rather
-than reusing an arbitrary server. Managed Playwright uses the supplied Preview.
+host's assigned address. Standalone Playwright (`browserTestConfig()`) builds
+the production frontend once and starts one server per worker, each with its own
+port and its own copy of the browser database restored from a schema snapshot.
+Managed Playwright uses the supplied Preview.
