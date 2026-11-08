@@ -34,7 +34,7 @@ Colours are the theme's Material 3 roles (`on-surface-variant`,
 an icon is a `$` alias, and one JSKIT lacks goes in that file's `icons`. Never
 hand-write Vuetify theme colours or icon sets in `src/main.js`: JSKIT's pages
 draw with roles only the generated schemes define. `npx jskit check m3` checks
-the guide's rules.
+the guide's rules; `npm run verify` runs it and fails on any finding.
 
 Before implementation, read the narrow relevant source pattern completely. If
 its owner package is installed, prefer that version-matched package-owned copy.

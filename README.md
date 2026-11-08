@@ -67,6 +67,9 @@ npm exec --no -- playwright install chromium
 npm run test:e2e
 ```
 
+`npm run verify` runs `jskit check` and `jskit check m3`, JSKIT's Material 3 check, so it fails on
+a raw colour, an MDI icon, an outlined card or a theme without a dark scheme as well.
+
 Browser tests use the database server you provide. `BROWSER_TEST_DB_NAME` names their database, distinct from
 `DB_NAME` and `TEST_DB_NAME`. They build the production frontend once, reused while its sources are unchanged, and
 start one server per Playwright worker within the machine's test budget, each on its own copy of that database

@@ -33,7 +33,8 @@
     "db:migrate:status": "knex --knexfile ./knexfile.js migrate:list",
     "jskit:update": "npx --yes @jskit-ai/jskit-catalog@latest update",
     "jskit:check": "jskit check",
-    "verify": "npm run jskit:check && npm run lint && npm run test && npm run test:client && npm run build",
+    "jskit:check:m3": "jskit check m3",
+    "verify": "npm run jskit:check && npm run jskit:check:m3 && npm run lint && npm run test && npm run test:client && npm run build",
     "test:database": "jskit test --databases tests/server/account-persistence.integration.js"
   },
   "dependencies": {
