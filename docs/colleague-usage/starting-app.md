@@ -11,6 +11,14 @@ Preview, name it in the Preview identity menu (by its email) and Preview can
 sign in as it. Which accounts appear there is your choice; the starter never
 creates users.
 
+When you deploy the app, Deploy generates its session secret and the first
+account's setup code. On an empty production database the first registration
+asks for that code: open **Deploy**, choose **Reveal** or **Copy** on the
+**First account setup code** card, then register in the app and enter it in
+**Setup code**. The app sends no email, so production accounts skip email
+confirmation; once an email sender is installed, set
+`AUTH_LOCAL_EMAIL_CONFIRMATION` to `true` under **Production Env**.
+
 If import reports missing Stack contracts while the destination project is
 still empty, the rejected starter needs repair. Migrating that empty project
 cannot repair the downloaded starter. Once the starter is corrected, retry

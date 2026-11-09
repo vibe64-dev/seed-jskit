@@ -17,6 +17,10 @@ function toPort(value, fallback) {
 /**
  * The process environment, with .env loaded and SERVER_SURFACE, PORT and HOST resolved. Every value stays a string,
  * as the kernel's RuntimeEnv type says.
+ *
+ * In production (NODE_ENV=production) new accounts skip email confirmation unless AUTH_LOCAL_EMAIL_CONFIRMATION is
+ * set: JSKIT refuses a production start that confirms email addresses without an email sender, and this starter
+ * installs none.
  * @returns {import("@jskit-ai/kernel/server/types").RuntimeEnv}
  */
 function resolveRuntimeEnv() {
@@ -25,6 +29,7 @@ function resolveRuntimeEnv() {
     process.env.JSKIT_SERVER_SURFACE || process.env.SERVER_SURFACE
   );
   return {
+    ...(process.env.NODE_ENV === "production" ? { AUTH_LOCAL_EMAIL_CONFIRMATION: "false" } : {}),
     ...process.env,
     DB_CLIENT: String(process.env.DB_CLIENT || "").trim() || "mysql2",
     SERVER_SURFACE: serverSurface,

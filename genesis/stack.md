@@ -62,6 +62,8 @@
 
 - Runtimes: `nodejs`
 - Recreate on restore: `node_modules`
+- Generated secrets: `AUTH_LOCAL_SESSION_SECRET`
+- Setup code: `AUTH_LOCAL_SETUP_CODE`
 - Ready when: `GET` `/api/health` returns `200`
 - Prepare `Install dependencies`: `npm` `ci` `--include=dev`
 - Build `Build`: `npm` `run` `build`

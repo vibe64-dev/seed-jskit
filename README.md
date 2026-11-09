@@ -25,6 +25,10 @@ npm run develop
 
 Open http://localhost:3001. `npm run build` followed by `npm start` serves a production build. `PORT` chooses the port. Password recovery needs a separately configured delivery service.
 
+A new account confirms its email address first; in development the sign-in page shows the confirmation link. The
+starter installs no email sender, so a production server (`NODE_ENV=production`) creates accounts without
+confirmation unless `AUTH_LOCAL_EMAIL_CONFIRMATION` is set: set it to `true` once an email sender is installed.
+
 ## Use through Genesis or Vibe64
 
 See [starting the app and recovering a failed import](docs/colleague-usage/starting-app.md).
@@ -42,6 +46,11 @@ Dashboard → Env: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD`
 `AUTH_LOCAL_SESSION_SECRET` using the generation command above. These values
 belong to your environment, not the starter's source. A managed host may supply
 the resources it owns; do not copy its credentials into this repository.
+
+When Vibe64 deploys the app, it generates the production `AUTH_LOCAL_SESSION_SECRET`
+and the first account's setup code (`genesis/stack.md`, Deployment). On an empty
+production database the first registration asks for that code, which Deploy shows
+only to the project owner.
 
 Return to the project and recheck setup. The declared workspace preparation
 installs dependencies and applies migrations before the web output starts.
