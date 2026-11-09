@@ -59,6 +59,8 @@ framework rules.
 - Ask the person for the owner email and the hub's domain. Never invent them,
   a secret or a token. Generate random secrets (`openssl rand -base64 48`) and
   store them in the host's secret store or Env, never in source or `.env`.
+  For production, Vibe64's Deploy generates `OIDC_HUB_SECRET` and
+  `OIDC_HUB_REGISTRATION_TOKEN` from the Stack's Generated secrets line.
 - Set `OIDC_HUB_SECRET` once and keep it: a hub started with another secret
   refuses its stored signing keys.
 - Development patterns (`OIDC_HUB_DEV_ORIGIN_PATTERNS`) matter on the deployed

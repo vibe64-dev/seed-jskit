@@ -20,8 +20,9 @@ for the email and generating the secrets:
   secret refuses its stored signing keys.
 
 Your other apps sign in through the **deployed** hub, not through this
-Preview. So its Production Env also needs `APP_PUBLIC_URL` (its own domain), a
-new `OIDC_HUB_SECRET`, the registration token your apps will use, an email
+Preview. So its Production Env also needs `APP_PUBLIC_URL` (its own domain), its
+own `OIDC_HUB_SECRET` and the registration token your apps will use (Deploy
+generates both; **Reveal** shows the token under **Production Env**), an email
 sender, and `OIDC_HUB_DEV_ORIGIN_PATTERNS`: the `https://` pattern of your
 apps' Preview addresses, so they are approved automatically. `README.md` lists
 every setting.
