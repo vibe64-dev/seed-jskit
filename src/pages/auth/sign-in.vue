@@ -182,8 +182,8 @@ function cancelSignIn() {
       <h1 class="auth-title text-headline-small">{{ heading }}</h1>
       <p class="auth-lead">{{ app ? hostOf(app.origin) : "Use your account for every connected app." }}</p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
-      <v-text-field v-model="email" label="Email" type="email" autocomplete="username" inputmode="email" class="mb-4" v-autofocus />
-      <PasswordField v-model="password" class="mb-4" />
+      <v-text-field v-model="email" label="Email" type="email" autocomplete="username" inputmode="email" v-autofocus />
+      <PasswordField v-model="password" />
       <div class="d-flex justify-end mt-n2 mb-4">
         <router-link class="auth-link text-body-medium" :to="withFlow('/forgot-password')">Forgot password?</router-link>
       </div>

@@ -49,8 +49,8 @@ async function create() {
       <h1 class="auth-title text-headline-small">Create your account</h1>
       <p class="auth-lead">One account for every app connected to this hub.</p>
       <v-alert v-if="error" type="error" variant="tonal" density="compact" class="mb-4" role="alert">{{ error }}</v-alert>
-      <v-text-field v-model="displayName" label="Your name" autocomplete="name" class="mb-4" v-autofocus />
-      <v-text-field v-model="email" label="Email" type="email" autocomplete="email" inputmode="email" class="mb-4" />
+      <v-text-field v-model="displayName" label="Your name" autocomplete="name" v-autofocus />
+      <v-text-field v-model="email" label="Email" type="email" autocomplete="email" inputmode="email" />
       <PasswordField
         v-model="password"
         label="Choose a password"

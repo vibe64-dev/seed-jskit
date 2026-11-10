@@ -110,7 +110,7 @@ const signOutEverywhere = () => act("everywhere", async () => {
 
       <SettingsSection title="Profile" body="Apps show this name and email after you sign in.">
         <form class="field-row" @submit.prevent="saveName">
-          <v-text-field v-model="name" label="Name" autocomplete="name" hide-details="auto" :error-messages="errors.name" />
+          <v-text-field v-model="name" label="Name" autocomplete="name" :error-messages="errors.name" />
           <v-btn type="submit" color="primary" variant="tonal" size="large" :disabled="!nameChanged" :loading="busy === 'name'">Save</v-btn>
         </form>
         <v-divider class="my-5" />
@@ -134,7 +134,7 @@ const signOutEverywhere = () => act("everywhere", async () => {
         :body="account.hasPassword ? 'Change it any time. Your apps stay signed in.' : 'You sign in with Google. Add a password to sign in without it.'"
       >
         <form @submit.prevent="savePassword">
-          <PasswordField v-if="account.hasPassword" v-model="currentPassword" label="Current password" class="mb-4" />
+          <PasswordField v-if="account.hasPassword" v-model="currentPassword" label="Current password" />
           <PasswordField
             v-model="newPassword"
             :label="account.hasPassword ? 'New password' : 'Password'"
