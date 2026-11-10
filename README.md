@@ -132,17 +132,20 @@ npm run test:e2e
 check, so it fails on a raw colour, an MDI icon, an outlined card or a theme
 without a dark scheme as well.
 
-Server and browser tests use JSKIT's test harness. `npm test` and
-`npm run test:database` run `jskit test --databases`: each test file running at
-once gets its own copy of `TEST_DB_NAME`, restored from a snapshot of the
-migrations' schema, so they never touch the development database in `DB_NAME`.
+Server and browser tests use JSKIT's test harness. `npm test` runs
+`jskit test --databases`: each test file running at once gets its own copy of
+`TEST_DB_NAME`, restored from a snapshot of the migrations' schema, so they
+never touch the development database in `DB_NAME`. Name a database test
+`<name>.integration.test.js`: `npm test` runs only test files whose names end
+in `.test.js`.
 Browser tests build the production frontend once, reused while its sources are
 unchanged, and start one hub per Playwright worker, each with its own address
 and its own copy of `BROWSER_TEST_DB_NAME` (`<name>`, `<name>_1`, ...) restored
 by `tests/browser/workers.js`, and a fixed test-only hub secret; the hub refuses
 keys made with another one. Grant the database user the test databases and
-their numbered copies (`accounts_hub_%`). `npm run test:database` checks that an
-account and its password survive a restart.
+their numbered copies (`accounts_hub_%`).
+`tests/server/hub-persistence.integration.test.js` checks that an account and
+its password survive a restart.
 
 ## Keep dependencies current
 
