@@ -1,9 +1,10 @@
 # App Agent Instructions
 
 Database and tests are ready after the declared Workspace setup. Use
-`npm test`, `npm run test:client`,
-`npm run test:database`, or `vibe64-helper playwright --target browser-tests test`
-in Vibe64. TEST_DB_NAME and BROWSER_TEST_DB_NAME are resource bindings. See
+`npm test` (every server test, the database integration test included),
+`npm run test:client`, or `vibe64-helper playwright --target browser-tests test`
+in Vibe64. Name a database test `<name>.integration.test.js`. TEST_DB_NAME and
+BROWSER_TEST_DB_NAME are resource bindings. See
 `docs/colleague-usage/testing.md`; do not invent database setup.
 
 The standard CRUD server, resource and shared web-screen libraries are already

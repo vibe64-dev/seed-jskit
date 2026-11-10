@@ -15,16 +15,17 @@ The starter has server tests under `tests/server`, client tests under
 them immediately. Application migrations belong in `migrations`; package-owned
 migrations are discovered by the existing JSKIT database runtime.
 
-Run server unit tests with `npm test`, limited to `tests/server/*.test.js`.
-`jskit test` runs the files in parallel, as many at a time as the machine's test
-budget allows. Launch scripts and database integration tests have separate
-commands. For one server file run `npx jskit test tests/server/smoke.test.js`.
-Run client tests
-with `npm run test:client`. `npm run test:database` runs the integration file
-with `jskit test --databases`: it gets its own copy of `TEST_DB_NAME`, restored
-from a snapshot of the migrations' schema, and checks migration idempotence,
-persistence and rollback. The normal and browser databases are refused. Its
-fixture table is removed even when a check fails.
+Run every server test with `npm test`, the database integration test
+included. It runs `jskit test --databases`, which runs the files in parallel,
+as many at a time as the machine's test budget allows, each on its own copy of
+`TEST_DB_NAME` restored from a snapshot of the migrations' schema. The normal
+and browser databases are refused. For one server file run
+`npm test -- tests/server/smoke.test.js`. Run client tests with
+`npm run test:client`. `tests/server/database.integration.test.js` checks
+migration idempotence, persistence and rollback; its fixture table is removed
+even when a check fails. Name a new database test
+`<name>.integration.test.js`: `npm test` runs only test files whose names end
+in `.test.js`.
 
 For browser checks in Vibe64, ask the coding agent to run
 `vibe64-helper playwright --target browser-tests test`. The declared **Browser

@@ -1,8 +1,8 @@
 # Test the application
 
 Application tests are ready before the first feature.
-`npm test` discovers only `tests/server/*.test.js`; launch scripts and the
-isolated database integration suite have separate commands.
+`npm test` runs every server test, the isolated database integration test
+included; client and browser tests have their own commands.
 
 ## Sources
 
@@ -11,8 +11,8 @@ isolated database integration suite have separate commands.
 - `scripts/prepare-database.js`
 - Main: `playwright.config.mjs`
 - `tests/browser/workers.js`
-- `bin/develop-test.js`
-- `tests/server/database.integration.js`
+- `bin/develop-test-app.js`
+- `tests/server/database.integration.test.js`
 - `docs/colleague-usage/testing.md`
 
 ## Public contract
@@ -25,8 +25,8 @@ The locked starter also includes `crud-core`, `resource-crud-core`, and
 
 Workspace setup installs the locked dependencies and runs ordinary JSKIT
 migration preparation. Test databases come from JSKIT's harness
-(`@jskit-ai/database-runtime/server/testDatabases`): `npm run test:database`
-runs `jskit test --databases`, which gives each integration file a copy of
+(`@jskit-ai/database-runtime/server/testDatabases`): `npm test` runs
+`jskit test --databases`, which gives each server test file a copy of
 `TEST_DB_NAME` restored from a schema snapshot, and the browser run's
 `tests/browser/workers.js` gives each server a copy of `BROWSER_TEST_DB_NAME`.
 Both refuse the normal database, each other's databases and production mode;

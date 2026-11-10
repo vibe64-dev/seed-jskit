@@ -46,5 +46,4 @@ jobs:
           "CREATE DATABASE database_app_test; GRANT ALL ON database_app_test.* TO 'database_app'@'%';"
       - run: npm ci
       - run: npm run db:prepare
-      - run: npm run test:database
       - run: npm run verify
