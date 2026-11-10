@@ -88,13 +88,15 @@ run ends with its 10 slowest tests. Grant the database user the test databases a
 
 ### Database integration check
 
-`npm test` and `npm run test:database` run `jskit test --databases`: each test
-file gets its own copy of `TEST_DB_NAME`, restored from a snapshot of the
-migrations' schema, as both `DB_NAME` and `TEST_DB_NAME`, with the connection in
-`.env`; set a `TEST_DB_NAME` distinct from `DB_NAME`. `npm run test:database`
-runs the integration file, which verifies its database, prepares it twice, and
-tests registration, profile updates, login after a server restart, rejected
-anonymous reads, and separate account profiles through the real server.
+`npm test` runs `jskit test --databases`: each test file gets its own copy of
+`TEST_DB_NAME`, restored from a snapshot of the migrations' schema, as both
+`DB_NAME` and `TEST_DB_NAME`, with the connection in `.env`; set a
+`TEST_DB_NAME` distinct from `DB_NAME`. Among them,
+`tests/server/account-persistence.integration.test.js` verifies its database,
+prepares it twice, and tests registration, profile updates, login after a
+server restart, rejected anonymous reads, and separate account profiles through
+the real server. Name a new database test `<name>.integration.test.js`:
+`npm test` runs only test files whose names end in `.test.js`.
 
 The starter follows the published JSKIT shell foundation and package-owned
 source patterns. It contains no installed dependencies or generated account
