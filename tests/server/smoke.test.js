@@ -9,7 +9,7 @@ test("health, discovery and the anonymous hub session are available", async (con
 
   const health = await app.inject({ method: "GET", url: "/api/health" });
   assert.equal(health.statusCode, 200);
-  assert.deepEqual(health.json(), { ok: true, app: "accounts-hub" });
+  assert.deepEqual(health.json(), { ok: true, checks: { database: { ok: true } }, app: "accounts-hub" });
 
   const discovery = await app.inject({ method: "GET", url: "/.well-known/openid-configuration" });
   assert.equal(discovery.statusCode, 200);

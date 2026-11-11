@@ -18,7 +18,8 @@ Supplies the operational entrypoints needed to prepare and run the hub.
 Database preparation applies every pending migration, including the hub's
 tables. The hub starts on port 3001 by default, serves its pages, the OpenID
 Connect endpoints under `/.well-known` and `/oidc`, and its API under `/hub`,
-and answers `/api/health`. A missing or invalid hub setting stops startup with
+and answers `/api/health`: `200` while the database answers `select 1` within
+two seconds, and `503` otherwise. A missing or invalid hub setting stops startup with
 one sentence naming the variable to fix. In development the hub's address
 defaults to the development server's address.
 
