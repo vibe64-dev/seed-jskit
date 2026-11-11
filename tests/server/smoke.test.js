@@ -28,6 +28,7 @@ test("health and anonymous account session endpoints are available", async (cont
   assert.equal(healthResponse.statusCode, 200);
   assert.deepEqual(healthResponse.json(), {
     ok: true,
+    checks: { database: { ok: true } },
     app: "account-app"
   });
 

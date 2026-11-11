@@ -16,5 +16,6 @@ the application.
 Database preparation applies every pending application and installed-package
 migration using the configured MySQL connection. The application starts on
 port 3001 by default, serves the browser application, and exposes a health
-response for readiness checks. Missing or invalid database configuration stops
+response for readiness checks: `/api/health` answers `200` while the database
+answers `select 1` within two seconds, and `503` otherwise. Missing or invalid database configuration stops
 startup or preparation with an error instead of guessing credentials.
