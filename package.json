@@ -59,9 +59,9 @@
     "vuetify": "^4.3.0"
   },
   "devDependencies": {
-    "@jskit-ai/agent-docs": "0.1.338",
+    "@jskit-ai/agent-docs": "0.1.339",
     "@jskit-ai/config-eslint": "0.1.252",
-    "@jskit-ai/jskit-catalog": "0.2.90",
+    "@jskit-ai/jskit-catalog": "0.2.91",
     "@playwright/test": "1.61.1",
     "@vitejs/plugin-vue": "^6.0.9",
     "eslint": "^10.11.0",
