@@ -48,7 +48,7 @@ jobs:
       mariadb:
         image: mariadb:13.0.2
         env:
-          MARIADB_DATABASE: accounts_hub_test
+          MARIADB_DATABASE: accounts_hub
           MARIADB_USER: accounts_hub_test
           MARIADB_PASSWORD: accounts_hub_test_password
           MARIADB_ROOT_PASSWORD: root_test_password
@@ -63,7 +63,7 @@ jobs:
       DB_CLIENT: mysql2
       DB_HOST: 127.0.0.1
       DB_PORT: 3306
-      DB_NAME: accounts_hub_test
+      DB_NAME: accounts_hub
       TEST_DB_NAME: accounts_hub_test
       DB_USER: accounts_hub_test
       DB_PASSWORD: accounts_hub_test_password
@@ -73,6 +73,14 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+      - name: Create the isolated test database
+        # TEST_DB_NAME, its snapshot (<TEST_DB_NAME>_0) and the copies `jskit test --databases` gives each test file
+        # running at once (<TEST_DB_NAME>_1, ...) are the database user's, so test files never share a database.
+        run: |
+          docker exec -i ${{ job.services.mariadb.id }} mariadb -uroot -proot_test_password <<'SQL'
+          CREATE DATABASE accounts_hub_test;
+          GRANT ALL ON `accounts\_hub\_test%`.* TO 'accounts_hub_test'@'%';
+          SQL
       - run: npm ci
       - run: npm run db:prepare
       - run: npm run verify

@@ -7,7 +7,7 @@ function hubTestEnv(overrides = {}) {
     DB_CLIENT: "mysql2",
     DB_HOST: process.env.DB_HOST ?? "127.0.0.1",
     DB_PORT: process.env.DB_PORT ?? "3306",
-    DB_NAME: process.env.TEST_DB_NAME || process.env.DB_NAME || "accounts_hub_test",
+    DB_NAME: process.env.TEST_DB_NAME || process.env.DB_NAME,
     DB_USER: process.env.DB_USER ?? "accounts_hub_test",
     DB_PASSWORD: process.env.DB_PASSWORD ?? "",
     HOST: "127.0.0.1",
