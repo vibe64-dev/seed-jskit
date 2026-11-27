@@ -8,7 +8,6 @@ const runtimeEnv = Object.freeze({
   DB_CLIENT: "mysql2",
   DB_HOST: process.env.DB_HOST ?? "127.0.0.1",
   DB_PORT: process.env.DB_PORT ?? "3306",
-  DB_NAME: process.env.DB_NAME ?? "account_app_server_test",
   DB_USER: process.env.DB_USER ?? "account_app_server_test",
   DB_PASSWORD: process.env.DB_PASSWORD ?? "",
   HOST: "127.0.0.1",
